@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/itemGoHome"
+        android:icon="@drawable/ic_home"
+        android:title="@string/go_home"/>
+
+    <item
+        android:id="@+id/itemCreateMachineLearningModel"
+        android:icon="@drawable/ic_machine_learning"
+        android:title="@string/item_create_machine_learning_model"/>
+
+    <item
+        android:id="@+id/itemMyModels"
+        android:icon="@drawable/ic_my_models"
+        android:title="@string/item_my_models" />
+
+    <item
+        android:id="@+id/itemMyProfile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/item_my_profile" />
+
+    <item
+        android:id="@+id/itemLoginOrLogout"
+        android:icon="@drawable/ic_login_logout"
+        android:title="@string/item_login_logout"/>
+
+    <item
+        android:id="@+id/itemAbout"
+        android:icon="@drawable/ic_info"
+        android:title="@string/item_about" />
+
+</menu>

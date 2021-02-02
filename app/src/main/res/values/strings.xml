@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">ML For All</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="item_create_machine_learning_model">Create ML Model</string>
+    <string name="item_login_logout">Login/Logout</string>
+    <string name="item_my_models">My Models</string>
+    <string name="item_my_profile">My Profile</string>
+    <string name="item_about">About</string>
+    <string name="welcome_greet">Welcome!</string>
+    <string name="go_home">Go Home</string>
+    <string name="load_data">Load Data For the Machine Learning Model</string>
+    <string name="upload_file">Upload CSV File</string>
+    <string name="dataset_columns">Columns In The Dataset:</string>
+    <string name="choose_ml_model">Please Choose Machine Learning Model</string>
+    <string name="start">Start!</string>
+    <string name="slope">Slope/s:</string>
+    <string name="intercept">Intercept:</string>
+    <string name="test_my_model">Test My Model!</string>
+    <string name="model_score">Model Score:</string>
+    <string name="show_my_model">Show My Model!</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="login">Login!</string>
+    <string name="about">This is a Machine Learning application that enables you to build 2 simple machine learning models,
+    one for classification and the other for regression. The application is open source and you can get it from this link:
+    <a href="https://github.com/TomerReiner/Machine-Learning-Project">here</a>
+    </string>
+    <string-array name="ml_models">
+        <item>Linear Regression</item>
+        <item>Naive Bayes</item>
+    </string-array>
+</resources>
