@@ -9,6 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -18,6 +20,15 @@ public class MyProfileActivity extends AppCompatActivity {
     private NavigationView navigationView; // The Navigation view in activity_main.xml.
     private ActionBarDrawerToggle drawerToggle;
     private ActionBar actionBar;
+
+    private DatabaseHelper db;
+
+    private TextView tvUsername;
+    private Button btnChangeUsername;
+    private TextView tvPassword;
+    private Button btnChangePassword;
+    private Button btnRequestMyData;
+    private Button btnDeleteAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,15 @@ public class MyProfileActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nvMyProfileActivity);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         actionBar = getSupportActionBar();
+
+        db = new DatabaseHelper(MyProfileActivity.this);
+
+        tvUsername = findViewById(R.id.tvUsername);
+        btnChangeUsername = findViewById(R.id.btnChangeUsername);
+        tvPassword = findViewById(R.id.tvPassword);
+        btnChangePassword = findViewById(R.id.btnChangePassword);
+        btnRequestMyData = findViewById(R.id.btnRequestMyData);
+        btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
     }
 
     /**

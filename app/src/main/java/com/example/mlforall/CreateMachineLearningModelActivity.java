@@ -24,8 +24,6 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
 
     private Button btnUploadFile;
 
-    private Spinner spinnerChooseMLModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +31,6 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
 
         initializeVariables(); // Initialize all the variables-DO NOT REMOVE!
         setMainMenu(); // Initialize the main menu-DO NOT REMOVE!
-        createSpinner();
     }
 
     @Override
@@ -53,18 +50,6 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
 
         btnUploadFile = findViewById(R.id.btnUploadFile);
-        spinnerChooseMLModel =  findViewById(R.id.spinnerChooseMLModel);
-    }
-
-    /**
-     * This function creates the items in {@link #spinnerChooseMLModel}.
-     */
-    private void createSpinner() {
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(CreateMachineLearningModelActivity.this,
-                R.array.ml_models,
-                android.R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerChooseMLModel.setAdapter(spinnerAdapter);
     }
 
     /**

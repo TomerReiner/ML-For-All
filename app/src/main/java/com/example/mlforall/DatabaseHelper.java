@@ -24,13 +24,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = String.format("CREATE TABLE IF NOT EXISTS %s (%s TEXT PRIMARY KEY NOT NULL, %s TEXT NOT NULL);", USERS_TABLE_NAME, USERNAME, PASSWORD);
+        String query = String.format("CREATE TABLE IF NOT EXISTS %s (%s TEXT PRIMARY KEY, %s TEXT NOT NULL);", USERS_TABLE_NAME, USERNAME, PASSWORD);
         db.execSQL(query);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
     /**
@@ -41,19 +40,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean addUser(User user) {
         String username = user.getUsername();
         String password = user.getPassword();
-
+        SQLiteDatabase db = this.getWritableDatabase();
         try {
-            SQLiteDatabase db = this.getWritableDatabase();
+            boolean isUserAlreadyExists = this.userNameAlreadyExists(username);
+
+            if (isUserAlreadyExists) // If the user already exists.
+                return false;
+            // If we are here then it means the is no user with that username.
             ContentValues cv = new ContentValues();
             cv.put(USERNAME, username);
             cv.put(PASSWORD, password);
             db.insert(USERS_TABLE_NAME, null, cv);
-            db.close();
-            return true;
         }
-        catch (SQLException e) { // If the insertion of the user failed.
+        catch (Exception e) { // If the insertion of the user failed.
             return false;
         }
+        db.close();
+        return true;
     }
 
     /**
@@ -82,5 +85,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return false; // No matching user was found.
+    }
+
+    /**
+     * This function checks if a username already exists in {@link #USERNAME} columns.
+     * @param username The username that we want to check if he exists in the database.
+     * @return <code>true</code> if the username already exists, <code>false</code> if not.
+     */
+    private boolean userNameAlreadyExists(String username) {
+        String query = String.format("SELECT %s FROM %s", USERNAME, USERS_TABLE_NAME);
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String currentUsername = cursor.getString(cursor.getColumnIndex(USERNAME));
+
+                if (username.equals(currentUsername)) // If the username was found.
+                    return true;
+            }
+        }
+        cursor.close();
+        db.close();
+        return false; // No username was found.
+
     }
 }

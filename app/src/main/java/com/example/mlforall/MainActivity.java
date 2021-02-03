@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -20,9 +21,14 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private ActionBar actionBar;
 
-    private Dialog dialog;
+    private Dialog loginDialog;
+    private Dialog signUpDialog;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     private DatabaseHelper db;
+    private DialogHelper dialogHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (dialog != null)
-            dialog.dismiss();
+        if (loginDialog != null) {
+            loginDialog.dismiss();
+            signUpDialog.dismiss();
+        }
     }
 
     /**
@@ -55,8 +63,12 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nvMainActivity);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         actionBar = getSupportActionBar();
-
+        loginDialog = new Dialog(MainActivity.this);
+        signUpDialog = new Dialog(MainActivity.this);
         db = new DatabaseHelper(MainActivity.this);
+        sharedPreferences = getSharedPreferences(getString(R.string.shared_preferences), MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        dialogHelper = new DialogHelper(MainActivity.this, db, loginDialog, signUpDialog, sharedPreferences, editor);
     }
 
     /**
@@ -91,11 +103,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intentMoveToMyModelsActivity);
                     return true;
                 }
-                else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    DialogHelper helper = new DialogHelper(MainActivity.this, db);
-                    dialog = helper.buildDialog();
-                    dialog.show();
-                }
+                else if (item.getItemId() == R.id.itemLoginOrLogout)
+                    dialogHelper.buildLoginDialog();
                 else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
                     Intent intentMoveToAboutActivity = new Intent(MainActivity.this, AboutActivity.class);
                     startActivity(intentMoveToAboutActivity);

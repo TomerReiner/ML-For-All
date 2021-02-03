@@ -2,6 +2,8 @@
     <string name="app_name">ML For All</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="shared_preferences">shared_preferences</string>
+    <string name="current_user_logged_in">current_user_logged_in</string>
     <string name="item_create_machine_learning_model">Create ML Model</string>
     <string name="item_login_logout">Login/Logout</string>
     <string name="item_my_models">My Models</string>
@@ -26,8 +28,4 @@
     one for classification and the other for regression. The application is open source and you can get it from this link:
     <a href="https://github.com/TomerReiner/Machine-Learning-Project">here</a>
     </string>
-    <string-array name="ml_models">
-        <item>Linear Regression</item>
-        <item>Naive Bayes</item>
-    </string-array>
 </resources>
