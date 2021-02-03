@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MLForAll">
-        <activity android:name=".MyModelsActivity"></activity>
+        <activity android:name=".MyModelsActivity"/>
         <activity android:name=".CreateMachineLearningModelActivity" />
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".AboutActivity" />

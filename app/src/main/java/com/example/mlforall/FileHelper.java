@@ -25,7 +25,7 @@ public class FileHelper {
      * @return {@link HashMap} The keys will be the column names and the values will be the items in the column.
      */
     public HashMap<String, double[]> getDataset() {
-        HashMap<String, double[]> dataset = new HashMap<String, double[]>();
+        HashMap<String, double[]> dataset = new HashMap<>();
         try {
             CSVReader reader = new CSVReader(new FileReader(this.path));
             ArrayList<ArrayList<String>> data = loadDataToArrayList(reader);
@@ -62,7 +62,7 @@ public class FileHelper {
      * @return {@link ArrayList} of all the values in the dataset.
      */
     private ArrayList<ArrayList<String>> loadDataToArrayList(CSVReader reader) {
-        ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>(); // This ArrayList will store the data for later process.
+        ArrayList<ArrayList<String>> data = new ArrayList<>(); // This ArrayList will store the data for later process.
         try {
             String[] line = reader.readNext();
 
@@ -78,7 +78,7 @@ public class FileHelper {
             }
 
             for (int i = 0; i < line.length; i++) // Initialize the ArrayList.
-                data.add(new ArrayList<String>());
+                data.add(new ArrayList<>());
 
             while ((line = reader.readNext()) != null) {
                 if (hasNullOrEmptyValues(line)) // If there is null or empty value in line we skip that line to prevent error or bad model accuracy.
@@ -146,10 +146,10 @@ public class FileHelper {
         final int DATA_SIZE = data.size();
         final int COLUMN_SIZE = data.get(0).size();
 
-        ArrayList<ArrayList<Double>> dataInDoubleValues = new ArrayList<ArrayList<Double>>();
+        ArrayList<ArrayList<Double>> dataInDoubleValues = new ArrayList<>();
 
         for (int i = 0; i < DATA_SIZE; i++) // Initialize the ArrayList.
-            dataInDoubleValues.add(new ArrayList<Double>());
+            dataInDoubleValues.add(new ArrayList<>());
 
 
         for (int i = 0; i < DATA_SIZE; i++) {
@@ -169,7 +169,7 @@ public class FileHelper {
     private HashMap<String, double[]> loadDataset(ArrayList<ArrayList<Double>> data) {
         if (data == null) // If data is empty.
             return null;
-        HashMap<String, double[]> dataset = new HashMap<String, double[]>();
+        HashMap<String, double[]> dataset = new HashMap<>();
 
         final int NUM_COLUMNS = this.columns.size();
         final int NUM_ROWS = data.get(0).size();

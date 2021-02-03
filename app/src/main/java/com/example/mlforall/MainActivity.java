@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -49,16 +50,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (loginDialog != null) {
-            loginDialog.dismiss();
-            signUpDialog.dismiss();
-        }
+        loginDialog.dismiss();
+        signUpDialog.dismiss();
     }
 
     /**
      * This function initializes the variables.
      */
-    private void initializeVariables() { // TODO-complete
+    private void initializeVariables() {
         drawerLayout = findViewById(R.id.dlMainActivity);
         navigationView = findViewById(R.id.nvMainActivity);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -103,8 +102,15 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intentMoveToMyModelsActivity);
                     return true;
                 }
-                else if (item.getItemId() == R.id.itemLoginOrLogout)
-                    dialogHelper.buildLoginDialog();
+                else if (item.getItemId() == R.id.itemLoginOrLogout) {
+                    String usernameInSharedPreferences = sharedPreferences.getString(getString(R.string.current_user_logged_in), "");
+                    if (!usernameInSharedPreferences.equals("")) // If there isn't a user logged in.
+                        dialogHelper.buildLoginDialog();
+                    else { // If there is a user in the Shared Preferences and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                        editor.putString(getString(R.string.current_user_logged_in), "");
+                        Toast.makeText(MainActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
+                    }
+                }
                 else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
                     Intent intentMoveToAboutActivity = new Intent(MainActivity.this, AboutActivity.class);
                     startActivity(intentMoveToAboutActivity);
