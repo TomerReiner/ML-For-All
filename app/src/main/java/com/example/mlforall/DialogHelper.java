@@ -15,7 +15,7 @@ import android.widget.Toast;
  */
 public class DialogHelper {
 
-    private Context context;
+    private final Context context;
     private DatabaseHelper db;
 
     /**

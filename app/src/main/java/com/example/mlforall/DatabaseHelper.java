@@ -43,19 +43,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             boolean isUserAlreadyExists = this.userNameAlreadyExists(username);
-
-            if (isUserAlreadyExists) // If the user already exists.
+            if (isUserAlreadyExists) { // If the user already exists.
                 return false;
+            }
             // If we are here then it means the is no user with that username.
             ContentValues cv = new ContentValues();
             cv.put(USERNAME, username);
             cv.put(PASSWORD, password);
             db.insert(USERS_TABLE_NAME, null, cv);
+            db.close();
         }
         catch (Exception e) { // If the insertion of the user failed.
+            e.printStackTrace();
             return false;
         }
-        db.close();
         return true;
     }
 
@@ -78,12 +79,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String currentUsername = cursor.getString(cursor.getColumnIndex(USERNAME));
                 String currentPassword = cursor.getString(cursor.getColumnIndex(PASSWORD));
 
-                if (username.equals(currentUsername) && password.equals(currentPassword)) // If the user was found.
+                if (username.equals(currentUsername) && password.equals(currentPassword)) { // If the user was found.
+                    cursor.close();
+                    db.close();
                     return true;
+                }
             }
         }
-        cursor.close();
-        db.close();
         return false; // No matching user was found.
     }
 
@@ -93,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return <code>true</code> if the username already exists, <code>false</code> if not.
      */
     private boolean userNameAlreadyExists(String username) {
-        String query = String.format("SELECT %s FROM %s", USERNAME, USERS_TABLE_NAME);
+        String query = String.format("SELECT %s FROM %s;", USERNAME, USERS_TABLE_NAME);
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
@@ -101,14 +103,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 String currentUsername = cursor.getString(cursor.getColumnIndex(USERNAME));
-
-                if (username.equals(currentUsername)) // If the username was found.
+                if (username.equals(currentUsername)) { // If the username was found.
+                    cursor.close();
+                    db.close();
                     return true;
+                }
             }
         }
-        cursor.close();
-        db.close();
         return false; // No username was found.
-
     }
 }

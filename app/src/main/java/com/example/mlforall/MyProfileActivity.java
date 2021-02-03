@@ -121,10 +121,11 @@ public class MyProfileActivity extends AppCompatActivity {
                 }
                 else if (item.getItemId() == R.id.itemLoginOrLogout) {
                     String usernameInSharedPreferences = sharedPreferences.getString(getString(R.string.current_user_logged_in), "");
-                    if (!usernameInSharedPreferences.equals("")) // If there isn't a user logged in.
+                    if (usernameInSharedPreferences.equals("")) // If there isn't a user logged in.
                         dialogHelper.buildLoginDialog();
                     else { // If there is a user in the Shared Preferences and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         editor.putString(getString(R.string.current_user_logged_in), "");
+                        editor.apply();
                         Toast.makeText(MyProfileActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
                     }
                 }
