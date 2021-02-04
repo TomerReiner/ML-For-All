@@ -101,13 +101,13 @@ public class LinearRegressionHelper {
      * </pre>
      * @param x the x values.
      * @param y the y values.
-     * @return array in the size of two.
+     * @return {@link LinearEquation} of the slope and intercept.
      * The item in the first index will be the slope, and the item in the second index will be the intercept.
      * @see #mean(double[])
      * @see #variance(double[])
      * @see #covariance(double[], double[])
      */
-    public static double[] coefficients(double[] x, double[] y){
+    public static LinearEquation coefficients(double[] x, double[] y){
         double[] xCopy = x;
         double[] yCopy = y;
 
@@ -117,6 +117,6 @@ public class LinearRegressionHelper {
         double slope = covariance(xCopy, yCopy) / variance(xCopy);
         double intercept = meanY - (slope * meanX);
 
-        return new double[] {slope, intercept};
+        return new LinearEquation(slope, intercept);
     }
 }

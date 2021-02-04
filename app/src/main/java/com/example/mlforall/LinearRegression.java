@@ -29,17 +29,17 @@ package com.example.mlforall;
  * Score: 0.8860972890825483
  * }
  * </pre>
- * @implNote We don't implement set method for {@link #coefficients}, {@link #slope} and {@link #intercept} because this will prevent the model from working well.
+ * @implNote We don't implement set method for {@link #linearEquation}, {@link #slope} and {@link #intercept} because this will prevent the model from working well.
  * We also don't implement get an set methods for {@link #x} and {@link #y}.
  * @see <a href="https://en.wikipedia.org/wiki/Simple_linear_regression">Linear Regression</a> (source: wikipedia)
  * @see LinearRegressionHelper
  * @author Tomer Reiner
  */
 public class LinearRegression {
-
+// TODO-change comments to {@link LinearEquation}
     private double[] x; // The x values for the LinearRegression.
     private double[] y; // The y values for the LinearRegression.
-    private double[] coefficients;
+    private LinearEquation linearEquation;
     private double slope;
     private double intercept;
 
@@ -51,8 +51,8 @@ public class LinearRegression {
             throw new IllegalArgumentException(String.format("The length of the arrays don't match: %d, %d", this.x.length, this.y.length));
     }
 
-    public double[] getCoefficients() {
-        return this.coefficients;
+    public LinearEquation getLinearEquation() {
+        return this.linearEquation;
     }
 
     public double getSlope() {
@@ -68,9 +68,9 @@ public class LinearRegression {
      */
     public void fit() {
         // fitting the model(creating the linear equation y = mx + b).
-        this.coefficients = LinearRegressionHelper.coefficients(this.x, this.y);
-        this.slope = this.coefficients[0]; // Get the slope.
-        this.intercept = this.coefficients[1]; // Get the intercept.
+        this.linearEquation = LinearRegressionHelper.coefficients(this.x, this.y);
+        this.slope = this.linearEquation.getSlope(); // Get the slope.
+        this.intercept = this.linearEquation.getIntercept(); // Get the intercept.
     }
 
     /**
