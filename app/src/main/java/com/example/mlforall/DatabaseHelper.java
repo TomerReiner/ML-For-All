@@ -224,7 +224,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ContentValues cv = new ContentValues();
             cv.put(CURRENTLY_LOGGED_IN, LOGGED_OUT);
             db.update(USERS_TABLE_NAME, cv, USERNAME + " = ?", new String[]{username});
-            username = "";
             db.close();
         }
         catch (Exception e) {

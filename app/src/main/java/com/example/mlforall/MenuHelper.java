@@ -99,11 +99,16 @@ public class MenuHelper {
                     return true;
                 }
                 else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    if (username.equals("")) // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                    username = db.getCurrentLoggedInUsername();
+                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         username = dialogHelper.buildLoginDialog();
+                        System.out.println("here");
+                    }
                     else {
                         db.logOut(username);
                         Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+                        System.out.println("a");
+                        username = "";
                     }
                 }
                 else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
@@ -148,11 +153,16 @@ public class MenuHelper {
                     return true;
                 }
                 else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    if (username.equals("")) // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                    username = db.getCurrentLoggedInUsername();
+                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         username = dialogHelper.buildLoginDialog();
+                        System.out.println("here");
+                    }
                     else {
                         db.logOut(username);
                         Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+                        System.out.println("a");
+                        username = "";
                     }
                 }
                 else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
@@ -197,11 +207,16 @@ public class MenuHelper {
                     return true;
                 }
                 else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    if (username.equals("")) // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                    username = db.getCurrentLoggedInUsername();
+                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         username = dialogHelper.buildLoginDialog();
+                        System.out.println("here");
+                    }
                     else {
                         db.logOut(username);
                         Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+                        System.out.println("a");
+                        username = "";
                     }
                 }
                 else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
@@ -246,11 +261,16 @@ public class MenuHelper {
                     return true;
                 }
                 else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    if (username.equals("")) // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                    username = db.getCurrentLoggedInUsername();
+                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         username = dialogHelper.buildLoginDialog();
+                        System.out.println("here");
+                    }
                     else {
                         db.logOut(username);
                         Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+                        System.out.println("a");
+                        username = "";
                     }
                 }
                 else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
@@ -296,11 +316,16 @@ public class MenuHelper {
                     return true;
                 }
                 else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    if (username.equals("")) // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                    username = db.getCurrentLoggedInUsername();
+                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         username = dialogHelper.buildLoginDialog();
+                        System.out.println("here");
+                    }
                     else {
                         db.logOut(username);
                         Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+                        System.out.println("a");
+                        username = "";
                     }
                 }
                 else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
