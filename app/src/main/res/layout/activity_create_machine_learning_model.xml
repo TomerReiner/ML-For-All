@@ -12,30 +12,42 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <EditText
+            android:id="@+id/etFileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter The Name Of the CSV File"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <Button
-            android:id="@+id/btnUploadFile"
+            android:id="@+id/btnLoadFile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/upload_file"
+            android:text="@string/load_file"
             android:textAllCaps="false"
             android:textColor="#0B59E3"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/etFileName"/>
 
         <TextView
-            android:id="@+id/tvDatasetColumns"
+            android:id="@+id/tvChooseXYColumns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/dataset_columns"
+            android:text="@string/choose_columns"
             android:textColor="#0B59E3"
             android:textSize="25sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnUploadFile" />
+            app:layout_constraintTop_toBottomOf="@+id/btnLoadFile" />
 
         <Spinner
             android:id="@+id/spinnerChooseXData"
@@ -45,7 +57,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDatasetColumns" />
+            app:layout_constraintTop_toBottomOf="@+id/tvChooseXYColumns" />
 
         <Spinner
             android:id="@+id/spinnerChooseYData"

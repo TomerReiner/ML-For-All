@@ -2,9 +2,9 @@ package com.example.mlforall;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -30,22 +30,20 @@ public class DialogHelper {
      */
     private Dialog signUpDialog;
 
-    private SharedPreferences sharedPreferences; // We will use the SharedPreferences to write the current user that is logged in to the app.
-    private SharedPreferences.Editor editor;
 
-    public DialogHelper(Context context, DatabaseHelper db, Dialog loginDialog, Dialog signUpDialog, SharedPreferences sharedPreferences, SharedPreferences.Editor editor) {
+    public DialogHelper(Context context, DatabaseHelper db, Dialog loginDialog, Dialog signUpDialog) {
         this.context = context;
         this.db = db;
         this.loginDialog = loginDialog;
         this.signUpDialog = signUpDialog;
-        this.sharedPreferences = sharedPreferences;
-        this.editor = editor;
+
     }
 
     /**
      * This function build the Login dialog.
+     * @return The name of the user that signed up.
      */
-    public void buildLoginDialog() {
+    public String buildLoginDialog() {
         loginDialog.setContentView(R.layout.login_dialog);
         loginDialog.setCancelable(true);
 
@@ -54,16 +52,16 @@ public class DialogHelper {
         Button btnLogin = loginDialog.findViewById(R.id.btnLogin);
         Button btnMoveToSignUp = loginDialog.findViewById(R.id.btnMoveToSignUp); // Getting the views in login_dialog.
 
+        final String[] username = {""};
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = etLoginUsername.getText().toString();
+                username[0] = etLoginUsername.getText().toString();
                 String password = etLoginPassword.getText().toString();
-                User user = new User(username, password, null);
+                User user = new User(username[0], password, null);
                 boolean successfullyLoggedInUser = db.login(user);
                 if (successfullyLoggedInUser) { // If the user was successfully logged in.
-                    editor.putString(context.getString(R.string.current_user_logged_in), username);
-                    editor.apply();
                     loginDialog.dismiss();
                 }
                 else { // Login Failed.
@@ -78,16 +76,18 @@ public class DialogHelper {
             @Override
             public void onClick(View v) {
                 loginDialog.dismiss();
-                createSignUpDialog();
+                username[0] = createSignUpDialog();
             }
         });
         loginDialog.show();
+        return username[0];
     }
 
     /**
      * This function creates the sign up dialog.
+     * @return The name of the username that signed up.
      */
-    private void createSignUpDialog() {
+    private String createSignUpDialog() {
         signUpDialog.setContentView(R.layout.sign_up_dialog);
         signUpDialog.setCancelable(true);
 
@@ -96,19 +96,18 @@ public class DialogHelper {
         EditText etRetypePassword = signUpDialog.findViewById(R.id.etRetypePassword);
         Button btnSignUp = signUpDialog.findViewById(R.id.btnSignUp);
 
+        final String[] username = {""};
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = etSignUpUsername.getText().toString();
+                username[0] = etSignUpUsername.getText().toString();
                 String password = etSignUpPassword.getText().toString();
                 String retypePassword = etRetypePassword.getText().toString();
 
-                if (!username.equals("") && !password.equals("") && password.equals(retypePassword)) { // If all the fields are filled and the passwords are equal.
-                    User user = new User(username, password, null);
+                if (!username[0].equals("") && !password.equals("") && password.equals(retypePassword)) { // If all the fields are filled and the passwords are equal.
+                    User user = new User(username[0], password, null);
                     boolean userSuccessfullySignedUp = db.addUser(user);
                     if (userSuccessfullySignedUp) { // If the user was successfully signed up.
-                        editor.putString(context.getString(R.string.current_user_logged_in), username);
-                        editor.apply();
                         signUpDialog.dismiss();
                         loginDialog.dismiss();
                     }
@@ -128,5 +127,6 @@ public class DialogHelper {
             }
         });
         signUpDialog.show();
+        return username[0];
     }
 }

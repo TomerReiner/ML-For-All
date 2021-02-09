@@ -1,22 +1,23 @@
 package com.example.mlforall;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.opencsv.CSVReader;
 
 public class FileHelper {
-
+// TODo-dialog to notify user that he need to load only full datasets.
     public static final int MIN_ROW_NUMBER_IN_DATASET = 10; // The min number of rows in the dataset.
     public static final int MIN_COLUMNS_NUMBER_IN_DATASET = 2; // The min number of columns in the dataset.
 
-    private String path; // the path to the file.
+    public static final String SEPARATOR = ",";
+
+    private BufferedReader reader;
     private ArrayList<String> columns = new ArrayList<>();
 
-    public FileHelper(String path) {
-        this.path = path;
+    public FileHelper(BufferedReader reader) {
+        this.reader = reader;
     }
 
     /**
@@ -27,17 +28,34 @@ public class FileHelper {
     public HashMap<String, double[]> getDataset() {
         HashMap<String, double[]> dataset = new HashMap<>();
         try {
-            CSVReader reader = new CSVReader(new FileReader(this.path));
-            ArrayList<ArrayList<String>> data = loadDataToArrayList(reader);
+            ArrayList<ArrayList<String>> data = loadPreprocessedData();
             data = dropNonNumericColumns(data);
             ArrayList<ArrayList<Double>> dataInDoubleValues = convertToDouble(data);
             dataset = loadDataset(dataInDoubleValues);
 
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
         return dataset;
     }
+
+    /**
+     * This function sets the new columns for the dataset. The function will remove from {@link #columns} all the values in the indexes that are in <code>indexesForNonNumericValueColumns</code>.
+     * @param indexesForNonNumericValueColumns The indexes of the columns that have numeric values and will be dropped.
+     */
+    private void setColumns(ArrayList<Integer> indexesForNonNumericValueColumns) {
+        ArrayList<String> newColumns = new ArrayList<>();
+
+        int columnsSize = this.columns.size();
+
+        for (int i = 0; i < columnsSize; i++) { // This loop adds to newColumns all the column names that has no numeric values.
+            if (!indexesForNonNumericValueColumns.contains(i))
+                newColumns.add(this.columns.get(i));
+        }
+        this.columns = newColumns;
+    }
+
 
     /**
      * This function checks if there is null value in {@link String[]}
@@ -57,42 +75,54 @@ public class FileHelper {
 
     /**
      * This function loads the dataset without columns(There will be default numeric columns).
-     *
-     * @param reader The csv file.
      * @return {@link ArrayList} of all the values in the dataset.
      */
-    private ArrayList<ArrayList<String>> loadDataToArrayList(CSVReader reader) {
+    private ArrayList<ArrayList<String>> loadPreprocessedData() {
         ArrayList<ArrayList<String>> data = new ArrayList<>(); // This ArrayList will store the data for later process.
         try {
-            String[] line = reader.readNext();
+            String line = this.reader.readLine();
+            String[] values = line.split(SEPARATOR);
 
-            if (line == null) // If loading the columns failed.
+            int valuesLength = values.length;
+
+            if (line == null || line.equals("")) // If loading the columns failed.
                 return null;
             else {
-                for (int i = 0; i < line.length; i++) { // Loading the dataset columns
-                    if (line[i] == null || line[i].equals(""))
+                for (int i = 0; i < valuesLength; i++) { // Loading the dataset columns
+                    if (values[i] == null || values[i].equals("")) // If the column name is empty or null.
                         this.columns.add("" + i);
                     else
-                        this.columns.add(line[i]);
+                        this.columns.add(values[i]);
                 }
             }
 
-            for (int i = 0; i < line.length; i++) // Initialize the ArrayList.
+            for (int i = 0; i < valuesLength; i++) // Initialize the ArrayList.
                 data.add(new ArrayList<>());
 
-            while ((line = reader.readNext()) != null) {
-                if (hasNullOrEmptyValues(line)) // If there is null or empty value in line we skip that line to prevent error or bad model accuracy.
-                    continue;
+            while ((line = reader.readLine()) != null) {
+                values = line.split(SEPARATOR);
 
-                for (int i = 0; i < line.length; i++) // Adding the value to the dataset.
-                    data.get(i).add(line[i]);
+                if ((values.length != valuesLength) || hasNullOrEmptyValues(values)) // If the length of values is not the same as teh amount of columns in the dataset or there are empty values in the dataset.
+                    return null;
+
+                for (int i = 0; i < valuesLength; i++) // Adding the value to the dataset.
+                    data.get(i).add(values[i]);
             }
-
             if (data.get(0).size() < MIN_ROW_NUMBER_IN_DATASET || data.size() < MIN_COLUMNS_NUMBER_IN_DATASET) // If the dataset has less than 10 rows and less than 2 columns.
                 return null;
-
-        } catch (IOException e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
+            return null;
+        }
+
+        try {
+            this.columns.get(0);
+            this.reader.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
         return data;
     }
@@ -101,37 +131,44 @@ public class FileHelper {
      * This function drops all the {@link ArrayList<String>} items in <code>data</code> if they contain values that are not numbers.
      *
      * @param data The {@link ArrayList} that we want to remove all non numeric data from.
-     * @return {@link ArrayList} only with numeric values in the dataset.
+     * @return {@link ArrayList} of {@link ArrayList} that contain only with numeric values in the dataset.
      */
     private ArrayList<ArrayList<String>> dropNonNumericColumns(ArrayList<ArrayList<String>> data) {
+
+        ArrayList<Integer> indexesForNonNumericValueColumns = new ArrayList<Integer>();
 
         if (data == null) // If data is empty.
             return null;
 
-        final int DATA_SIZE = data.size();
-        final int COLUMN_SIZE = data.get(0).size();
+        int data_size = data.size();
+        int column_size = data.get(0).size();
 
-        for (int i = 0; i < DATA_SIZE; i++) {
-            int j = 0;
+        for (int i = 0; i < data_size; i++) { // Loading the indexes of columns with non numeric values.
+            int rows = data.get(i).size();
             boolean hasNonNumericValues = false;
-            while (j < COLUMN_SIZE && !hasNonNumericValues) {
-                char[] values = data.get(i).get(j).toCharArray();
-
-                for (char c : values) {
-                    if (c < '0' || c > '9') // If there is non numeric value in data.
-                        hasNonNumericValues = true;
+            for (int j = 0; j < rows; j++) {
+                try {
+                    double itemInPosition = Double.parseDouble(data.get(i).get(j));
                 }
-
-                if (hasNonNumericValues) {
-                    data.remove(i); // Dropping the non numeric values in data.
-                    this.columns.remove(i);
+                catch (Exception e) {
+                    hasNonNumericValues = true;
                 }
-                j++;
             }
+            if (hasNonNumericValues)
+                indexesForNonNumericValueColumns.add(i);
+        }
+
+        ArrayList<ArrayList<String>> dataWithoutNonNumericColumn = new ArrayList<>();
+
+        this.setColumns(indexesForNonNumericValueColumns);
+
+        for (int i = 0; i < data_size; i++) {
+            if (!indexesForNonNumericValueColumns.contains(i))
+                dataWithoutNonNumericColumn.add(data.get(i));
         }
         if (data.get(0).size() < MIN_ROW_NUMBER_IN_DATASET || data.size() < MIN_COLUMNS_NUMBER_IN_DATASET) // If the dataset has less than 10 rows and less than 2 columns.
             return null;
-        return data;
+        return dataWithoutNonNumericColumn;
     }
 
     /**
@@ -171,15 +208,14 @@ public class FileHelper {
             return null;
         HashMap<String, double[]> dataset = new HashMap<>();
 
-        final int NUM_COLUMNS = this.columns.size();
-        final int NUM_ROWS = data.get(0).size();
+        int num_columns = this.columns.size();
+        int num_rows = data.get(0).size();
 
 
-        for (int i = 0; i < NUM_COLUMNS; i++) {
-            double[] arr = new double[NUM_ROWS]; // Loading the data to double array.
-            for (int j = 0; j < NUM_ROWS; j++) {
-                arr[i] = data.get(i).get(j);
-            }
+        for (int i = 0; i < num_columns; i++) {
+            double[] arr = new double[num_rows]; // Loading the data to double array.
+            for (int j = 0; j < num_rows; j++)
+                arr[j] = data.get(i).get(j);
             dataset.put(this.columns.get(i), arr);
         }
         return dataset; // loading the dataset.

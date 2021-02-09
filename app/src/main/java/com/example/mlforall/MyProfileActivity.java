@@ -8,9 +8,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
 public class MyProfileActivity extends AppCompatActivity {
+
+    public static final String TAG = "MyProfileActivity";
 
     private DrawerLayout drawerLayout; // The main layout in activity_main.xml.
     private NavigationView navigationView; // The Navigation view in activity_main.xml.
@@ -27,26 +29,33 @@ public class MyProfileActivity extends AppCompatActivity {
     private Dialog loginDialog;
     private Dialog signUpDialog;
 
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-
     private DatabaseHelper db;
-    private DialogHelper dialogHelper;
+    private MenuHelper menuHelper;
 
     private TextView tvUsername;
     private Button btnChangeUsername;
     private TextView tvPassword;
     private Button btnChangePassword;
     private Button btnRequestMyData;
+    private Button btnDeleteData;
     private Button btnDeleteAccount;
+
+    private String username ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
-
         initializeVariables(); // Initialize all the variables-DO NOT REMOVE!
-        setMainMenu(); // Initialize the main menu-DO NOT REMOVE!
+        menuHelper.setMainMenu(TAG); // Initialize the main menu-DO NOT REMOVE!
+
+        btnDeleteData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = db.getCurrentLoggedInUsername();
+            }
+        });
+
     }
 
     @Override
@@ -75,67 +84,15 @@ public class MyProfileActivity extends AppCompatActivity {
         loginDialog = new Dialog(MyProfileActivity.this);
         signUpDialog = new Dialog(MyProfileActivity.this);
         db = new DatabaseHelper(MyProfileActivity.this);
-        sharedPreferences = getSharedPreferences(getString(R.string.shared_preferences), MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        dialogHelper = new DialogHelper(MyProfileActivity.this, db, loginDialog, signUpDialog, sharedPreferences, editor);
+        username = db.getCurrentLoggedInUsername();
+        menuHelper = new MenuHelper(MyProfileActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
 
         tvUsername = findViewById(R.id.tvUsername);
         btnChangeUsername = findViewById(R.id.btnChangeUsername);
         tvPassword = findViewById(R.id.tvPassword);
         btnChangePassword = findViewById(R.id.btnChangePassword);
         btnRequestMyData = findViewById(R.id.btnRequestMyData);
+        btnDeleteData = findViewById(R.id.btnDeleteData);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
-    }
-
-    /**
-     * This function initializes the main menu.
-     * @implNote We don't implement <code>if (item.getItemId == {@link R.id#itemMyProfile})</code> because we are in {@link MyProfileActivity}.
-     * @see CreateMachineLearningModelActivity
-     * @see MainActivity
-     * @see MyModelsActivity
-     * @see AboutActivity
-     */
-    private void setMainMenu() {
-        drawerLayout.addDrawerListener(drawerToggle);
-
-        drawerToggle.syncState();
-
-        actionBar.setDisplayHomeAsUpEnabled(true); // Set the menu icon available.
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
-                    Intent intentMoveToMainActivity = new Intent(MyProfileActivity.this, MainActivity.class);
-                    startActivity(intentMoveToMainActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemCreateMachineLearningModel) { // If the user wants to go to CreateMachineLearningModelActivity.
-                    Intent intentMoveToCreateMachineLearningActivity = new Intent(MyProfileActivity.this, CreateMachineLearningModelActivity.class);
-                    startActivity(intentMoveToCreateMachineLearningActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
-                    Intent intentMoveToMyModelsActivity = new Intent(MyProfileActivity.this, MyModelsActivity.class);
-                    startActivity(intentMoveToMyModelsActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    String usernameInSharedPreferences = sharedPreferences.getString(getString(R.string.current_user_logged_in), "");
-                    if (usernameInSharedPreferences.equals("")) // If there isn't a user logged in.
-                        dialogHelper.buildLoginDialog();
-                    else { // If there is a user in the Shared Preferences and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
-                        editor.putString(getString(R.string.current_user_logged_in), "");
-                        editor.apply();
-                        Toast.makeText(MyProfileActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
-                    Intent intentMoveToAboutActivity = new Intent(MyProfileActivity.this, AboutActivity.class);
-                    startActivity(intentMoveToAboutActivity);
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 }

@@ -74,19 +74,33 @@
             app:layout_constraintTop_toBottomOf="@+id/btnChangePassword" />
 
         <Button
+            android:id="@+id/btnDeleteData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Delete My Data"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FF0000"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/btnDeleteAccount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnRequestMyData" />
+
+        <Button
             android:id="@+id/btnDeleteAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:text="Delete My Account"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="#E91E63"
+            android:textColor="#FF0000"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnRequestMyData" />
-
+            app:layout_constraintTop_toBottomOf="@+id/btnDeleteData" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

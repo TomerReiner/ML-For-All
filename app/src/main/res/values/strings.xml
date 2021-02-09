@@ -12,11 +12,11 @@
     <string name="welcome_greet">Welcome!</string>
     <string name="go_home">Go Home</string>
     <string name="load_data">Load Data For the Machine Learning Model</string>
-    <string name="upload_file">Upload CSV File</string>
-    <string name="dataset_columns">Columns In The Dataset:</string>
+    <string name="load_file">Load File</string>
+    <string name="choose_columns">Please Choose X Column and Y Column</string>
     <string name="choose_ml_model">Please Choose Machine Learning Model</string>
     <string name="start">Start!</string>
-    <string name="slope">Slope/s:</string>
+    <string name="slope">Slope:</string>
     <string name="intercept">Intercept:</string>
     <string name="test_my_model">Test My Model!</string>
     <string name="model_score">Model Score:</string>

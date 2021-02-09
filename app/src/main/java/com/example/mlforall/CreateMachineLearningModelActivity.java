@@ -6,19 +6,39 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
 public class CreateMachineLearningModelActivity extends AppCompatActivity {
+
+    public static final String TAG = "CreateMachineLearningModelActivity"; // The name of the activity.
 
     private DrawerLayout drawerLayout; // The main layout in activity_main.xml.
     private NavigationView navigationView; // The Navigation view in activity_main.xml.
@@ -28,13 +48,36 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
     private Dialog loginDialog;
     private Dialog signUpDialog;
 
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-
     private DatabaseHelper db;
-    private DialogHelper dialogHelper;
+    private MenuHelper menuHelper;
 
-    private Button btnUploadFile;
+    private EditText etFileName;
+
+    private Button btnLoadFile;
+
+    private TextView tvChooseXYColumns;
+
+    private Spinner spinnerChooseXData;
+    private Spinner spinnerChooseYData;
+
+    private Button btnStart;
+
+    private TextView tvSlope;
+    private TextView tvIntercept;
+
+    private Button btnTestModel;
+
+    private TextView tvScore;
+
+    private Button btnShowModel;
+
+    private String username = "";
+
+    private HashMap<String, double[]> dataset; // This HashMap will contain the dataset.
+    private boolean successfullyLoadedDataset = false;
+
+
+    public static final int REQUEST_STORAGE = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +85,34 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_machine_learning_model);
 
         initializeVariables(); // Initialize all the variables-DO NOT REMOVE!
-        setMainMenu(); // Initialize the main menu-DO NOT REMOVE!
+        menuHelper.setMainMenu(TAG); // Initialize the main menu-DO NOT REMOVE!
+
+        btnLoadFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                successfullyLoadedDataset = loadDataset();
+                if (successfullyLoadedDataset) { // If the dataset was successfully loaded.
+                    btnLoadFile.setEnabled(false);
+                    tvChooseXYColumns.setVisibility(View.VISIBLE);
+                    spinnerChooseXData.setVisibility(View.VISIBLE);
+                    setSpinnerItems(spinnerChooseXData);
+                    spinnerChooseYData.setVisibility(View.VISIBLE); // Setting the spinners to choose X and Y data available.
+                    setSpinnerItems(spinnerChooseYData);
+                    btnStart.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String xColumn = getSelectedColumn(spinnerChooseXData);
+                String yColumn = getSelectedColumn(spinnerChooseYData);
+                double[] x = dataset.get(xColumn);
+                double[] y = dataset.get(yColumn);
+            }
+        });
     }
 
     @Override
@@ -70,61 +140,102 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         loginDialog = new Dialog(CreateMachineLearningModelActivity.this);
         signUpDialog = new Dialog(CreateMachineLearningModelActivity.this);
         db = new DatabaseHelper(CreateMachineLearningModelActivity.this);
-        sharedPreferences = getSharedPreferences(getString(R.string.shared_preferences), MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        dialogHelper = new DialogHelper(CreateMachineLearningModelActivity.this, db, loginDialog, signUpDialog, sharedPreferences, editor);
-        btnUploadFile = findViewById(R.id.btnUploadFile);
+        username = db.getCurrentLoggedInUsername();
+        menuHelper = new MenuHelper(CreateMachineLearningModelActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
+
+        dataset = new HashMap<>();
+
+        etFileName = findViewById(R.id.etFileName);
+
+        btnLoadFile = findViewById(R.id.btnLoadFile);
+
+        tvChooseXYColumns = findViewById(R.id.tvChooseXYColumns);
+
+        spinnerChooseXData = findViewById(R.id.spinnerChooseXData);
+        spinnerChooseYData = findViewById(R.id.spinnerChooseYData);
+
+        btnStart = findViewById(R.id.btnStart);
+
+        tvSlope = findViewById(R.id.tvSlope);
+        tvIntercept = findViewById(R.id.tvIntercept);
+
+        btnTestModel = findViewById(R.id.btnTestModel);
+
+        tvScore = findViewById(R.id.tvScore);
+
+        btnShowModel = findViewById(R.id.btnShowModel);
     }
 
     /**
-     * This function initializes the main menu.
-     * @implNote We don't implement <code>if (item.getItemId == {@link R.id#itemCreateMachineLearningModel})</code> because we are in {@link CreateMachineLearningModelActivity}.
-     * @see MainActivity
-     * @see AboutActivity
-     * @see MyModelsActivity
-     * @see MyProfileActivity
+     * This function checks if there is a permission to read from external storage.
+     * @return <code>true</code> if there is a permission to read from external storage, <code>false</code> if not.
      */
-    private void setMainMenu() {
-        drawerLayout.addDrawerListener(drawerToggle);
+    private boolean canReadExternalStorage() {
+        return checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
 
-        drawerToggle.syncState();
+    /**
+     * This function asks permission from the user to read external storage if he didn't grant the permission.
+     */
+    private void requestReadExternalStoragePermission() {
+        if (!canReadExternalStorage())
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+    }
 
-        actionBar.setDisplayHomeAsUpEnabled(true); // Set the menu icon available.
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
-                    Intent intentMoveToMainActivity = new Intent(CreateMachineLearningModelActivity.this, MainActivity.class);
-                    startActivity(intentMoveToMainActivity);
+    /**
+     * This function loads the dataset from the file that the user wanted.
+     * @return <code>true</code> if the file was successfully loaded, <code>false</code> if not.
+     */
+    private boolean loadDataset() {
+        String fileName = etFileName.getText().toString();
+        requestReadExternalStoragePermission();
+        try {
+            if (canReadExternalStorage()) {
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName); // Getting the file from the Downloads directory in the external storage.
+                FileReader reader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                FileHelper helper = new FileHelper(bufferedReader);
+                dataset = helper.getDataset(); // Loading the dataset.
+
+                if (dataset == null || dataset.size() == 0) { // If loading the dataset failed for any reason.
+                    Toast.makeText(CreateMachineLearningModelActivity.this, "Please Make sure that all the values in the file are filled, there is the same amount of items in each column and that there are at least 10 rows in the dataset and 2 or more numeric columns.", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                else // The the file was successfully loaded.
                     return true;
-                }
-                else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
-                    Intent intentMoveToMyModelsActivity = new Intent(CreateMachineLearningModelActivity.this, MyModelsActivity.class);
-                    startActivity(intentMoveToMyModelsActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
-                    Intent intentMoveToMyProfileActivity = new Intent(CreateMachineLearningModelActivity.this, MyProfileActivity.class);
-                    startActivity(intentMoveToMyProfileActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    String usernameInSharedPreferences = sharedPreferences.getString(getString(R.string.current_user_logged_in), "");
-                    if (usernameInSharedPreferences.equals("")) // If there isn't a user logged in.
-                        dialogHelper.buildLoginDialog();
-                    else { // If there is a user in the Shared Preferences and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
-                        editor.putString(getString(R.string.current_user_logged_in), "");
-                        editor.apply();
-                        Toast.makeText(CreateMachineLearningModelActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
-                    Intent intentMoveToAboutActivity = new Intent(CreateMachineLearningModelActivity.this, AboutActivity.class);
-                    startActivity(intentMoveToAboutActivity);
-                    return true;
-                }
+            }
+            else { // The user has not granted the application permission to read files.
+                Toast.makeText(CreateMachineLearningModelActivity.this, "Can't read file without permission.", Toast.LENGTH_SHORT).show();
                 return false;
             }
-        });
+        } catch (IOException e) { // Error loading the file.
+            Toast.makeText(CreateMachineLearningModelActivity.this, "Error Loading the file", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * This function sets the items in <code>spinner</code> to be the {@link #dataset} keys(the columns of the dataset).
+     * @param spinner The spinner that we want to set the items in it.
+     */
+    private void setSpinnerItems(Spinner spinner) {
+        Set datasetColumns = dataset.keySet();
+        String[] columns = new String[datasetColumns.size()];
+        columns = (String[]) datasetColumns.toArray(columns);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(CreateMachineLearningModelActivity.this, android.R.layout.simple_spinner_item, columns);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    /**
+     * This function checks what item was selected in <code>spinner</code>.
+     * @param spinner The spinner in which we want to see which item was selected.
+     * @return The item that was selected in the spinner.
+     */
+    private String getSelectedColumn(Spinner spinner) {
+        int position = spinner.getSelectedItemPosition();
+        return (String) spinner.getItemAtPosition(position);
     }
 }
