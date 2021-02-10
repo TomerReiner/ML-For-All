@@ -25,8 +25,8 @@ import com.google.android.material.navigation.NavigationView;
 public class MenuHelper {
 
     private Context context;
-    private DrawerLayout drawerLayout; // The main layout in activity_main.xml.
-    private NavigationView navigationView; // The Navigation view in activity_main.xml.
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private ActionBar actionBar;
     private Dialog loginDialog;

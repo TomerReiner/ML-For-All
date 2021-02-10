@@ -7,10 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,11 +25,9 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -76,6 +71,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
     private HashMap<String, double[]> dataset; // This HashMap will contain the dataset.
     private boolean successfullyLoadedDataset = false;
 
+    private LinearRegression model;
 
     public static final int REQUEST_STORAGE = 1000;
 
@@ -111,6 +107,13 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
                 String yColumn = getSelectedColumn(spinnerChooseYData);
                 double[] x = dataset.get(xColumn);
                 double[] y = dataset.get(yColumn);
+
+                model = new LinearRegression(x, y);
+                model.fit();
+                LinearEquation equation = model.getLinearEquation();
+                equation.getIntercept();
+
+
             }
         });
     }

@@ -78,13 +78,7 @@ public class LinearRegression {
      * @param xValue The x value that we want to predict his y value.
      * @return The predicted value for x value.
      */
-    public double predict(double xValue) {
-        int xLength = this.x.length; // The length of x.
-
-        for (int i = 0; i < xLength; i++) {
-            if (this.x[i] == xValue) // If xValue is in x then we simply return the corresponding y value at the same position.
-                return this.y[i];
-        }
+    private double predict(double xValue) {
         return this.slope * xValue + this.intercept;
     }
 
@@ -98,10 +92,8 @@ public class LinearRegression {
         int xValuesLength = xValues.length;
         double[] yPredicted = new double[xValuesLength]; // This array will store the predicted values xValues.
 
-        for (int i = 0; i < xValuesLength; i++) {// Initialize the array and putting the predicted values in it.
-            yPredicted[i] = 0;
+        for (int i = 0; i < xValuesLength; i++) // Putting the predicted values in the array.
             yPredicted[i] = predict(xValues[i]);
-        }
         return yPredicted;
     }
 
