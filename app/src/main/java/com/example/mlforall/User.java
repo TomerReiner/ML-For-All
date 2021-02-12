@@ -1,12 +1,14 @@
 package com.example.mlforall;
 
+import java.util.ArrayList;
+
 public class User {
 
     private String username;
     private String password;
-    private int[][] machineLearningModels;
+    private ArrayList<double[]> machineLearningModels;
 
-    public User(String username, String password, int[][] machineLearningModels) {
+    public User(String username, String password, ArrayList<double[]> machineLearningModels) {
         this.username = username;
         this.password = password;
         this.machineLearningModels = machineLearningModels;
@@ -16,23 +18,11 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int[][] getMachineLearningModels() {
+    public ArrayList<double[]> getMachineLearningModels() {
         return machineLearningModels;
-    }
-
-    public void setMachineLearningModels(int[][] machineLearningModels) {
-        this.machineLearningModels = machineLearningModels;
     }
 }

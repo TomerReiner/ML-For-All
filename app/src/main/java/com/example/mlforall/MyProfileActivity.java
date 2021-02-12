@@ -38,7 +38,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private Button btnDeleteData;
     private Button btnDeleteAccount;
 
-    private String username ="";
+    private String username = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

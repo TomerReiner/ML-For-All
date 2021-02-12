@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "users.db";
@@ -18,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String CURRENTLY_LOGGED_IN = "currentlyLoggedIn";
     public static final String SLOPE = "slope";
     public static final String INTERCEPT = "intercept";
+    public static final String SCORE = "score";
     public static final int VERSION = 1;
     public static final int LOGGED_IN = 1;
     public static final int LOGGED_OUT = 0;
@@ -58,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cv.put(CURRENTLY_LOGGED_IN, LOGGED_IN);
             db.insert(USERS_TABLE_NAME, null, cv);
 
-            String query = String.format("CREATE TABLE IF NOT EXISTS %s(%s REAL NOT NULL, %s REAL NOT NULL);", username, SLOPE, INTERCEPT); // Creating data table for each user.
+            String query = String.format("CREATE TABLE IF NOT EXISTS %s(%s REAL NOT NULL, %s REAL NOT NULL, %s REAL NOT NULL);", username, SLOPE, INTERCEPT, SCORE); // Creating data table for each user.
             db.execSQL(query);
 
             db.close();
@@ -269,6 +272,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
         return true;
+    }
+
+    /**
+     * This function adds a model to the user's data table.
+     * @param username The username of the user that we want to add data for his table.
+     * @param equation The linear equation that was built for the data the user has loaded.
+     */
+    public void addModel(String username, LinearEquation equation, double score) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(SLOPE, equation.getSlope());
+        cv.put(INTERCEPT, equation.getIntercept());
+        cv.put(SCORE, score);
+        db.insert(username, null, cv);
+        db.close();
     }
 
     /**

@@ -72,4 +72,8 @@ public class MyModelsActivity extends AppCompatActivity {
         username = db.getCurrentLoggedInUsername();
         menuHelper = new MenuHelper(MyModelsActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
     }
+
+    private void loadModels() {
+        // TODO -load models
+    }
 }

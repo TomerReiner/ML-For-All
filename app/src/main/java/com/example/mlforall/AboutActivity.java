@@ -32,7 +32,7 @@ public class AboutActivity extends AppCompatActivity {
 
     private TextView tvAbout;
 
-    private String username = getIntent() == null ? "" : getIntent().getStringExtra(DatabaseHelper.USERNAME);
+    private String username = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

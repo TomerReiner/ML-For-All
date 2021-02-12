@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,6 +29,8 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -73,6 +76,19 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
 
     private LinearRegression model;
 
+    /**
+     * This variable will contain the dataset split to training and testing x and training and testing y.
+     * @see LinearRegressionHelper#splitData(double[], double[])
+     */
+    private ArrayList<double[]> splitData = new ArrayList<>();
+
+    private double[] xTrain;
+    private double[] xTest;
+    private double[] yTrain;
+    private double[] yTest;
+
+    private LinearEquation equation;
+
     public static final int REQUEST_STORAGE = 1000;
 
     @Override
@@ -86,6 +102,12 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         btnLoadFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                username = db.getCurrentLoggedInUsername();
+                if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
+                    Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 successfullyLoadedDataset = loadDataset();
                 if (successfullyLoadedDataset) { // If the dataset was successfully loaded.
                     btnLoadFile.setEnabled(false);
@@ -103,17 +125,74 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                username = db.getCurrentLoggedInUsername();
+                if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
+                    Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String xColumn = getSelectedColumn(spinnerChooseXData);
                 String yColumn = getSelectedColumn(spinnerChooseYData);
                 double[] x = dataset.get(xColumn);
                 double[] y = dataset.get(yColumn);
 
-                model = new LinearRegression(x, y);
-                model.fit();
-                LinearEquation equation = model.getLinearEquation();
-                equation.getIntercept();
+                splitData = LinearRegressionHelper.splitData(x, y);
 
+                xTrain = splitData.get(LinearRegressionHelper.X_TRAIN_INDEX);
+                xTest = splitData.get(LinearRegressionHelper.X_TEST_INDEX);
+                yTrain = splitData.get(LinearRegressionHelper.Y_TRAIN_INDEX);
+                yTest = splitData.get(LinearRegressionHelper.Y_TEST_INDEX); // Getting the data.
 
+                model = new LinearRegression(xTrain, yTrain);
+                model.fit(); // Fitting the model to create the best matching linear equation for this data.
+                equation = model.getLinearEquation();
+
+                tvSlope.setText(tvSlope.getText().toString() + " " + equation.getSlope());
+                tvIntercept.setText(tvIntercept.getText().toString() + " " + equation.getIntercept());
+
+                btnTestModel.setVisibility(View.VISIBLE);
+                tvSlope.setVisibility(View.VISIBLE);
+                tvIntercept.setVisibility(View.VISIBLE);
+                tvScore.setVisibility(View.VISIBLE); // Setting the next views to be visible.
+                btnStart.setEnabled(false);
+            }
+        });
+
+        btnTestModel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = db.getCurrentLoggedInUsername();
+                if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
+                    Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to view model's score.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                double score = model.score(xTest, yTest); // Getting the score of the model.
+                tvScore.setText(tvScore.getText().toString() + " " + score * 100 + "%"); // Showing the score in percentages format.
+                btnTestModel.setEnabled(false);
+                btnShowModel.setVisibility(View.VISIBLE);
+
+                db.addModel(username, equation, score); // Adding the model to the database.
+            }
+        });
+
+        btnShowModel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = db.getCurrentLoggedInUsername();
+                if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
+                    Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to view your model's graph.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent intentMoveToShowModelActivity = new Intent(CreateMachineLearningModelActivity.this, ShowModelActivity.class);
+                intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.X_TRAIN, xTrain);
+                intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.X_TEST, xTest);
+                intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.Y_TRAIN, yTrain);
+                intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.Y_TEST, yTest);
+                intentMoveToShowModelActivity.putExtra("slope", equation.getSlope());
+                intentMoveToShowModelActivity.putExtra("intercept", equation.getIntercept());
+                startActivity(intentMoveToShowModelActivity);
             }
         });
     }
@@ -195,7 +274,6 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         try {
             if (canReadExternalStorage()) {
                 File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName); // Getting the file from the Downloads directory in the external storage.
-                FileReader reader = new FileReader(file);
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
                 FileHelper helper = new FileHelper(bufferedReader);
                 dataset = helper.getDataset(); // Loading the dataset.

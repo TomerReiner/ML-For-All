@@ -1,6 +1,7 @@
 package com.example.mlforall;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class helps setting the coefficients in {@link LinearRegression}
@@ -9,6 +10,16 @@ import java.util.ArrayList;
 public class LinearRegressionHelper {
 
     public static final double TRAIN_SPLIT = 0.8;
+    public static final int X_TRAIN_INDEX = 0;
+    public static final int X_TEST_INDEX = 1;
+    public static final int Y_TRAIN_INDEX = 2;
+    public static final int Y_TEST_INDEX = 3; // The indexes for the variables.
+
+    public static final String X_TRAIN = "xTrain";
+    public static final String X_TEST = "xTest";
+    public static final String Y_TRAIN = "yTrain";
+    public static final String Y_TEST = "yTest";
+
 
     /**
      * This function computes the sum of a double array.
@@ -16,7 +27,7 @@ public class LinearRegressionHelper {
      * @return The sum of arr.
      * @see #sum(double[])
      */
-    public static double sum(double[] arr) {
+    private static double sum(double[] arr) {
         double sum = 0;
         for (double v : arr)
             sum += v;
@@ -47,7 +58,7 @@ public class LinearRegressionHelper {
      * @return The variance of arr.
      * @see #mean(double[])
      */
-    public static double variance(double[] arr) {
+    private static double variance(double[] arr) {
         double meanArr = mean(arr); // The mean of the arr
         double[] arrCopy = new double[arr.length];
 
@@ -76,7 +87,7 @@ public class LinearRegressionHelper {
      * @return The covariance between x and y.
      * @see #mean(double[])
      */
-    public static double covariance(double[] x, double[] y) {
+    private static double covariance(double[] x, double[] y) {
         double[] xCopy = x;
         double[] yCopy = y;
 
@@ -126,15 +137,16 @@ public class LinearRegressionHelper {
 
     /**
      * This function creates {@link ArrayList} of random indexes for training data.
-     * @param trainSize The amount of training items. <code>trainSize</code> will be <code>{@link LinearRegression#x}.length</code> * {@link #TRAIN_SPLIT}.
+     * @param size The dataset size.
      * @return random indexes fot training data.
      */
-    private static ArrayList<Integer> randomTrainingIndexes(int trainSize) {
+    private static ArrayList<Integer> randomTrainingIndexes(int size) {
+        int trainSize = (int) (size * TRAIN_SPLIT);
         ArrayList<Integer> randomIndexes = new ArrayList<>();
+        int randIndex = (int) (Math.random() * size);
         for (int i = 0; i < trainSize; i++) {
-            int randIndex = (int) (Math.random() * trainSize);
             while (randomIndexes.contains(randIndex))
-                randIndex = (int) (Math.random() * trainSize);
+                randIndex = (int) (Math.random() * size);
             randomIndexes.add(randIndex);
         }
         return randomIndexes;
@@ -144,15 +156,15 @@ public class LinearRegressionHelper {
      * This function create {@link ArrayList} of the testing indexes. The function will iterate through
      * <code>size</code> <code>for (int i = 0; i < size; i++)</code> and will add every
      * <code>i</code> that is not in <code>trainingIndexes</code>.
-     * @param testSize The amount of testing items.
+     * @param size The dataset size.
      * @param trainingIndexes The training indexes.
      * @return The testing indexes.
      * @see #randomTrainingIndexes(int)
      */
-    private static ArrayList<Integer> testingIndexes(int testSize, ArrayList<Integer> trainingIndexes) {
-        ArrayList<Integer> testingIndexes = new ArrayList<Integer>();
+    private static ArrayList<Integer> testingIndexes(int size, ArrayList<Integer> trainingIndexes) {
+        ArrayList<Integer> testingIndexes = new ArrayList<>();
 
-        for (int i = 0; i < testSize; i++) {
+        for (int i = 0; i < size; i++) {
             if (!trainingIndexes.contains(i))
                 testingIndexes.add(i);
         }
@@ -180,8 +192,8 @@ public class LinearRegressionHelper {
             yData[i] = y[currentIndex];
         }
 
-        data.add(x);
-        data.add(y);
+        data.add(xData);
+        data.add(yData);
         return data;
     }
 
@@ -196,28 +208,24 @@ public class LinearRegressionHelper {
      * and the last item will be testing y data(yTest).
      */
     public static ArrayList<double[]> splitData(double[] x, double[] y) {
-        int trainSize = (int) (x.length * TRAIN_SPLIT);
-        int testSize = x.length - trainSize;
-
-        ArrayList<Integer> trainingIndexes = randomTrainingIndexes(trainSize);
-        ArrayList<Integer> testingIndexes = testingIndexes(testSize, trainingIndexes);
+        ArrayList<Integer> trainingIndexes = randomTrainingIndexes(x.length);
+        ArrayList<Integer> testingIndexes = testingIndexes(x.length, trainingIndexes);
 
         ArrayList<double[]> trainingData = getShuffledData(x, y, trainingIndexes);
-        ArrayList<double[]> testingData = getShuffledData(x, y, testingIndexes);
+        ArrayList<double[]> testingData = getShuffledData(x, y, testingIndexes); // Getting the training and testing data.
 
         double[] xTrain = trainingData.get(0);
-        double[] yTrain = testingData.get(1);
+        double[] yTrain = trainingData.get(1);
 
-        double[] xTest = trainingData.get(0);
-        double[] yTest = trainingData.get(1);
+        double[] xTest = testingData.get(0);
+        double[] yTest = testingData.get(1); // Unpacking the data.
 
         ArrayList<double[]> data = new ArrayList<>();
         data.add(xTrain);
         data.add(xTest);
         data.add(yTrain);
-        data.add(yTest);
+        data.add(yTest); // Repacking the data.
 
         return data;
     }
-
 }
