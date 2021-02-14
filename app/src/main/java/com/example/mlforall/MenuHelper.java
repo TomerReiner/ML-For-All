@@ -102,12 +102,10 @@ public class MenuHelper {
                     username = db.getCurrentLoggedInUsername();
                     if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         username = dialogHelper.buildLoginDialog();
-                        System.out.println("here");
                     }
                     else {
                         db.logOut(username);
                         Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                        System.out.println("a");
                         username = "";
                     }
                 }
@@ -156,12 +154,10 @@ public class MenuHelper {
                     username = db.getCurrentLoggedInUsername();
                     if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         username = dialogHelper.buildLoginDialog();
-                        System.out.println("here");
                     }
                     else {
                         db.logOut(username);
                         Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                        System.out.println("a");
                         username = "";
                     }
                 }
@@ -178,6 +174,7 @@ public class MenuHelper {
     /**
      * This function sets the main menu for {@link MyModelsActivity}
      * @implNote We don't implement <code>if (item.getItemId == {@link R.id#itemMyModels})</code> because we are in {@link MyModelsActivity}.
+     * We also don't implement login and logout in the activity menu because this will harm the activities function.
      * @see CreateMachineLearningModelActivity
      * @see MainActivity
      * @see MyProfileActivity
@@ -206,19 +203,17 @@ public class MenuHelper {
                     context.startActivity(intentMoveToMyProfileActivity);
                     return true;
                 }
-                else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    username = db.getCurrentLoggedInUsername();
-                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
-                        username = dialogHelper.buildLoginDialog();
-                        System.out.println("here");
-                    }
-                    else {
-                        db.logOut(username);
-                        Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                        System.out.println("a");
-                        username = "";
-                    }
-                }
+//                else if (item.getItemId() == R.id.itemLoginOrLogout) {
+//                    username = db.getCurrentLoggedInUsername();
+//                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+//                        username = dialogHelper.buildLoginDialog();
+//                    }
+//                    else {
+//                        db.logOut(username);
+//                        Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+//                        username = "";
+//                    }
+//                }
                 else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
                     Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
                     context.startActivity(intentMoveToAboutActivity);
@@ -264,12 +259,10 @@ public class MenuHelper {
                     username = db.getCurrentLoggedInUsername();
                     if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         username = dialogHelper.buildLoginDialog();
-                        System.out.println("here");
                     }
                     else {
                         db.logOut(username);
                         Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                        System.out.println("a");
                         username = "";
                     }
                 }
@@ -319,12 +312,10 @@ public class MenuHelper {
                     username = db.getCurrentLoggedInUsername();
                     if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
                         username = dialogHelper.buildLoginDialog();
-                        System.out.println("here");
                     }
                     else {
                         db.logOut(username);
                         Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                        System.out.println("a");
                         username = "";
                     }
                 }

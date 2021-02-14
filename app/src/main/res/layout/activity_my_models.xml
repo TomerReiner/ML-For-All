@@ -7,10 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".MyModelsActivity">
 
-    <ListView
-        android:id="@+id/lvMyModels"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tvLoginWarning"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="@string/login_warning"
+            android:textSize="25sp"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/lvMyModels"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nvMyModelsActivity"

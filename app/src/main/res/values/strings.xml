@@ -28,4 +28,5 @@
     one for classification and the other for regression. The application is open source and you can get it from this link:
     <a href="https://github.com/TomerReiner/Machine-Learning-Project">here</a>
     </string>
+    <string name="login_warning">You must be logged in to view your models.Please move to any other screen using the navigation menu, login to your account and come back to this screen.</string>
 </resources>

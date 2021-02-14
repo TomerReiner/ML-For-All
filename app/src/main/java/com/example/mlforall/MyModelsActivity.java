@@ -9,7 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,6 +34,8 @@ public class MyModelsActivity extends AppCompatActivity {
 
     private String username = "";
 
+    private TextView tvLoginWarning;
+
     private ListView lvMyModels;
     private ArrayList<MachineLearningModel> models;
     private MyModelsListViewAdapter adapter;
@@ -42,7 +46,14 @@ public class MyModelsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_models);
         initializeVariables(); // Initialize all the variables-DO NOT REMOVE!
         menuHelper.setMainMenu(TAG); // Initialize the main menu-DO NOT REMOVE!
-        loadModels();
+        username = db.getCurrentLoggedInUsername();
+
+        if (username.equals(""))  // If there is no user logged in.
+            tvLoginWarning.setVisibility(View.VISIBLE);
+        else {
+            lvMyModels.setVisibility(View.VISIBLE);
+            loadModels();
+        }
     }
 
     @Override
@@ -73,6 +84,7 @@ public class MyModelsActivity extends AppCompatActivity {
         username = db.getCurrentLoggedInUsername();
         menuHelper = new MenuHelper(MyModelsActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
         lvMyModels = findViewById(R.id.lvMyModels);
+        tvLoginWarning = findViewById(R.id.tvLoginWarning);
         models = new ArrayList<>();
     }
 
@@ -80,8 +92,6 @@ public class MyModelsActivity extends AppCompatActivity {
      * This function sets {@link #lvMyModels} adapter.
      */
     private void loadModels() {
-        username = db.getCurrentLoggedInUsername();
-
         if (username.equals(""))
             return;
 
