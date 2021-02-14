@@ -1,6 +1,7 @@
 package com.example.mlforall;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -220,6 +221,10 @@ public class LinearRegressionHelper {
         double[] xTest = testingData.get(0);
         double[] yTest = testingData.get(1); // Unpacking the data.
 
+        sortData(xTrain, yTrain);
+        sortData(xTest, yTest);
+
+
         ArrayList<double[]> data = new ArrayList<>();
         data.add(xTrain);
         data.add(xTest);
@@ -227,5 +232,26 @@ public class LinearRegressionHelper {
         data.add(yTest); // Repacking the data.
 
         return data;
+    }
+
+    /**
+     * This function sorts <code>x</code> from minimum value to maximum value and then change <y>so</y> so the y values for each x value will be saved.
+     * @param x The x values.
+     * @param y The y values.
+     */
+    private static void sortData(double[] x, double[] y) {
+        double[] xCopy = x.clone();
+        double[] yCopy = y.clone();
+
+        Arrays.sort(x); // Sorting the array.
+
+        int xLength = x.length;
+
+        for (int i = 0; i < xLength; i++) {
+            for (int j = 0; j < xLength; j++) { // x and y lengths are equal.
+                if (xCopy[j] == x[i])
+                    y[i] = yCopy[j];
+            }
+        }
     }
 }

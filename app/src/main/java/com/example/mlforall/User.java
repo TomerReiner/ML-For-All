@@ -6,9 +6,9 @@ public class User {
 
     private String username;
     private String password;
-    private ArrayList<double[]> machineLearningModels;
+    private ArrayList<MachineLearningModel> machineLearningModels;
 
-    public User(String username, String password, ArrayList<double[]> machineLearningModels) {
+    public User(String username, String password, ArrayList<MachineLearningModel> machineLearningModels) {
         this.username = username;
         this.password = password;
         this.machineLearningModels = machineLearningModels;
@@ -22,7 +22,7 @@ public class User {
         return password;
     }
 
-    public ArrayList<double[]> getMachineLearningModels() {
+    public ArrayList<MachineLearningModel> getMachineLearningModels() {
         return machineLearningModels;
     }
 }

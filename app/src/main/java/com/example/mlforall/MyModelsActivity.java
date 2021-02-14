@@ -33,7 +33,7 @@ public class MyModelsActivity extends AppCompatActivity {
     private String username = "";
 
     private ListView lvMyModels;
-    private ArrayList<LinearEquation> linearEquations;
+    private ArrayList<MachineLearningModel> models;
     private MyModelsListViewAdapter adapter;
 
     @Override
@@ -42,6 +42,7 @@ public class MyModelsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_models);
         initializeVariables(); // Initialize all the variables-DO NOT REMOVE!
         menuHelper.setMainMenu(TAG); // Initialize the main menu-DO NOT REMOVE!
+        loadModels();
     }
 
     @Override
@@ -71,9 +72,21 @@ public class MyModelsActivity extends AppCompatActivity {
         db = new DatabaseHelper(MyModelsActivity.this);
         username = db.getCurrentLoggedInUsername();
         menuHelper = new MenuHelper(MyModelsActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
+        lvMyModels = findViewById(R.id.lvMyModels);
+        models = new ArrayList<>();
     }
 
+    /**
+     * This function sets {@link #lvMyModels} adapter.
+     */
     private void loadModels() {
-        // TODO -load models
+        username = db.getCurrentLoggedInUsername();
+
+        if (username.equals(""))
+            return;
+
+        models = db.getAllUsersModel(username);
+        adapter = new MyModelsListViewAdapter(MyModelsActivity.this, models);
+        lvMyModels.setAdapter(adapter);
     }
 }

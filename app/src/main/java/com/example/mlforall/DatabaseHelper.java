@@ -253,6 +253,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     return currentUsername;
             }
         }
+        cursor.close();
+        db.close();
         return ""; // If there is no user logged in it means the table is empty.
     }
 
@@ -297,4 +299,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String requestData(String username) {
         return null; // TODO-complete
     }
+
+    /**
+     * This function gets all the user's machine learning models from his table.
+     * @param username The username of the user.
+     * @return {@link ArrayList} of {@link MachineLearningModel} with all of the users model.
+     */
+    public ArrayList<MachineLearningModel> getAllUsersModel(String username) {
+        ArrayList<MachineLearningModel> models = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = String.format("SELECT * FROM %s;", username);
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                double currentSlope = cursor.getDouble(cursor.getColumnIndex(SLOPE));
+                double currentIntercept = cursor.getDouble(cursor.getColumnIndex(INTERCEPT));
+                double currentScore = cursor.getDouble(cursor.getColumnIndex(SCORE));
+
+                LinearEquation equation = new LinearEquation(currentSlope, currentIntercept);
+
+                models.add(new MachineLearningModel(equation, currentScore));
+            }
+        }
+        cursor.close();
+        db.close();
+        return models;
+    }
+
 }

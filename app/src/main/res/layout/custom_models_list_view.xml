@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/tvModelsListViewSlope"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/slope"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvModelsListViewIntercept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/intercept"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvModelsListViewSlope" />
+
+    <TextView
+        android:id="@+id/tvModelsListViewScore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/model_score"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvModelsListViewIntercept" />
+</androidx.constraintlayout.widget.ConstraintLayout>
