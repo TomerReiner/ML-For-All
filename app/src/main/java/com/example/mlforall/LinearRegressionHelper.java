@@ -124,8 +124,8 @@ public class LinearRegressionHelper {
      * @see #covariance(double[], double[])
      */
     public static LinearEquation coefficients(double[] x, double[] y){
-        double[] xCopy = x;
-        double[] yCopy = y;
+        double[] xCopy = x.clone();
+        double[] yCopy = y.clone();
 
         double meanX = mean(xCopy);
         double meanY = mean(yCopy);
