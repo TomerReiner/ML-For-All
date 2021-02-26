@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class CreateMachineLearningModelActivity extends AppCompatActivity {
-
+// TODO - abort process.
     public static final String TAG = "CreateMachineLearningModelActivity"; // The name of the activity.
 
     private DrawerLayout drawerLayout; // The main layout in activity_main.xml.

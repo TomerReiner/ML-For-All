@@ -328,4 +328,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return models;
     }
 
+    /**
+     * This function deletes a model from the user's table.
+     * @param username The username of the user.
+     * @param model The model that the user wants to delete.
+     * @return <code>true</code> if the model was successfully deleted, <code>false</code> if not.
+     */
+    public boolean deleteModel(String username, MachineLearningModel model) {
+        ArrayList<MachineLearningModel> models = this.getAllUsersModel(username);
+        int modelsSize = models.size();
+
+        for (int i = 0; i < modelsSize; i++) {
+            if (model.equals(models.get(i))) { // If the model that the user wants to delete was found.
+                SQLiteDatabase db = this.getWritableDatabase();
+                LinearEquation currentEquation = model.getLinearEquation();
+
+                String whereClause = String.format("%s = ? AND %s = ? AND %s = ?", SLOPE, INTERCEPT, SCORE);
+                db.delete(username, whereClause, new String[]{"" + currentEquation.getSlope(), "" + currentEquation.getIntercept(), "" + model.getScore()});
+                db.close();
+                return true;
+            }
+        }
+        return false; // No model was found
+    }
+
 }

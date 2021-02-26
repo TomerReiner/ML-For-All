@@ -30,21 +30,13 @@ public class PlottingHelper {
     }
 
     /**
-     * This function create the linear line so the user will be able to the the model that was built for {@link #xTrain} an {@link #yTrain}.
+     * This function create the linear line so the user will be able to view the model that was built for the data.
      * @return The line.
      */
     public LineGraphSeries<DataPoint> getLine() {
-        LineGraphSeries<DataPoint> line = new LineGraphSeries<>();
-        double maxXTrain = xTrain[xTrain.length - 1]; // Getting the max item in xTrain(xTrain is sorted so its the last item).
-        double maxXTest = xTest[xTest.length - 1];
-        int maxXValue = (int) Math.max(maxXTrain, maxXTest);
-
-
-        for (int i = 0; i < maxXValue; i++) {
-            double yPredicted = slope * i + intercept;
-            line.appendData(new DataPoint(i, yPredicted), true, maxXValue);
-        }
-        return line;
+        if (xTrain != null && xTest != null && yTrain != null && yTest != null) // If the training points are not null then we plot them.
+            return plotLinearEquationWithTrainTestValues();
+        return plotLinearEquationWithoutTrainTestData();
     }
     /**
      * This function creates the training points.
@@ -80,5 +72,38 @@ public class PlottingHelper {
 
         testingPoints.setColor(Color.BLUE);
         return testingPoints;
+    }
+
+    /**
+     * This function plot line graph if {@link #xTrain}, {@link #xTest}, {@link #yTrain} and {@link #yTest} are not null.
+     * @return The line.
+     */
+    private LineGraphSeries<DataPoint> plotLinearEquationWithTrainTestValues() {
+        LineGraphSeries<DataPoint> line = new LineGraphSeries<>();
+        double maxXTrain = xTrain[xTrain.length - 1]; // Getting the max item in xTrain(xTrain is sorted so its the last item).
+        double maxXTest = xTest[xTest.length - 1];
+        int maxXValue = (int) Math.max(maxXTrain, maxXTest);
+
+
+        for (int i = 0; i < maxXValue; i++) {
+            double yPredicted = slope * i + intercept;
+            line.appendData(new DataPoint(i, yPredicted), true, maxXValue);
+        }
+        line.setColor(Color.GREEN);
+        return line;
+    }
+
+    /**
+     * This function plots the data if {@link #xTrain}, {@link #xTest}, {@link #yTrain} and {@link #yTest} are null.
+     * @return The line.
+     */
+    private LineGraphSeries<DataPoint> plotLinearEquationWithoutTrainTestData() {
+        LineGraphSeries<DataPoint> line = new LineGraphSeries<>();
+        for (int i = 0; i < 100; i++) {
+            double yPredicted = slope * i + intercept;
+            line.appendData(new DataPoint(i, yPredicted), true, 100);
+        }
+        line.setColor(Color.GREEN);
+        return line;
     }
 }

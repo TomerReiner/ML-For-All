@@ -17,4 +17,9 @@ public class MachineLearningModel {
     public double getScore() {
         return score;
     }
+
+    public boolean equals(MachineLearningModel model) {
+        return this.score == model.getScore() && this.linearEquation.equals(model.getLinearEquation());
+    }
+
 }

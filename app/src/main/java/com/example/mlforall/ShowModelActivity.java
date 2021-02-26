@@ -50,8 +50,12 @@ public class ShowModelActivity extends AppCompatActivity {
 
         plottingHelper = new PlottingHelper(xTrain, xTest, yTrain,yTest, slope, intercept);
 
+
         graph.addSeries(plottingHelper.getLine());
-        graph.addSeries(plottingHelper.getTrainingPoints());
-        graph.addSeries(plottingHelper.getTestingPoints());
+
+        if (xTrain != null && xTest != null && yTrain != null && yTest != null) { // If the training points are not null then we plot them.
+            graph.addSeries(plottingHelper.getTrainingPoints());
+            graph.addSeries(plottingHelper.getTestingPoints());
+        }
     }
 }

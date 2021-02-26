@@ -1,5 +1,7 @@
 package com.example.mlforall;
 
+import java.util.Objects;
+
 public class LinearEquation {
 
     private double slope;
@@ -24,6 +26,15 @@ public class LinearEquation {
 
     public void setIntercept(double intercept) {
         this.intercept = intercept;
+    }
+
+    public boolean equals(LinearEquation equation) {
+        return this.slope == equation.getSlope() && this.intercept == equation.getIntercept();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(slope, intercept);
     }
 
     @Override

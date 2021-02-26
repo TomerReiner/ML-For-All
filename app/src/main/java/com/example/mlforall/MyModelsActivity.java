@@ -7,9 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,6 +57,28 @@ public class MyModelsActivity extends AppCompatActivity {
             lvMyModels.setVisibility(View.VISIBLE);
             loadModels();
         }
+
+        lvMyModels.setOnItemClickListener(new AdapterView.OnItemClickListener() { // If the user wants to show one of his models.
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LinearEquation currentLinearEquation = models.get(position).getLinearEquation();
+                Intent intentMoveToShowModelActivity = new Intent(MyModelsActivity.this, ShowModelActivity.class);
+                intentMoveToShowModelActivity.putExtra("slope", currentLinearEquation.getSlope());
+                intentMoveToShowModelActivity.putExtra("intercept", currentLinearEquation.getIntercept());
+                startActivity(intentMoveToShowModelActivity);
+            }
+        });
+
+        lvMyModels.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                db.deleteModel(username, models.get(position)); // Deleting the model.
+                loadModels(); // Reloading the models.
+                return true;
+            }
+        });
+
     }
 
     @Override
