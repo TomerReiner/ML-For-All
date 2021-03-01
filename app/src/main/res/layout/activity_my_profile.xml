@@ -10,6 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/constrainLayout"
         android:layout_height="match_parent">
 
         <TextView
@@ -18,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="@string/username"
-            android:textAlignment="center"
             android:textSize="30sp"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/password"
-            android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"

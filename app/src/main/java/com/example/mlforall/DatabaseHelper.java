@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.service.autofill.UserData;
 
 import androidx.annotation.Nullable;
 
@@ -118,6 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
 
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -146,6 +148,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return <code>true</code> if the username is valid, <code>false</code> if not.
      */
     private boolean isUsernameValid(String username) {
+        if (username.equals("")) // If the username is empty.
+            return false;
+
         String uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
         String numbers = "1234567890";
@@ -162,6 +167,97 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (int i = 0; i < usernameLength; i++) {
             if (!validCharacters.contains("" + username.charAt(i)))
                 return false;
+        }
+        return true;
+    }
+
+    /**
+     * This function finds the password for a username.
+     * @param username The username of the user that we want to find his password.
+     * @return The password of the user.
+     */
+    public String getPasswordForUsername(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = String.format("SELECT %s FROM %s WHERE %s = ?;", PASSWORD, USERS_TABLE_NAME, USERNAME);
+
+        Cursor cursor = db.rawQuery(query, new String[]{username});
+
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String currentPassword = cursor.getString(cursor.getColumnIndex(PASSWORD));
+                cursor.close();
+                db.close();
+                return currentPassword;
+            }
+        }
+        cursor.close();
+        db.close();
+        return "";
+    }
+
+    /**
+     * This function renames a table's name.
+     * @param oldTableName The old table name.
+     * @param newTableName The new table name.
+     * @see #changeUsername(String, String)
+     */
+    private void renameTable(String oldTableName, String newTableName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = String.format("ALTER TABLE %s RENAME TO %s", oldTableName, newTableName);
+        db.execSQL(query);
+        db.close();
+    }
+
+    /**
+     * This function changes the username of the user.
+     * @param oldUsername The old username of the user.
+     * @param newUsername The new username of the user.
+     * @return <code>true</code> if the username was successfully changes, <code>false</code> if not.
+     * @see #renameTable(String, String)
+     */
+    public boolean changeUsername(String oldUsername, String newUsername) {
+        if (this.userNameAlreadyExists(newUsername) || !this.isUsernameValid(newUsername)) // If a user already has the new username or the new username is not valid.
+            return false;
+        if (oldUsername.equals(newUsername)) // If the usernames are equal we don't need to change the username.
+            return true;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(USERNAME, newUsername);
+
+        try {
+            db.update(USERS_TABLE_NAME, cv, USERNAME + " = ?", new String[]{oldUsername}); // Changing the old username to the new username.
+            renameTable(oldUsername, newUsername);
+            db.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * This function changes the password of the user.
+     * @param username The username of the user that we want to change his password.
+     * @param newPassword The new password of the user.
+     * @return <code>true</code> if the password was successfully changed, <code>false</code> if not.
+     */
+    public boolean changePassword(String username, String newPassword) {
+        if (newPassword.equals("")) // If the new password is empty, we terminate the process.
+            return false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(PASSWORD, newPassword);
+
+        try {
+            db.update(USERS_TABLE_NAME, cv, USERNAME + " = ?", new String[]{username}); // Changing the old password to the new password.
+            db.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -351,5 +447,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return false; // No model was found
     }
-
 }

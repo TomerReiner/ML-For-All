@@ -39,8 +39,6 @@ public class ShowModelActivity extends AppCompatActivity {
         intent = getIntent();
         graph = findViewById(R.id.graph);
 
-
-
         xTrain = intent.getDoubleArrayExtra(LinearRegressionHelper.X_TRAIN);
         xTest = intent.getDoubleArrayExtra(LinearRegressionHelper.X_TEST);
         yTrain = intent.getDoubleArrayExtra(LinearRegressionHelper.Y_TRAIN);
@@ -50,10 +48,10 @@ public class ShowModelActivity extends AppCompatActivity {
 
         plottingHelper = new PlottingHelper(xTrain, xTest, yTrain,yTest, slope, intercept);
 
-
         graph.addSeries(plottingHelper.getLine());
 
         if (xTrain != null && xTest != null && yTrain != null && yTest != null) { // If the training points are not null then we plot them.
+            graph.setMinimumHeight((int) Math.max(yTrain[yTrain.length - 1], yTest[yTest.length - 1]));
             graph.addSeries(plottingHelper.getTrainingPoints());
             graph.addSeries(plottingHelper.getTestingPoints());
         }

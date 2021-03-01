@@ -63,7 +63,6 @@ public class PlottingHelper {
     public PointsGraphSeries<DataPoint> getTestingPoints() {
         PointsGraphSeries<DataPoint> testingPoints = new PointsGraphSeries<>();
         int xTestLength = xTest.length;
-
         for (int i = 0; i < xTestLength; i++) {
             double currentX = xTest[i];
             double currentY = yTest[i];
@@ -83,7 +82,6 @@ public class PlottingHelper {
         double maxXTrain = xTrain[xTrain.length - 1]; // Getting the max item in xTrain(xTrain is sorted so its the last item).
         double maxXTest = xTest[xTest.length - 1];
         int maxXValue = (int) Math.max(maxXTrain, maxXTest);
-
 
         for (int i = 0; i < maxXValue; i++) {
             double yPredicted = slope * i + intercept;

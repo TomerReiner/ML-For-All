@@ -4,14 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,8 +28,12 @@ public class MyProfileActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private ActionBar actionBar;
 
+    private ConstraintLayout constraintLayout;
+
     private Dialog loginDialog;
     private Dialog signUpDialog;
+    private Dialog changeUsernameDialog;
+    private Dialog changePasswordDialog;
 
     private DatabaseHelper db;
     private MenuHelper menuHelper;
@@ -47,13 +55,62 @@ public class MyProfileActivity extends AppCompatActivity {
         initializeVariables(); // Initialize all the variables-DO NOT REMOVE!
         menuHelper.setMainMenu(TAG); // Initialize the main menu-DO NOT REMOVE!
 
-        btnDeleteData.setOnClickListener(new View.OnClickListener() {
+        updateUsernameAndPasswordTextViews();
+
+        btnChangeUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = db.getCurrentLoggedInUsername();
+                updateUsernameAndPasswordTextViews();
+                createChangeUsernameDialog();
             }
         });
 
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateUsernameAndPasswordTextViews();
+                createChangePasswordDialog();
+            }
+        });
+
+
+        btnDeleteData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateUsernameAndPasswordTextViews();
+                username = db.getCurrentLoggedInUsername();
+                db.deleteUserData(username);
+            }
+        });
+
+        btnRequestMyData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = db.getCurrentLoggedInUsername();
+                db.deleteUser(username);
+            }
+        });
+
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateUsernameAndPasswordTextViews();
+            }
+        });
+
+        drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateUsernameAndPasswordTextViews();
+            }
+        });
     }
 
     @Override
@@ -68,6 +125,7 @@ public class MyProfileActivity extends AppCompatActivity {
         super.onPause();
         loginDialog.dismiss();
         signUpDialog.dismiss();
+        changeUsernameDialog.dismiss();
     }
 
     /**
@@ -79,8 +137,12 @@ public class MyProfileActivity extends AppCompatActivity {
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         actionBar = getSupportActionBar();
 
+        constraintLayout = findViewById(R.id.constrainLayout);
+
         loginDialog = new Dialog(MyProfileActivity.this);
         signUpDialog = new Dialog(MyProfileActivity.this);
+        changeUsernameDialog = new Dialog(MyProfileActivity.this);
+        changePasswordDialog = new Dialog(MyProfileActivity.this);
         db = new DatabaseHelper(MyProfileActivity.this);
         username = db.getCurrentLoggedInUsername();
         menuHelper = new MenuHelper(MyProfileActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
@@ -92,5 +154,143 @@ public class MyProfileActivity extends AppCompatActivity {
         btnRequestMyData = findViewById(R.id.btnRequestMyData);
         btnDeleteData = findViewById(R.id.btnDeleteData);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
+    }
+
+    /**
+     * This function creates the change username dialog.
+     * The dialog will enable the username to change his username.
+     * If the new username already exists, the user will be asked to choose other username.
+     */
+    private void createChangeUsernameDialog() {
+        username = db.getCurrentLoggedInUsername();
+        if (username.equals("")) // If there is no username logged in we terminate the process.
+            return;
+
+        changeUsernameDialog.setContentView(R.layout.change_username_dialog);
+        changeUsernameDialog.setCancelable(true);
+
+        EditText etChangeUsernameNewUsername = changeUsernameDialog.findViewById(R.id.etChangeUsernameNewUsername);
+        EditText etChangeUsernameRetypeUsername = changeUsernameDialog.findViewById(R.id.etChangeUsernameRetypeUsername);
+        EditText etChangeUsernameVerifyPassword = changeUsernameDialog.findViewById(R.id.etChangeUsernameVerifyPassword);
+
+        Button btnChangeUsernameConfirm = changeUsernameDialog.findViewById(R.id.btnChangeUsernameConfirm);
+
+        btnChangeUsernameConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newUsername = etChangeUsernameNewUsername.getText().toString();
+                String retypeUsername = etChangeUsernameRetypeUsername.getText().toString();
+                String insertedPassword = etChangeUsernameVerifyPassword.getText().toString(); // The values that the user typed.
+                String realPassword = db.getPasswordForUsername(username); // The real password of the user.
+
+                /*
+                If the new username filed and the retype username field are equal,
+                and if the password that the user has entered is his reaL Password.
+                 */
+                if (newUsername.equals(retypeUsername) && insertedPassword.equals(realPassword)) {
+                    boolean successfullyChangesUsername = db.changeUsername(username, newUsername);
+
+                    if (successfullyChangesUsername) { // If the username was successfully changed.
+                        Toast.makeText(MyProfileActivity.this, "Username was successfully changes!", Toast.LENGTH_LONG).show();
+                        username = newUsername; // Updating the username.
+                        changeUsernameDialog.dismiss();
+                        return;
+                    }
+
+                    else { // Changing the username failed.
+                        Toast.makeText(MyProfileActivity.this, "Error enocountered. Please make sure that all the fields are filled. If this doesn't work, try other username.", Toast.LENGTH_LONG).show();
+                        clearAllFields(etChangeUsernameNewUsername, etChangeUsernameRetypeUsername, etChangeUsernameVerifyPassword);
+                    }
+                }
+                else {
+                    Toast.makeText(MyProfileActivity.this, "Please make sure that the usernames are equal, and the inserted password is your real password.", Toast.LENGTH_LONG).show();
+                    clearAllFields(etChangeUsernameNewUsername, etChangeUsernameRetypeUsername, etChangeUsernameVerifyPassword);
+                }
+            }
+        });
+        changeUsernameDialog.show();
+    }
+
+    /**
+     * This function creates the change username dialog.
+     * The dialog will enable the username to change his username.
+     * If the new username already exists, the user will be asked to choose other username.
+     */
+    private void createChangePasswordDialog() {
+        username = db.getCurrentLoggedInUsername();
+        if (username.equals("")) // If there is no username logged in we terminate the process.
+            return;
+
+        changePasswordDialog.setContentView(R.layout.change_password_dialog);
+        changePasswordDialog.setCancelable(true);
+
+        EditText etChangePasswordNewPassword = changePasswordDialog.findViewById(R.id.etChangePasswordNewPassword);
+        EditText etChangePasswordRetypePassword = changePasswordDialog.findViewById(R.id.etChangePasswordRetypePassword);
+        EditText etChangePasswordOldPassword = changePasswordDialog.findViewById(R.id.etChangePasswordOldPassword);
+
+        Button btnChangePasswordConfirm = changePasswordDialog.findViewById(R.id.btnChangePasswordConfirm);
+
+        btnChangePasswordConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newPassword = etChangePasswordNewPassword.getText().toString();
+                String retypePassword = etChangePasswordRetypePassword.getText().toString();
+                String insertedPassword = etChangePasswordOldPassword.getText().toString(); // The values that the user typed.
+                String realPassword =  db.getPasswordForUsername(username); // The real password of the user.
+
+                /*
+                If the new password filed and the retype password field are equal,
+                and if the password that the user has entered is his real password.
+                 */
+                if (newPassword.equals(retypePassword) && insertedPassword.equals(realPassword)) {
+                    boolean successfullyChangesPassword = db.changePassword(username, newPassword);
+
+                    if (successfullyChangesPassword) { // If the password was successfully changed.
+                        Toast.makeText(MyProfileActivity.this, "Password was successfully changed!", Toast.LENGTH_LONG).show();
+                        changePasswordDialog.dismiss();
+                        return;
+                    }
+                    else {
+                        Toast.makeText(MyProfileActivity.this, "Error enocuntered. Please make sure that all the fields are filled.", Toast.LENGTH_LONG).show();
+                        clearAllFields(etChangePasswordNewPassword,  etChangePasswordRetypePassword, etChangePasswordOldPassword);
+                    }
+                }
+                else {
+                    Toast.makeText(MyProfileActivity.this, "Please make sure that new password fields are equal and that the old password is your password.", Toast.LENGTH_LONG).show();
+                    clearAllFields(etChangePasswordNewPassword,  etChangePasswordRetypePassword, etChangePasswordOldPassword);
+                }
+            }
+        });
+        changePasswordDialog.show();
+    }
+
+    /**
+     * This function clears all the {@link EditText} in <code>args</code>
+     * @param args The {@link EditText} that we want to clear their values.
+     */
+    private void clearAllFields(EditText ... args) {
+        for (EditText et : args)
+            et.setText("");
+    }
+
+    /**
+     * This function updates the text in {@link #tvUsername} and {@link #tvPassword}
+     * to be the username and the password of the currently logged in user.
+     * If there is no user logged in, the fields will contain the texts:
+     * <pre>
+     *     {@link #tvUsername} : {@link R.string#username}
+     *     {@link #tvPassword} : {@link R.string#password}
+     * </pre>
+     */
+    private void updateUsernameAndPasswordTextViews() { // TODO-complete
+//        username = db.getCurrentLoggedInUsername();
+//        if (username.equals("")) { // If the username is empty, which means there is no user logged in.
+//            tvUsername.setText(R.string.username);
+//            tvPassword.setText(R.string.password);
+//        }
+//        else {
+//            tvUsername.setText(tvUsername.getText().toString() + " " +  username);
+//            tvPassword.setText(tvPassword.getText().toString() + " " + db.getPasswordForUsername(username));
+//        }
     }
 }
