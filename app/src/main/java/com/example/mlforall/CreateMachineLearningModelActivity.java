@@ -12,10 +12,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +61,10 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
     private Spinner spinnerChooseXData;
     private Spinner spinnerChooseYData;
 
+    private Button btnCheckNormalize;
+
+    private CheckBox cbNormalizeData;
+
     private Button btnStart;
 
     private TextView tvSlope;
@@ -69,10 +76,14 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
 
     private Button btnShowModel;
 
+    private Button btnReset;
+
     private String username = "";
 
     private HashMap<String, double[]> dataset; // This HashMap will contain the dataset.
     private boolean successfullyLoadedDataset = false;
+
+    private boolean shouldUserNormalizeData = false;
 
     private LinearRegression model;
 
@@ -81,6 +92,9 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      * @see LinearRegressionHelper#splitData(double[], double[])
      */
     private ArrayList<double[]> splitData = new ArrayList<>();
+
+    private double[] x;
+    private double[] y;
 
     private double[] xTrain;
     private double[] xTest;
@@ -116,45 +130,22 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
                     setSpinnerItems(spinnerChooseXData);
                     spinnerChooseYData.setVisibility(View.VISIBLE); // Setting the spinners to choose X and Y data available.
                     setSpinnerItems(spinnerChooseYData);
-                    btnStart.setVisibility(View.VISIBLE);
-
+                    btnCheckNormalize.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        btnCheckNormalize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkNormalize();
             }
         });
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = db.getCurrentLoggedInUsername();
-                if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
-                    Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String xColumn = getSelectedColumn(spinnerChooseXData);
-                String yColumn = getSelectedColumn(spinnerChooseYData);
-                double[] x = dataset.get(xColumn);
-                double[] y = dataset.get(yColumn);
-
-                splitData = LinearRegressionHelper.splitData(x, y);
-
-                xTrain = splitData.get(LinearRegressionHelper.X_TRAIN_INDEX);
-                xTest = splitData.get(LinearRegressionHelper.X_TEST_INDEX);
-                yTrain = splitData.get(LinearRegressionHelper.Y_TRAIN_INDEX);
-                yTest = splitData.get(LinearRegressionHelper.Y_TEST_INDEX); // Getting the data.
-
-                model = new LinearRegression(xTrain, yTrain);
-                model.fit(); // Fitting the model to create the best matching linear equation for this data.
-                equation = model.getLinearEquation();
-
-                tvSlope.setText(tvSlope.getText().toString() + " " + equation.getSlope());
-                tvIntercept.setText(tvIntercept.getText().toString() + " " + equation.getIntercept());
-
-                btnTestModel.setVisibility(View.VISIBLE);
-                tvSlope.setVisibility(View.VISIBLE);
-                tvIntercept.setVisibility(View.VISIBLE);
-                tvScore.setVisibility(View.VISIBLE); // Setting the next views to be visible.
-                btnStart.setEnabled(false);
+                buildMachineLearningModel();
             }
         });
 
@@ -195,6 +186,14 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
                 startActivity(intentMoveToShowModelActivity);
             }
         });
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetProcess(); // Terminating the Machine Learning Model building process.
+            }
+        });
+
     }
 
     @Override
@@ -210,7 +209,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         loginDialog.dismiss();
         signUpDialog.dismiss();
     }
-
+// TODO-dialog for normalize data
     /**
      * This function initializes the variables.
      */
@@ -236,6 +235,10 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         spinnerChooseXData = findViewById(R.id.spinnerChooseXData);
         spinnerChooseYData = findViewById(R.id.spinnerChooseYData);
 
+        btnCheckNormalize = findViewById(R.id.btnCheckNormalize);
+
+        cbNormalizeData = findViewById(R.id.cbNormalizeData);
+
         btnStart = findViewById(R.id.btnStart);
 
         tvSlope = findViewById(R.id.tvSlope);
@@ -246,6 +249,8 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         tvScore = findViewById(R.id.tvScore);
 
         btnShowModel = findViewById(R.id.btnShowModel);
+
+        btnReset = findViewById(R.id.btnReset);
     }
 
     /**
@@ -279,7 +284,9 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
                 dataset = helper.getDataset(); // Loading the dataset.
 
                 if (dataset == null || dataset.size() == 0) { // If loading the dataset failed for any reason.
-                    Toast.makeText(CreateMachineLearningModelActivity.this, "Please Make sure that all the values in the file are filled, there is the same amount of items in each column and that there are at least 10 rows in the dataset and 2 or more numeric columns.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreateMachineLearningModelActivity.this,
+                            "Please Make sure that all the values in the file are filled, there is the same amount of items in each column and that there are at least 10 rows in the dataset and 2 or more numeric columns.",
+                            Toast.LENGTH_LONG).show();
                     return false;
                 }
                 else // The the file was successfully loaded.
@@ -318,5 +325,105 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
     private String getSelectedColumn(Spinner spinner) {
         int position = spinner.getSelectedItemPosition();
         return (String) spinner.getItemAtPosition(position);
+    }
+
+    /**
+     * This function resets the Machine Learning building process.
+     * This function will reset the layout to its starting position.
+     * @see R.layout#activity_create_machine_learning_model
+     */
+    private void resetProcess() {
+        etFileName.setText("");
+        btnLoadFile.setEnabled(true);
+        tvChooseXYColumns.setVisibility(View.GONE);
+        spinnerChooseXData.setClickable(true);
+        spinnerChooseXData.setVisibility(View.GONE);
+        spinnerChooseYData.setClickable(true);
+        spinnerChooseYData.setVisibility(View.GONE);
+        btnCheckNormalize.setEnabled(true);
+        btnCheckNormalize.setVisibility(View.GONE);
+        cbNormalizeData.setChecked(false);
+        cbNormalizeData.setEnabled(true);
+        cbNormalizeData.setVisibility(View.GONE);
+        btnStart.setVisibility(View.GONE);
+        btnStart.setEnabled(true);
+        tvSlope.setText(R.string.slope);
+        tvSlope.setVisibility(View.GONE);
+        tvIntercept.setText(R.string.intercept);
+        tvIntercept.setVisibility(View.GONE);
+        btnShowModel.setVisibility(View.GONE);
+        btnShowModel.setEnabled(true);
+        tvScore.setText(R.string.model_score);
+        tvScore.setVisibility(View.GONE);
+        btnTestModel.setVisibility(View.GONE);
+        btnTestModel.setEnabled(true);
+        btnShowModel.setVisibility(View.GONE);
+        btnShowModel.setEnabled(true);
+    }
+
+    /**
+     * This function checks if the data should be normalized.
+     * @see LinearRegressionHelper#shouldUserNormalizeData(double[])
+     */
+    private void checkNormalize() {
+        String xColumn = getSelectedColumn(spinnerChooseXData);
+        String yColumn = getSelectedColumn(spinnerChooseYData);
+        spinnerChooseXData.setClickable(false);
+        spinnerChooseYData.setClickable(false);
+        x = dataset.get(xColumn);
+        y = dataset.get(yColumn);
+        shouldUserNormalizeData = LinearRegressionHelper.shouldUserNormalizeData(x) || LinearRegressionHelper.shouldUserNormalizeData(y);
+        if (shouldUserNormalizeData) { // If the dataset is too big the user will be recommended to normalize the data.
+            Toast.makeText(CreateMachineLearningModelActivity.this,
+                    "You should normalize the data. If you don't normalize the data, the data points won't be shown in the Graph.",
+                    Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(CreateMachineLearningModelActivity.this,
+                    "You don't have to normalize the data.",
+                    Toast.LENGTH_LONG).show();
+        }
+        cbNormalizeData.setVisibility(View.VISIBLE);
+        btnStart.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * This function builds the machine learning model once the user presses
+     * {@link #btnStart}.
+     */
+    private void buildMachineLearningModel() {
+        username = db.getCurrentLoggedInUsername();
+        if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
+            Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        splitData = LinearRegressionHelper.splitData(x, y);
+
+        xTrain = splitData.get(LinearRegressionHelper.X_TRAIN_INDEX);
+        xTest = splitData.get(LinearRegressionHelper.X_TEST_INDEX);
+        yTrain = splitData.get(LinearRegressionHelper.Y_TRAIN_INDEX);
+        yTest = splitData.get(LinearRegressionHelper.Y_TEST_INDEX); // Getting the data.
+
+        boolean normalize = cbNormalizeData.isChecked();
+
+        if (normalize) { // If the user wants to normalize the data.
+            xTrain = LinearRegressionHelper.normalizeData(xTrain);
+            xTest = LinearRegressionHelper.normalizeData(xTest);
+            yTrain = LinearRegressionHelper.normalizeData(yTrain);
+            yTest = LinearRegressionHelper.normalizeData(yTest);
+        }
+
+        model = new LinearRegression(xTrain, yTrain);
+        model.fit(); // Fitting the model to create the best matching linear equation for this data.
+        equation = model.getLinearEquation();
+
+        btnTestModel.setVisibility(View.VISIBLE);
+        tvSlope.setVisibility(View.VISIBLE);
+        tvSlope.setText(tvSlope.getText().toString() + " " + equation.getSlope());
+        tvIntercept.setVisibility(View.VISIBLE);
+        tvIntercept.setText(tvIntercept.getText().toString() + " " + equation.getIntercept());
+        tvScore.setVisibility(View.VISIBLE); // Setting the next views to be visible.
+        btnStart.setEnabled(false);
     }
 }

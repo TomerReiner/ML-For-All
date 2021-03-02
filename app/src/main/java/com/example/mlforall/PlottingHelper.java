@@ -67,6 +67,7 @@ public class PlottingHelper {
             double currentX = xTest[i];
             double currentY = yTest[i];
             testingPoints.appendData(new DataPoint(currentX, currentY), true, xTestLength);
+
         }
 
         testingPoints.setColor(Color.BLUE);
@@ -81,11 +82,24 @@ public class PlottingHelper {
         LineGraphSeries<DataPoint> line = new LineGraphSeries<>();
         double maxXTrain = xTrain[xTrain.length - 1]; // Getting the max item in xTrain(xTrain is sorted so its the last item).
         double maxXTest = xTest[xTest.length - 1];
+        double minXTrain = xTrain[0];
+        double minXTest = xTest[0];
         int maxXValue = (int) Math.max(maxXTrain, maxXTest);
+        int minXValue = (int) (Math.min(minXTrain, minXTest));
 
-        for (int i = 0; i < maxXValue; i++) {
+        System.out.println(maxXValue + " " + minXValue);
+
+        if (minXValue == maxXValue) { // If the min and max values are equal we plot the line from x = 0 to x = 1
+            for (int i = 0; i <= 1; i++) {
+                double yPredicted = slope * i + intercept;
+                line.appendData(new DataPoint(i, yPredicted), true, 2);
+            }
+            return line;
+        }
+
+        for (int i = minXValue; i <= maxXValue + 1; i++) {
             double yPredicted = slope * i + intercept;
-            line.appendData(new DataPoint(i, yPredicted), true, maxXValue);
+            line.appendData(new DataPoint(i, yPredicted), true, maxXValue + 2);
         }
         line.setColor(Color.GREEN);
         return line;

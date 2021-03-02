@@ -30,7 +30,7 @@ public class ShowModelActivity extends AppCompatActivity {
     private double intercept;
 
     private PlottingHelper plottingHelper;
-
+// TODO - graph point error
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +51,6 @@ public class ShowModelActivity extends AppCompatActivity {
         graph.addSeries(plottingHelper.getLine());
 
         if (xTrain != null && xTest != null && yTrain != null && yTest != null) { // If the training points are not null then we plot them.
-            graph.setMinimumHeight((int) Math.max(yTrain[yTrain.length - 1], yTest[yTest.length - 1]));
             graph.addSeries(plottingHelper.getTrainingPoints());
             graph.addSeries(plottingHelper.getTestingPoints());
         }

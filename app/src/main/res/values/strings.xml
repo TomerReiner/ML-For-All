@@ -29,4 +29,5 @@
     <a href="https://github.com/TomerReiner/Machine-Learning-Project">here</a>
     </string>
     <string name="login_warning">You must be logged in to view your models.Please move to any other screen using the navigation menu, login to your account and come back to this screen.</string>
+    <string name="reset">Reset</string>
 </resources>

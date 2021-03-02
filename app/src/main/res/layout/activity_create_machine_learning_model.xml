@@ -31,7 +31,7 @@
             android:text="@string/load_file"
             android:textAllCaps="false"
             android:textColor="#0B59E3"
-            android:textSize="25sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etFileName"/>
@@ -43,7 +43,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/choose_columns"
             android:textColor="#0B59E3"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,11 +63,33 @@
             android:id="@+id/spinnerChooseYData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerChooseXData" />
+
+        <Button
+            android:id="@+id/btnCheckNormalize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check Data Normalization"
+            android:textAllCaps="false"
+            android:textColor="#0B59E3"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerChooseYData" />
+
+        <CheckBox
+            android:id="@+id/cbNormalizeData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Normalize Data"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnCheckNormalize" />
 
         <Button
             android:id="@+id/btnStart"
@@ -77,11 +99,11 @@
             android:text="@string/start"
             android:textAllCaps="false"
             android:textColor="#0B59E3"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerChooseYData" />
+            app:layout_constraintTop_toBottomOf="@+id/cbNormalizeData" />
 
         <TextView
             android:id="@+id/tvSlope"
@@ -90,7 +112,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/slope"
             android:textColor="#0B59E3"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +125,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/intercept"
             android:textColor="#0B59E3"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +139,7 @@
             android:text="@string/test_my_model"
             android:textAllCaps="false"
             android:textColor="#0B59E3"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +152,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/model_score"
             android:textColor="#0B59E3"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,11 +166,23 @@
             android:text="@string/show_my_model"
             android:textAllCaps="false"
             android:textColor="#0B59E3"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvScore" />
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reset"
+            android:textAllCaps="false"
+            android:textColor="#0B59E3"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
