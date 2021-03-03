@@ -69,29 +69,6 @@
             app:layout_constraintTop_toBottomOf="@+id/spinnerChooseXData" />
 
         <Button
-            android:id="@+id/btnCheckNormalize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Check Data Normalization"
-            android:textAllCaps="false"
-            android:textColor="#0B59E3"
-            android:textSize="20sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinnerChooseYData" />
-
-        <CheckBox
-            android:id="@+id/cbNormalizeData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Normalize Data"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnCheckNormalize" />
-
-        <Button
             android:id="@+id/btnStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +80,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cbNormalizeData" />
+            app:layout_constraintTop_toBottomOf="@+id/spinnerChooseYData" />
 
         <TextView
             android:id="@+id/tvSlope"

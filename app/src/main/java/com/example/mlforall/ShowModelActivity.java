@@ -29,6 +29,8 @@ public class ShowModelActivity extends AppCompatActivity {
     private double slope;
     private double intercept;
 
+    private boolean isDataTooLargeToDisplay;
+
     private PlottingHelper plottingHelper;
 // TODO - graph point error
     @Override
@@ -45,12 +47,13 @@ public class ShowModelActivity extends AppCompatActivity {
         yTest = intent.getDoubleArrayExtra(LinearRegressionHelper.Y_TEST);
         slope = intent.getDoubleExtra("slope", 0);
         intercept = intent.getDoubleExtra("intercept", 0);
+        isDataTooLargeToDisplay = intent.getBooleanExtra(CreateMachineLearningModelActivity.IS_DATA_TO_LARGE_TO_DISPLAY, true);
 
-        plottingHelper = new PlottingHelper(xTrain, xTest, yTrain,yTest, slope, intercept);
+        plottingHelper = new PlottingHelper(xTrain, xTest, yTrain,yTest, slope, intercept, isDataTooLargeToDisplay);
 
         graph.addSeries(plottingHelper.getLine());
 
-        if (xTrain != null && xTest != null && yTrain != null && yTest != null) { // If the training points are not null then we plot them.
+        if ((xTrain != null && xTest != null && yTrain != null && yTest != null) && !isDataTooLargeToDisplay) { // If the training and testing points are not null and if the data can be displayed we show the data.
             graph.addSeries(plottingHelper.getTrainingPoints());
             graph.addSeries(plottingHelper.getTestingPoints());
         }

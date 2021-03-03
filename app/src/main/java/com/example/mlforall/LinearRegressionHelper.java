@@ -256,33 +256,23 @@ public class LinearRegressionHelper {
     }
 
     /**
-     * This function checks if the user should normalize the data.
-     * If the max value in <code>arr</code> is greater than 100,
-     * the user will be recommended to normalize the data.
-     * @param arr The array that we want to check if it should be normalized. The array is sorted from minimal value to maximal value.
-     * @return <code>true</code> if the values should be normalized, <code>false</code> if not.
+     * This function checks if the data is too large or too small to display on the graph.
+     * @param arr The array that we want to check if it is too large or too small to display on the graph.
+     * The array is sorted from minimal value to maximal value.
+     * @return <code>true</code> if the values are too large or too small to display on the graph, <code>false</code> if not.
      */
-    public static boolean shouldUserNormalizeData(double[] arr) {
-        return arr[arr.length - 1] > 100;
+    public static boolean isDataTooLargeForGraph(double[] arr) {
+        return arr[0] < -100 || arr[arr.length - 1] > 100;
     }
 
     /**
-     * This function normalizes the data.
-     * Data normalization will be the following process.
-     * <pre>
-     * 1) Taking the maximal value in the array.
-     * 2) Dividing every item in the array with the maximal value.
-     * </pre>
-     * Data normalization is recommended because Machine Learning Models perform well on normalized data.
-     * @param arr The array that we want to normalize. The array is sorted from minimal value to maximal value.
-     * @return The normalized array.
+     * This function computes the difference between the min value and max value in <code>arr</code>.
+     * @param arr The array that we want to find the difference between its min value and its max value.
+     * The array is sorted from minimal value to maximal value.
+     * @return The difference between the min value and max value.
      */
-    public static double[] normalizeData(double[] arr) {
-        int arrLength = arr.length;
-        double maxValue = arr[arrLength - 1];
-
-        for (int i = 0; i < arrLength; i++)
-            arr[i] /= maxValue;
-        return arr;
+    public static double differenceBetweenMinAndMaxValues(double[] arr) {
+        return arr[arr.length - 1] - arr[0];
     }
+
 }
