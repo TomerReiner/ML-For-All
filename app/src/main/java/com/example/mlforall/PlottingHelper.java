@@ -17,6 +17,14 @@ public class PlottingHelper {
     private double[] yTest;
     private double slope;
     private double intercept;
+    /**
+     * If the data values are too large,
+     * which means that one of the values in
+     * {@link #xTrain}, {@link #xTest}, {@link #yTrain} or {@link #yTest}
+     * is less than -100 or more than 100.
+     * This is used to prevent {@link OutOfMemoryError},
+     * which occurs when the data values are large and the graph can't display values in a large range.
+     */
     private boolean isDataTooLargeToDisplay;
 
 
@@ -36,7 +44,7 @@ public class PlottingHelper {
      * @return The line.
      */
     public LineGraphSeries<DataPoint> getLine() {
-        if ((xTrain != null && xTest != null && yTrain != null && yTest != null) && !isDataTooLargeToDisplay) // If the training points are not null then we plot them.
+        if ((xTrain != null && xTest != null && yTrain != null && yTest != null) && !isDataTooLargeToDisplay) // If the training points are not null then we plot them and the data is not too large.
             return plotLinearEquationWithTrainTestValues();
         return plotLinearEquationWithoutTrainTestData();
     }
