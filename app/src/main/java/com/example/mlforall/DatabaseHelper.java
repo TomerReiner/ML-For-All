@@ -392,7 +392,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param username
      * @return
      */
-    public String requestData(String username) {
+    public String getMLModels(String username) {
         return null; // TODO-complete
     }
 

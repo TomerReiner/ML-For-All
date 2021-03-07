@@ -60,11 +60,11 @@
             app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
 
         <Button
-            android:id="@+id/btnRequestMyData"
+            android:id="@+id/btnDownloadMLModels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="Request My Data"
+            android:text="Download My ML Models"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="30sp"
@@ -85,7 +85,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btnDeleteAccount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnRequestMyData" />
+            app:layout_constraintTop_toBottomOf="@id/btnDownloadMLModels" />
 
         <Button
             android:id="@+id/btnDeleteAccount"

@@ -78,7 +78,6 @@ public class MyModelsActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
     @Override

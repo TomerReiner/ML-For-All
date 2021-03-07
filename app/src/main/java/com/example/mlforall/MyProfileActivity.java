@@ -42,7 +42,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private Button btnChangeUsername;
     private TextView tvPassword;
     private Button btnChangePassword;
-    private Button btnRequestMyData;
+    private Button btnDownloadMLModels;
     private Button btnDeleteData;
     private Button btnDeleteAccount;
 
@@ -60,16 +60,16 @@ public class MyProfileActivity extends AppCompatActivity {
         btnChangeUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateUsernameAndPasswordTextViews();
                 createChangeUsernameDialog();
+                updateUsernameAndPasswordTextViews();
             }
         });
 
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateUsernameAndPasswordTextViews();
                 createChangePasswordDialog();
+                updateUsernameAndPasswordTextViews();
             }
         });
 
@@ -83,10 +83,10 @@ public class MyProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnRequestMyData.setOnClickListener(new View.OnClickListener() {
+        btnDownloadMLModels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                updateUsernameAndPasswordTextViews();
             }
         });
 
@@ -109,6 +109,14 @@ public class MyProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateUsernameAndPasswordTextViews();
+            }
+        });
+
+        constraintLayout.setOnTouchListener(new View.OnTouchListener() { // This listener is used to update tvUsername and tvPassword texts.
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                updateUsernameAndPasswordTextViews();
+                return false;
             }
         });
     }
@@ -151,7 +159,7 @@ public class MyProfileActivity extends AppCompatActivity {
         btnChangeUsername = findViewById(R.id.btnChangeUsername);
         tvPassword = findViewById(R.id.tvPassword);
         btnChangePassword = findViewById(R.id.btnChangePassword);
-        btnRequestMyData = findViewById(R.id.btnRequestMyData);
+        btnDownloadMLModels = findViewById(R.id.btnDownloadMLModels);
         btnDeleteData = findViewById(R.id.btnDeleteData);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
     }
@@ -283,14 +291,18 @@ public class MyProfileActivity extends AppCompatActivity {
      * </pre>
      */
     private void updateUsernameAndPasswordTextViews() { // TODO-complete
-//        username = db.getCurrentLoggedInUsername();
-//        if (username.equals("")) { // If the username is empty, which means there is no user logged in.
-//            tvUsername.setText(R.string.username);
-//            tvPassword.setText(R.string.password);
-//        }
-//        else {
-//            tvUsername.setText(tvUsername.getText().toString() + " " +  username);
-//            tvPassword.setText(tvPassword.getText().toString() + " " + db.getPasswordForUsername(username));
-//        }
+        username = db.getCurrentLoggedInUsername();
+
+        if (username.equals("")) { // If the username is empty, which means there is no user logged in.
+            tvUsername.setText(R.string.username);
+            tvPassword.setText(R.string.password);
+        }
+
+        else {
+            tvUsername.setText(R.string.username);
+            tvPassword.setText(R.string.password); // Resetting the fields.
+            tvUsername.setText(tvUsername.getText().toString() + " " +  username);
+            tvPassword.setText(tvPassword.getText().toString() + " " + db.getPasswordForUsername(username)); // Updating the fields.
+        }
     }
 }
