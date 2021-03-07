@@ -91,6 +91,12 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      */
     private boolean isDataTooLargeToDisplay = false;
 
+    /**
+     * This boolean checks if there is an sd card inserted.
+     * The application needs sd card to function.
+     */
+    boolean sdInserted = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+
     private LinearRegression model;
 
     /**
@@ -118,6 +124,8 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
 
         initializeVariables(); // Initialize all the variables-DO NOT REMOVE!
         menuHelper.setMainMenu(TAG); // Initialize the main menu-DO NOT REMOVE!
+
+        requestReadExternalStoragePermission(); // Asking for permission to read files from the sd card.
 
         btnLoadFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,7 +263,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      * @return <code>true</code> if there is a permission to read from external storage, <code>false</code> if not.
      */
     private boolean canReadExternalStorage() {
-        return checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) && (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
     }
 
     /**
@@ -263,7 +271,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      */
     private void requestReadExternalStoragePermission() {
         if (!canReadExternalStorage())
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE);
     }
 
     /**
@@ -272,11 +280,11 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      */
     private boolean loadDataset() {
         String fileName = etFileName.getText().toString();
-        requestReadExternalStoragePermission();
         try {
             if (canReadExternalStorage()) {
-                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName); // Getting the file from the Downloads directory in the external storage.
+                File file = new File(Environment.getExternalStorageDirectory() + "/Download/", fileName); // Getting the file from the Downloads directory in the external storage.
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+
                 FileHelper helper = new FileHelper(bufferedReader);
                 dataset = helper.getDataset(); // Loading the dataset.
 
@@ -327,10 +335,10 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
     /**
      * This function resets the Machine Learning building process.
      * This function will reset the layout to its starting position.
+     * The function won't reset the text in {@link #etFileName}.
      * @see R.layout#activity_create_machine_learning_model
      */
     private void resetProcess() {
-        etFileName.setText("");
         btnLoadFile.setEnabled(true);
         tvChooseXYColumns.setVisibility(View.GONE);
         spinnerChooseXData.setClickable(true);
