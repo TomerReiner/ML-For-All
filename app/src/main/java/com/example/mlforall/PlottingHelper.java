@@ -66,7 +66,7 @@ public class PlottingHelper {
             double currentY = yTrain[i];
             trainPoints.appendData(new DataPoint(currentX, currentY), true, xTrainLength);
         }
-
+        trainPoints.setTitle("Training Points");
         trainPoints.setColor(Color.RED);
         return trainPoints;
     }
@@ -90,7 +90,7 @@ public class PlottingHelper {
             testingPoints.appendData(new DataPoint(currentX, currentY), true, xTestLength);
 
         }
-
+        testingPoints.setTitle("Testing Points");
         testingPoints.setColor(Color.BLUE);
         return testingPoints;
     }
@@ -120,6 +120,7 @@ public class PlottingHelper {
             double yPredicted = slope * i + intercept;
             line.appendData(new DataPoint(i, yPredicted), true, maxXValue);
         }
+        line.setTitle("Linear Equation");
         line.setColor(Color.GREEN);
         return line;
     }
@@ -134,6 +135,7 @@ public class PlottingHelper {
             double yPredicted = slope * i + intercept;
             line.appendData(new DataPoint(i, yPredicted), true, 100);
         }
+        line.setTitle("Linear Equation");
         line.setColor(Color.GREEN);
         return line;
     }

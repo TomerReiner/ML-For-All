@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
@@ -57,5 +58,7 @@ public class ShowModelActivity extends AppCompatActivity {
             graph.addSeries(plottingHelper.getTrainingPoints());
             graph.addSeries(plottingHelper.getTestingPoints());
         }
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
     }
 }
