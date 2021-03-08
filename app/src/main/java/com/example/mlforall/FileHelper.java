@@ -25,7 +25,7 @@ public class FileHelper {
      * @return {@link HashMap} The keys will be the column names and the values will be the items in the column.
      */
     public HashMap<String, double[]> getDataset() {
-        HashMap<String, double[]> dataset = new HashMap<>();
+        HashMap<String, double[]> dataset;
         try {
             ArrayList<ArrayList<String>> data = loadPreprocessedData();
             data = dropNonNumericColumns(data);
@@ -38,7 +38,7 @@ public class FileHelper {
         }
         return dataset;
     }
-
+//TODO-change class structure.
     /**
      * This function sets the new columns for the dataset. The function will remove from {@link #columns} all the values in the indexes that are in <code>indexesForNonNumericValueColumns</code>.
      * @param indexesForNonNumericValueColumns The indexes of the columns that have numeric values and will be dropped.
@@ -116,7 +116,6 @@ public class FileHelper {
         }
 
         try {
-            this.columns.get(0);
             this.reader.close();
         }
         catch (IOException e) {
@@ -134,7 +133,7 @@ public class FileHelper {
      */
     private ArrayList<ArrayList<String>> dropNonNumericColumns(ArrayList<ArrayList<String>> data) {
 
-        ArrayList<Integer> indexesForNonNumericValueColumns = new ArrayList<Integer>();
+        ArrayList<Integer> indexesForNonNumericValueColumns = new ArrayList<>();
 
         if (data == null) // If data is empty.
             return null;

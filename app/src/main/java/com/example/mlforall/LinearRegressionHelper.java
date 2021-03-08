@@ -2,7 +2,6 @@ package com.example.mlforall;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * This class helps setting the coefficients in {@link LinearRegression}
@@ -89,8 +88,8 @@ public class LinearRegressionHelper {
      * @see #mean(double[])
      */
     private static double covariance(double[] x, double[] y) {
-        double[] xCopy = x;
-        double[] yCopy = y;
+        double[] xCopy = x.clone();
+        double[] yCopy = y.clone();
 
         double meanX = mean(xCopy);
         double meanY = mean(yCopy);

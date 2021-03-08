@@ -2,7 +2,6 @@ package com.example.mlforall;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -53,30 +52,24 @@ public class DialogHelper {
 
         final String[] username = {""};
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                username[0] = etLoginUsername.getText().toString();
-                String password = etLoginPassword.getText().toString();
-                User user = new User(username[0], password, null);
-                boolean successfullyLoggedInUser = db.login(user);
-                if (successfullyLoggedInUser) { // If the user was successfully logged in.
-                    loginDialog.dismiss();
-                }
-                else { // Login Failed.
-                    Toast.makeText(context, "Incorrect username or password.", Toast.LENGTH_LONG).show();
-                    etLoginUsername.setText("");
-                    etLoginPassword.setText(""); // Clearing the fields.
-                }
+        btnLogin.setOnClickListener(v -> {
+            username[0] = etLoginUsername.getText().toString();
+            String password = etLoginPassword.getText().toString();
+            User user = new User(username[0], password);
+            boolean successfullyLoggedInUser = db.login(user);
+            if (successfullyLoggedInUser) { // If the user was successfully logged in.
+                loginDialog.dismiss();
+            }
+            else { // Login Failed.
+                Toast.makeText(context, "Incorrect username or password.", Toast.LENGTH_LONG).show();
+                etLoginUsername.setText("");
+                etLoginPassword.setText(""); // Clearing the fields.
             }
         });
 
-        btnMoveToSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginDialog.dismiss();
-                username[0] = createSignUpDialog();
-            }
+        btnMoveToSignUp.setOnClickListener(v -> {
+            loginDialog.dismiss();
+            username[0] = createSignUpDialog();
         });
         loginDialog.show();
         return username[0];
@@ -96,33 +89,30 @@ public class DialogHelper {
         Button btnSignUp = signUpDialog.findViewById(R.id.btnSignUp);
 
         final String[] username = {""};
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                username[0] = etSignUpUsername.getText().toString();
-                String password = etSignUpPassword.getText().toString();
-                String retypePassword = etRetypePassword.getText().toString();
+        btnSignUp.setOnClickListener(v -> {
+            username[0] = etSignUpUsername.getText().toString();
+            String password = etSignUpPassword.getText().toString();
+            String retypePassword = etRetypePassword.getText().toString();
 
-                if (!username[0].equals("") && !password.equals("") && password.equals(retypePassword)) { // If all the fields are filled and the passwords are equal.
-                    User user = new User(username[0], password, null);
-                    boolean userSuccessfullySignedUp = db.addUser(user);
-                    if (userSuccessfullySignedUp) { // If the user was successfully signed up.
-                        signUpDialog.dismiss();
-                        loginDialog.dismiss();
-                    }
-                    else {
-                        Toast.makeText(context, "Error signing up. Please try another username.", Toast.LENGTH_LONG).show();
-                        etSignUpUsername.setText("");
-                        etSignUpPassword.setText("");
-                        etRetypePassword.setText(""); // Clearing the fields.
-                    }
+            if (!username[0].equals("") && !password.equals("") && password.equals(retypePassword)) { // If all the fields are filled and the passwords are equal.
+                User user = new User(username[0], password);
+                boolean userSuccessfullySignedUp = db.addUser(user);
+                if (userSuccessfullySignedUp) { // If the user was successfully signed up.
+                    signUpDialog.dismiss();
+                    loginDialog.dismiss();
                 }
-                else { // If not all of the fields are filled.
-                    Toast.makeText(context, "Please make sure that all the fields are filled and that the passwords are equal.", Toast.LENGTH_LONG).show();
+                else {
+                    Toast.makeText(context, "Error signing up. Please try another username.", Toast.LENGTH_LONG).show();
                     etSignUpUsername.setText("");
                     etSignUpPassword.setText("");
                     etRetypePassword.setText(""); // Clearing the fields.
                 }
+            }
+            else { // If not all of the fields are filled.
+                Toast.makeText(context, "Please make sure that all the fields are filled and that the passwords are equal.", Toast.LENGTH_LONG).show();
+                etSignUpUsername.setText("");
+                etSignUpPassword.setText("");
+                etRetypePassword.setText(""); // Clearing the fields.
             }
         });
         signUpDialog.show();

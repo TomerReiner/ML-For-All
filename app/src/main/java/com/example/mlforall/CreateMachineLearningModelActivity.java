@@ -12,13 +12,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,13 +26,10 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 public class CreateMachineLearningModelActivity extends AppCompatActivity {
 // TODO - abort process.
@@ -127,80 +121,63 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
 
         requestReadExternalStoragePermission(); // Asking for permission to read files from the sd card.
 
-        btnLoadFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                username = db.getCurrentLoggedInUsername();
-                if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
-                    Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        btnLoadFile.setOnClickListener(v -> {
+            username = db.getCurrentLoggedInUsername();
+            if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
+                Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                successfullyLoadedDataset = loadDataset();
-                if (successfullyLoadedDataset) { // If the dataset was successfully loaded.
-                    btnLoadFile.setEnabled(false);
-                    tvChooseXYColumns.setVisibility(View.VISIBLE);
-                    spinnerChooseXData.setVisibility(View.VISIBLE);
-                    setSpinnerItems(spinnerChooseXData);
-                    spinnerChooseYData.setVisibility(View.VISIBLE); // Setting the spinners to choose X and Y data available.
-                    setSpinnerItems(spinnerChooseYData);
-                    btnStart.setVisibility(View.VISIBLE);
-                }
+            successfullyLoadedDataset = loadDataset();
+            if (successfullyLoadedDataset) { // If the dataset was successfully loaded.
+                btnLoadFile.setEnabled(false);
+                tvChooseXYColumns.setVisibility(View.VISIBLE);
+                spinnerChooseXData.setVisibility(View.VISIBLE);
+                setSpinnerItems(spinnerChooseXData);
+                spinnerChooseYData.setVisibility(View.VISIBLE); // Setting the spinners to choose X and Y data available.
+                setSpinnerItems(spinnerChooseYData);
+                btnStart.setVisibility(View.VISIBLE);
             }
         });
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buildMachineLearningModel();
+        btnStart.setOnClickListener(v -> buildMachineLearningModel());
+
+        btnTestModel.setOnClickListener(v -> {
+            username = db.getCurrentLoggedInUsername();
+            if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
+                Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to view model's score.", Toast.LENGTH_SHORT).show();
+                return;
             }
+            tvScore.setVisibility(View.VISIBLE); // Setting the next views to be visible.
+
+            double score = model.score(xTest, yTest); // Getting the score of the model.
+            tvScore.setText(tvScore.getText().toString() + " " + score * 100 + "%"); // Showing the score in percentages format.
+            btnTestModel.setEnabled(false);
+            btnShowModel.setVisibility(View.VISIBLE);
+
+            db.addModel(username, equation, score); // Adding the model to the database.
         });
 
-        btnTestModel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                username = db.getCurrentLoggedInUsername();
-                if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
-                    Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to view model's score.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                tvScore.setVisibility(View.VISIBLE); // Setting the next views to be visible.
-
-                double score = model.score(xTest, yTest); // Getting the score of the model.
-                tvScore.setText(tvScore.getText().toString() + " " + score * 100 + "%"); // Showing the score in percentages format.
-                btnTestModel.setEnabled(false);
-                btnShowModel.setVisibility(View.VISIBLE);
-
-                db.addModel(username, equation, score); // Adding the model to the database.
+        btnShowModel.setOnClickListener(v -> {
+            username = db.getCurrentLoggedInUsername();
+            if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
+                Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to view your model's graph.", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            Intent intentMoveToShowModelActivity = new Intent(CreateMachineLearningModelActivity.this, ShowModelActivity.class);
+            intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.X_TRAIN, xTrain);
+            intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.X_TEST, xTest);
+            intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.Y_TRAIN, yTrain);
+            intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.Y_TEST, yTest);
+            intentMoveToShowModelActivity.putExtra(IS_DATA_TO_LARGE_TO_DISPLAY, isDataTooLargeToDisplay);
+            intentMoveToShowModelActivity.putExtra("slope", equation.getSlope());
+            intentMoveToShowModelActivity.putExtra("intercept", equation.getIntercept());
+            startActivity(intentMoveToShowModelActivity);
         });
 
-        btnShowModel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                username = db.getCurrentLoggedInUsername();
-                if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
-                    Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to view your model's graph.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                Intent intentMoveToShowModelActivity = new Intent(CreateMachineLearningModelActivity.this, ShowModelActivity.class);
-                intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.X_TRAIN, xTrain);
-                intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.X_TEST, xTest);
-                intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.Y_TRAIN, yTrain);
-                intentMoveToShowModelActivity.putExtra(LinearRegressionHelper.Y_TEST, yTest);
-                intentMoveToShowModelActivity.putExtra(IS_DATA_TO_LARGE_TO_DISPLAY, isDataTooLargeToDisplay);
-                intentMoveToShowModelActivity.putExtra("slope", equation.getSlope());
-                intentMoveToShowModelActivity.putExtra("intercept", equation.getIntercept());
-                startActivity(intentMoveToShowModelActivity);
-            }
-        });
-
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetProcess(); // Terminating the Machine Learning Model building process.
-            }
+        btnReset.setOnClickListener(v -> {
+            resetProcess(); // Terminating the Machine Learning Model building process.
         });
 
     }
@@ -313,9 +290,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      * @param spinner The spinner that we want to set the items in it.
      */
     private void setSpinnerItems(Spinner spinner) {
-        Set datasetColumns = dataset.keySet();
-        String[] columns = new String[datasetColumns.size()];
-        columns = (String[]) datasetColumns.toArray(columns);
+        String[] columns = (String[]) dataset.keySet().toArray();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(CreateMachineLearningModelActivity.this, android.R.layout.simple_spinner_item, columns);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

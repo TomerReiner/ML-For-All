@@ -10,8 +10,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,7 +41,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private TextView tvPassword;
     private Button btnChangePassword;
     private Button btnDownloadMLModels;
-    private Button btnDeleteData;
+    private Button btnDeleteMLModels;
     private Button btnDeleteAccount;
 
     private String username = "";
@@ -57,67 +55,38 @@ public class MyProfileActivity extends AppCompatActivity {
 
         updateUsernameAndPasswordTextViews();
 
-        btnChangeUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createChangeUsernameDialog();
-                updateUsernameAndPasswordTextViews();
-            }
+        btnChangeUsername.setOnClickListener(v -> {
+            createChangeUsernameDialog();
+            updateUsernameAndPasswordTextViews();
         });
 
-        btnChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createChangePasswordDialog();
-                updateUsernameAndPasswordTextViews();
-            }
+        btnChangePassword.setOnClickListener(v -> {
+            createChangePasswordDialog();
+            updateUsernameAndPasswordTextViews();
         });
 
 
-        btnDeleteData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateUsernameAndPasswordTextViews();
-                username = db.getCurrentLoggedInUsername();
-                db.deleteUserData(username);
-            }
+        btnDeleteMLModels.setOnClickListener(v -> {
+            updateUsernameAndPasswordTextViews();
+            username = db.getCurrentLoggedInUsername();
+            db.deleteUserData(username);
         });
 
-        btnDownloadMLModels.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateUsernameAndPasswordTextViews();
-            }
+        btnDownloadMLModels.setOnClickListener(v -> updateUsernameAndPasswordTextViews());
+
+        btnDeleteAccount.setOnClickListener(v -> {
+            username = db.getCurrentLoggedInUsername();
+            db.deleteUser(username);
         });
 
-        btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                username = db.getCurrentLoggedInUsername();
-                db.deleteUser(username);
-            }
-        });
+        constraintLayout.setOnClickListener(v -> updateUsernameAndPasswordTextViews());
 
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateUsernameAndPasswordTextViews();
-            }
-        });
+        drawerToggle.setToolbarNavigationClickListener(v -> updateUsernameAndPasswordTextViews());
 
-        drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateUsernameAndPasswordTextViews();
-            }
-        });
-
-        constraintLayout.setOnTouchListener(new View.OnTouchListener() { // This listener is used to update tvUsername and tvPassword texts.
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                updateUsernameAndPasswordTextViews();
-                return false;
-            }
+        // This listener is used to update tvUsername and tvPassword texts.
+        constraintLayout.setOnTouchListener((v, event) -> {
+            updateUsernameAndPasswordTextViews();
+            return false;
         });
     }
 
@@ -160,7 +129,7 @@ public class MyProfileActivity extends AppCompatActivity {
         tvPassword = findViewById(R.id.tvPassword);
         btnChangePassword = findViewById(R.id.btnChangePassword);
         btnDownloadMLModels = findViewById(R.id.btnDownloadMLModels);
-        btnDeleteData = findViewById(R.id.btnDeleteData);
+        btnDeleteMLModels = findViewById(R.id.btnDeleteMLModels);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
     }
 
@@ -183,37 +152,34 @@ public class MyProfileActivity extends AppCompatActivity {
 
         Button btnChangeUsernameConfirm = changeUsernameDialog.findViewById(R.id.btnChangeUsernameConfirm);
 
-        btnChangeUsernameConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String newUsername = etChangeUsernameNewUsername.getText().toString();
-                String retypeUsername = etChangeUsernameRetypeUsername.getText().toString();
-                String insertedPassword = etChangeUsernameVerifyPassword.getText().toString(); // The values that the user typed.
-                String realPassword = db.getPasswordForUsername(username); // The real password of the user.
+        btnChangeUsernameConfirm.setOnClickListener(v -> {
+            String newUsername = etChangeUsernameNewUsername.getText().toString();
+            String retypeUsername = etChangeUsernameRetypeUsername.getText().toString();
+            String insertedPassword = etChangeUsernameVerifyPassword.getText().toString(); // The values that the user typed.
+            String realPassword = db.getPasswordForUsername(username); // The real password of the user.
 
-                /*
-                If the new username filed and the retype username field are equal,
-                and if the password that the user has entered is his reaL Password.
-                 */
-                if (newUsername.equals(retypeUsername) && insertedPassword.equals(realPassword)) {
-                    boolean successfullyChangesUsername = db.changeUsername(username, newUsername);
+            /*
+            If the new username filed and the retype username field are equal,
+            and if the password that the user has entered is his reaL Password.
+             */
+            if (newUsername.equals(retypeUsername) && insertedPassword.equals(realPassword)) {
+                boolean successfullyChangesUsername = db.changeUsername(username, newUsername);
 
-                    if (successfullyChangesUsername) { // If the username was successfully changed.
-                        Toast.makeText(MyProfileActivity.this, "Username was successfully changes!", Toast.LENGTH_LONG).show();
-                        username = newUsername; // Updating the username.
-                        changeUsernameDialog.dismiss();
-                        return;
-                    }
-
-                    else { // Changing the username failed.
-                        Toast.makeText(MyProfileActivity.this, "Error enocountered. Please make sure that all the fields are filled. If this doesn't work, try other username.", Toast.LENGTH_LONG).show();
-                        clearAllFields(etChangeUsernameNewUsername, etChangeUsernameRetypeUsername, etChangeUsernameVerifyPassword);
-                    }
+                if (successfullyChangesUsername) { // If the username was successfully changed.
+                    Toast.makeText(MyProfileActivity.this, "Username was successfully changes!", Toast.LENGTH_LONG).show();
+                    username = newUsername; // Updating the username.
+                    changeUsernameDialog.dismiss();
+                    updateUsernameAndPasswordTextViews();
                 }
-                else {
-                    Toast.makeText(MyProfileActivity.this, "Please make sure that the usernames are equal, and the inserted password is your real password.", Toast.LENGTH_LONG).show();
+
+                else { // Changing the username failed.
+                    Toast.makeText(MyProfileActivity.this, "Error encountered. Please make sure that all the fields are filled. If this doesn't work, try other username.", Toast.LENGTH_LONG).show();
                     clearAllFields(etChangeUsernameNewUsername, etChangeUsernameRetypeUsername, etChangeUsernameVerifyPassword);
                 }
+            }
+            else {
+                Toast.makeText(MyProfileActivity.this, "Please make sure that the usernames are equal, and the inserted password is your real password.", Toast.LENGTH_LONG).show();
+                clearAllFields(etChangeUsernameNewUsername, etChangeUsernameRetypeUsername, etChangeUsernameVerifyPassword);
             }
         });
         changeUsernameDialog.show();
@@ -238,35 +204,32 @@ public class MyProfileActivity extends AppCompatActivity {
 
         Button btnChangePasswordConfirm = changePasswordDialog.findViewById(R.id.btnChangePasswordConfirm);
 
-        btnChangePasswordConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String newPassword = etChangePasswordNewPassword.getText().toString();
-                String retypePassword = etChangePasswordRetypePassword.getText().toString();
-                String insertedPassword = etChangePasswordOldPassword.getText().toString(); // The values that the user typed.
-                String realPassword =  db.getPasswordForUsername(username); // The real password of the user.
+        btnChangePasswordConfirm.setOnClickListener(v -> {
+            String newPassword = etChangePasswordNewPassword.getText().toString();
+            String retypePassword = etChangePasswordRetypePassword.getText().toString();
+            String insertedPassword = etChangePasswordOldPassword.getText().toString(); // The values that the user typed.
+            String realPassword =  db.getPasswordForUsername(username); // The real password of the user.
 
-                /*
-                If the new password filed and the retype password field are equal,
-                and if the password that the user has entered is his real password.
-                 */
-                if (newPassword.equals(retypePassword) && insertedPassword.equals(realPassword)) {
-                    boolean successfullyChangesPassword = db.changePassword(username, newPassword);
+            /*
+            If the new password filed and the retype password field are equal,
+            and if the password that the user has entered is his real password.
+             */
+            if (newPassword.equals(retypePassword) && insertedPassword.equals(realPassword)) {
+                boolean successfullyChangesPassword = db.changePassword(username, newPassword);
 
-                    if (successfullyChangesPassword) { // If the password was successfully changed.
-                        Toast.makeText(MyProfileActivity.this, "Password was successfully changed!", Toast.LENGTH_LONG).show();
-                        changePasswordDialog.dismiss();
-                        return;
-                    }
-                    else {
-                        Toast.makeText(MyProfileActivity.this, "Error enocuntered. Please make sure that all the fields are filled.", Toast.LENGTH_LONG).show();
-                        clearAllFields(etChangePasswordNewPassword,  etChangePasswordRetypePassword, etChangePasswordOldPassword);
-                    }
+                if (successfullyChangesPassword) { // If the password was successfully changed.
+                    Toast.makeText(MyProfileActivity.this, "Password was successfully changed!", Toast.LENGTH_LONG).show();
+                    changePasswordDialog.dismiss();
+                    updateUsernameAndPasswordTextViews();
                 }
                 else {
-                    Toast.makeText(MyProfileActivity.this, "Please make sure that new password fields are equal and that the old password is your password.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyProfileActivity.this, "Error encountered. Please make sure that all the fields are filled.", Toast.LENGTH_LONG).show();
                     clearAllFields(etChangePasswordNewPassword,  etChangePasswordRetypePassword, etChangePasswordOldPassword);
                 }
+            }
+            else {
+                Toast.makeText(MyProfileActivity.this, "Please make sure that new password fields are equal and that the old password is your password.", Toast.LENGTH_LONG).show();
+                clearAllFields(etChangePasswordNewPassword,  etChangePasswordRetypePassword, etChangePasswordOldPassword);
             }
         });
         changePasswordDialog.show();

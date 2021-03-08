@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.service.autofill.UserData;
 
 import androidx.annotation.Nullable;
 
@@ -389,10 +388,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function
-     * @param username
-     * @return
+     * @param username The username of the user.
+     * @return All the Machine Learning Models of the user.
      */
-    public String getMLModels(String username) {
+    public ArrayList<MachineLearningModel> getMLModels(String username) {
         return null; // TODO-complete
     }
 

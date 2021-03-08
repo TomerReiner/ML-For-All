@@ -3,10 +3,8 @@ package com.example.mlforall;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -55,16 +53,23 @@ public class MenuHelper {
      * @param tag The name of the activity that we are in.
      */
     public void setMainMenu(String tag) {
-        if (tag.equals(MainActivity.TAG))
-            setMainMenuForMainActivity();
-        else if (tag.equals(CreateMachineLearningModelActivity.TAG))
-            setMainMenuForCreateMachineLearningModelActivity();
-        else if (tag.equals(MyModelsActivity.TAG))
-            setMainMenuForMyModelsActivity();
-        else if (tag.equals(MyProfileActivity.TAG))
-            setMainMenuForMyProfileActivity();
-        else if (tag.equals(AboutActivity.TAG))
-            setMainMenuForAboutActivity();
+        switch (tag) {
+            case MainActivity.TAG:
+                setMainMenuForMainActivity();
+                break;
+            case CreateMachineLearningModelActivity.TAG:
+                setMainMenuForCreateMachineLearningModelActivity();
+                break;
+            case MyModelsActivity.TAG:
+                setMainMenuForMyModelsActivity();
+                break;
+            case MyProfileActivity.TAG:
+                setMainMenuForMyProfileActivity();
+                break;
+            case AboutActivity.TAG:
+                setMainMenuForAboutActivity();
+                break;
+        }
     }
 
     /**
@@ -80,42 +85,39 @@ public class MenuHelper {
         drawerToggle.syncState();
 
         actionBar.setDisplayHomeAsUpEnabled(true); // Set the menu icon available.
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.itemCreateMachineLearningModel) { // If the user wants to go to CreateMachineLearningModelActivity.
-                    Intent intentMoveToCreateMachineLearningActivity = new Intent(context, CreateMachineLearningModelActivity.class);
-                    context.startActivity(intentMoveToCreateMachineLearningActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
-                    Intent intentMoveToMyProfileActivity = new Intent(context, MyProfileActivity.class);
-                    context.startActivity(intentMoveToMyProfileActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
-                    Intent intentMoveToMyModelsActivity = new Intent(context, MyModelsActivity.class);
-                    context.startActivity(intentMoveToMyModelsActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    username = db.getCurrentLoggedInUsername();
-                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
-                        username = dialogHelper.buildLoginDialog();
-                    }
-                    else {
-                        db.logOut(username);
-                        Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                        username = "";
-                    }
-                }
-                else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
-                    Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
-                    context.startActivity(intentMoveToAboutActivity);
-                    return true;
-                }
-                return false;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.itemCreateMachineLearningModel) { // If the user wants to go to CreateMachineLearningModelActivity.
+                Intent intentMoveToCreateMachineLearningActivity = new Intent(context, CreateMachineLearningModelActivity.class);
+                context.startActivity(intentMoveToCreateMachineLearningActivity);
+                return true;
             }
+            else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
+                Intent intentMoveToMyProfileActivity = new Intent(context, MyProfileActivity.class);
+                context.startActivity(intentMoveToMyProfileActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
+                Intent intentMoveToMyModelsActivity = new Intent(context, MyModelsActivity.class);
+                context.startActivity(intentMoveToMyModelsActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemLoginOrLogout) {
+                username = db.getCurrentLoggedInUsername();
+                if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                    username = dialogHelper.buildLoginDialog();
+                }
+                else {
+                    db.logOut(username);
+                    Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+                    username = "";
+                }
+            }
+            else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
+                Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
+                context.startActivity(intentMoveToAboutActivity);
+                return true;
+            }
+            return false;
         });
     }
 
@@ -132,42 +134,39 @@ public class MenuHelper {
         drawerToggle.syncState();
 
         actionBar.setDisplayHomeAsUpEnabled(true); // Set the menu icon available.
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
-                    Intent intentMoveToMainActivity = new Intent(context, MainActivity.class);
-                    context.startActivity(intentMoveToMainActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
-                    Intent intentMoveToMyModelsActivity = new Intent(context, MyModelsActivity.class);
-                    context.startActivity(intentMoveToMyModelsActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
-                    Intent intentMoveToMyProfileActivity = new Intent(context, MyProfileActivity.class);
-                    context.startActivity(intentMoveToMyProfileActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    username = db.getCurrentLoggedInUsername();
-                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
-                        username = dialogHelper.buildLoginDialog();
-                    }
-                    else {
-                        db.logOut(username);
-                        Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                        username = "";
-                    }
-                }
-                else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
-                    Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
-                    context.startActivity(intentMoveToAboutActivity);
-                    return true;
-                }
-                return false;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
+                Intent intentMoveToMainActivity = new Intent(context, MainActivity.class);
+                context.startActivity(intentMoveToMainActivity);
+                return true;
             }
+            else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
+                Intent intentMoveToMyModelsActivity = new Intent(context, MyModelsActivity.class);
+                context.startActivity(intentMoveToMyModelsActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
+                Intent intentMoveToMyProfileActivity = new Intent(context, MyProfileActivity.class);
+                context.startActivity(intentMoveToMyProfileActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemLoginOrLogout) {
+                username = db.getCurrentLoggedInUsername();
+                if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                    username = dialogHelper.buildLoginDialog();
+                }
+                else {
+                    db.logOut(username);
+                    Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+                    username = "";
+                }
+            }
+            else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
+                Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
+                context.startActivity(intentMoveToAboutActivity);
+                return true;
+            }
+            return false;
         });
     }
 
@@ -185,24 +184,22 @@ public class MenuHelper {
         drawerToggle.syncState();
 
         actionBar.setDisplayHomeAsUpEnabled(true); // Set the menu icon available.
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
-                    Intent intentMoveToMainActivity = new Intent(context, MainActivity.class);
-                    context.startActivity(intentMoveToMainActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemCreateMachineLearningModel) { // If the user wants to go to CreateMachineLearningModelActivity.
-                    Intent intentMoveToCreateMachineLearningActivity = new Intent(context, CreateMachineLearningModelActivity.class);
-                    context.startActivity(intentMoveToCreateMachineLearningActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
-                    Intent intentMoveToMyProfileActivity = new Intent(context, MyProfileActivity.class);
-                    context.startActivity(intentMoveToMyProfileActivity);
-                    return true;
-                }
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
+                Intent intentMoveToMainActivity = new Intent(context, MainActivity.class);
+                context.startActivity(intentMoveToMainActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemCreateMachineLearningModel) { // If the user wants to go to CreateMachineLearningModelActivity.
+                Intent intentMoveToCreateMachineLearningActivity = new Intent(context, CreateMachineLearningModelActivity.class);
+                context.startActivity(intentMoveToCreateMachineLearningActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
+                Intent intentMoveToMyProfileActivity = new Intent(context, MyProfileActivity.class);
+                context.startActivity(intentMoveToMyProfileActivity);
+                return true;
+            }
 //                else if (item.getItemId() == R.id.itemLoginOrLogout) {
 //                    username = db.getCurrentLoggedInUsername();
 //                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
@@ -214,13 +211,12 @@ public class MenuHelper {
 //                        username = "";
 //                    }
 //                }
-                else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
-                    Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
-                    context.startActivity(intentMoveToAboutActivity);
-                    return true;
-                }
-                return false;
+            else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
+                Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
+                context.startActivity(intentMoveToAboutActivity);
+                return true;
             }
+            return false;
         });
     }
 
@@ -237,42 +233,39 @@ public class MenuHelper {
         drawerToggle.syncState();
 
         actionBar.setDisplayHomeAsUpEnabled(true); // Set the menu icon available.
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
-                    Intent intentMoveToMainActivity = new Intent(context, MainActivity.class);
-                    context.startActivity(intentMoveToMainActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemCreateMachineLearningModel) { // If the user wants to go to CreateMachineLearningModelActivity.
-                    Intent intentMoveToCreateMachineLearningActivity = new Intent(context, CreateMachineLearningModelActivity.class);
-                    context.startActivity(intentMoveToCreateMachineLearningActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
-                    Intent intentMoveToMyModelsActivity = new Intent(context, MyModelsActivity.class);
-                    context.startActivity(intentMoveToMyModelsActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    username = db.getCurrentLoggedInUsername();
-                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
-                        username = dialogHelper.buildLoginDialog();
-                    }
-                    else {
-                        db.logOut(username);
-                        Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                        username = "";
-                    }
-                }
-                else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
-                    Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
-                    context.startActivity(intentMoveToAboutActivity);
-                    return true;
-                }
-                return false;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
+                Intent intentMoveToMainActivity = new Intent(context, MainActivity.class);
+                context.startActivity(intentMoveToMainActivity);
+                return true;
             }
+            else if (item.getItemId() == R.id.itemCreateMachineLearningModel) { // If the user wants to go to CreateMachineLearningModelActivity.
+                Intent intentMoveToCreateMachineLearningActivity = new Intent(context, CreateMachineLearningModelActivity.class);
+                context.startActivity(intentMoveToCreateMachineLearningActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
+                Intent intentMoveToMyModelsActivity = new Intent(context, MyModelsActivity.class);
+                context.startActivity(intentMoveToMyModelsActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemLoginOrLogout) {
+                username = db.getCurrentLoggedInUsername();
+                if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                    username = dialogHelper.buildLoginDialog();
+                }
+                else {
+                    db.logOut(username);
+                    Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+                    username = "";
+                }
+            }
+            else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
+                Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
+                context.startActivity(intentMoveToAboutActivity);
+                return true;
+            }
+            return false;
         });
     }
 
@@ -290,42 +283,39 @@ public class MenuHelper {
         drawerToggle.syncState();
 
         actionBar.setDisplayHomeAsUpEnabled(true); // Set the menu icon available.
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
-                    Intent intentMoveToMainActivity = new Intent(context, MainActivity.class);
-                    context.startActivity(intentMoveToMainActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemCreateMachineLearningModel) { // If the user wants to go to AboutActivity.
-                    Intent intentMoveToCreateMachineLearningActivity = new Intent(context, CreateMachineLearningModelActivity.class);
-                    context.startActivity(intentMoveToCreateMachineLearningActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
-                    Intent intentMoveToMyModelsActivity = new Intent(context, MyModelsActivity.class);
-                    context.startActivity(intentMoveToMyModelsActivity);
-                    return true;
-                }
-                else if (item.getItemId() == R.id.itemLoginOrLogout) {
-                    username = db.getCurrentLoggedInUsername();
-                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
-                        username = dialogHelper.buildLoginDialog();
-                    }
-                    else {
-                        db.logOut(username);
-                        Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-                        username = "";
-                    }
-                }
-                else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
-                    Intent intentMoveToMyProfileActivity = new Intent(context, MyProfileActivity.class);
-                    context.startActivity(intentMoveToMyProfileActivity);
-                    return true;
-                }
-                return false;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.itemGoHome) { // If the user wants to go to MainActivity.
+                Intent intentMoveToMainActivity = new Intent(context, MainActivity.class);
+                context.startActivity(intentMoveToMainActivity);
+                return true;
             }
+            else if (item.getItemId() == R.id.itemCreateMachineLearningModel) { // If the user wants to go to AboutActivity.
+                Intent intentMoveToCreateMachineLearningActivity = new Intent(context, CreateMachineLearningModelActivity.class);
+                context.startActivity(intentMoveToCreateMachineLearningActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemMyModels) { // If the user wants to go to MyModelsActivity.
+                Intent intentMoveToMyModelsActivity = new Intent(context, MyModelsActivity.class);
+                context.startActivity(intentMoveToMyModelsActivity);
+                return true;
+            }
+            else if (item.getItemId() == R.id.itemLoginOrLogout) {
+                username = db.getCurrentLoggedInUsername();
+                if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
+                    username = dialogHelper.buildLoginDialog();
+                }
+                else {
+                    db.logOut(username);
+                    Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
+                    username = "";
+                }
+            }
+            else if (item.getItemId() == R.id.itemMyProfile) { // If the user wants to go to MyProfileActivity.
+                Intent intentMoveToMyProfileActivity = new Intent(context, MyProfileActivity.class);
+                context.startActivity(intentMoveToMyProfileActivity);
+                return true;
+            }
+            return false;
         });
     }
 }
