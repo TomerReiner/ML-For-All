@@ -290,7 +290,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      * @param spinner The spinner that we want to set the items in it.
      */
     private void setSpinnerItems(Spinner spinner) {
-        String[] columns = (String[]) dataset.keySet().toArray();
+        String[] columns = (String[]) dataset.keySet().toArray(new String[0]);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(CreateMachineLearningModelActivity.this, android.R.layout.simple_spinner_item, columns);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
