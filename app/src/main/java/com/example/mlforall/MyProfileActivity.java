@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private Dialog signUpDialog;
     private Dialog changeUsernameDialog;
     private Dialog changePasswordDialog;
+    private Dialog deleteMLModelsDialog;
 
     private DatabaseHelper db;
     private MenuHelper menuHelper;
@@ -40,7 +42,6 @@ public class MyProfileActivity extends AppCompatActivity {
     private Button btnChangeUsername;
     private TextView tvPassword;
     private Button btnChangePassword;
-    private Button btnDownloadMLModels;
     private Button btnDeleteMLModels;
     private Button btnDeleteAccount;
 
@@ -68,11 +69,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
         btnDeleteMLModels.setOnClickListener(v -> {
             updateUsernameAndPasswordTextViews();
-            username = db.getCurrentLoggedInUsername();
-            db.deleteUserData(username);
+            createDeleteMLModelsDialog();
         });
-
-        btnDownloadMLModels.setOnClickListener(v -> updateUsernameAndPasswordTextViews());
 
         btnDeleteAccount.setOnClickListener(v -> {
             username = db.getCurrentLoggedInUsername();
@@ -103,6 +101,7 @@ public class MyProfileActivity extends AppCompatActivity {
         loginDialog.dismiss();
         signUpDialog.dismiss();
         changeUsernameDialog.dismiss();
+        deleteMLModelsDialog.dismiss();
     }
 
     /**
@@ -120,6 +119,7 @@ public class MyProfileActivity extends AppCompatActivity {
         signUpDialog = new Dialog(MyProfileActivity.this);
         changeUsernameDialog = new Dialog(MyProfileActivity.this);
         changePasswordDialog = new Dialog(MyProfileActivity.this);
+        deleteMLModelsDialog = new Dialog(MyProfileActivity.this);
         db = new DatabaseHelper(MyProfileActivity.this);
         username = db.getCurrentLoggedInUsername();
         menuHelper = new MenuHelper(MyProfileActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
@@ -128,7 +128,6 @@ public class MyProfileActivity extends AppCompatActivity {
         btnChangeUsername = findViewById(R.id.btnChangeUsername);
         tvPassword = findViewById(R.id.tvPassword);
         btnChangePassword = findViewById(R.id.btnChangePassword);
-        btnDownloadMLModels = findViewById(R.id.btnDownloadMLModels);
         btnDeleteMLModels = findViewById(R.id.btnDeleteMLModels);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
     }
@@ -235,6 +234,33 @@ public class MyProfileActivity extends AppCompatActivity {
         changePasswordDialog.show();
     }
 
+    private void createDeleteMLModelsDialog() {
+        username = db.getCurrentLoggedInUsername();
+        deleteMLModelsDialog.setContentView(R.layout.dialog_delete_ml_models);
+        deleteMLModelsDialog.setCancelable(true);
+        deleteMLModelsDialog.setTitle("Are you sure you want to delete all your ML Model?");
+
+        EditText etDeleteMLModelsPassword = deleteMLModelsDialog.findViewById(R.id.etDeleteMLModelsPassword);
+        Button btnDeleteMLModelsConfirm = deleteMLModelsDialog.findViewById(R.id.btnDeleteMLModelsConfirm);
+
+        btnDeleteMLModelsConfirm.setOnClickListener(v -> {
+            String insertedPassword = etDeleteMLModelsPassword.getText().toString();
+            String realPassword = db.getPasswordForUsername(username); // The real password of the user.
+
+            if (realPassword.equals(insertedPassword)) { // If the passwords are equal then we delete
+                db.deleteUserData(username);
+                Toast.makeText(MyProfileActivity.this, "Your ML Models were deleted :(", Toast.LENGTH_LONG).show();
+                deleteMLModelsDialog.dismiss();
+            }
+            else {
+                Toast.makeText(MyProfileActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
+                clearAllFields(etDeleteMLModelsPassword);
+            }
+        });
+        deleteMLModelsDialog.show();
+    }
+
+
     /**
      * This function clears all the {@link EditText} in <code>args</code>
      * @param args The {@link EditText} that we want to clear their values.
@@ -249,11 +275,11 @@ public class MyProfileActivity extends AppCompatActivity {
      * to be the username and the password of the currently logged in user.
      * If there is no user logged in, the fields will contain the texts:
      * <pre>
-     *     {@link #tvUsername} : {@link R.string#username}
-     *     {@link #tvPassword} : {@link R.string#password}
+     * {@link #tvUsername} : {@link R.string#username}
+     * {@link #tvPassword} : {@link R.string#password}
      * </pre>
      */
-    private void updateUsernameAndPasswordTextViews() { // TODO-complete
+    private void updateUsernameAndPasswordTextViews() {
         username = db.getCurrentLoggedInUsername();
 
         if (username.equals("")) { // If the username is empty, which means there is no user logged in.

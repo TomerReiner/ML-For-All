@@ -85,12 +85,6 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      */
     private boolean isDataTooLargeToDisplay = false;
 
-    /**
-     * This boolean checks if there is an sd card inserted.
-     * The application needs sd card to function.
-     */
-    boolean sdInserted = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-
     private LinearRegression model;
 
     /**
