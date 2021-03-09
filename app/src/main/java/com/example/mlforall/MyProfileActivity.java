@@ -234,6 +234,12 @@ public class MyProfileActivity extends AppCompatActivity {
         changePasswordDialog.show();
     }
 
+    /**
+     * This function creates the dialog to delete all the user's ML Models.
+     * If the passwords that the user has inserted are equal and they are the real password,
+     * the user ML Model table will be emptied.
+     * @see DatabaseHelper#deleteUserData(String)
+     */
     private void createDeleteMLModelsDialog() {
         username = db.getCurrentLoggedInUsername();
         deleteMLModelsDialog.setContentView(R.layout.dialog_delete_ml_models);
@@ -241,24 +247,30 @@ public class MyProfileActivity extends AppCompatActivity {
         deleteMLModelsDialog.setTitle("Are you sure you want to delete all your ML Model?");
 
         EditText etDeleteMLModelsPassword = deleteMLModelsDialog.findViewById(R.id.etDeleteMLModelsPassword);
+        EditText etDeleteMLModelsRetypePassword = deleteMLModelsDialog.findViewById(R.id.etDeleteMLModelsRetypePassword);
         Button btnDeleteMLModelsConfirm = deleteMLModelsDialog.findViewById(R.id.btnDeleteMLModelsConfirm);
 
         btnDeleteMLModelsConfirm.setOnClickListener(v -> {
             String insertedPassword = etDeleteMLModelsPassword.getText().toString();
+            String retypePassword = etDeleteMLModelsRetypePassword.getText().toString();
             String realPassword = db.getPasswordForUsername(username); // The real password of the user.
 
-            if (realPassword.equals(insertedPassword)) { // If the passwords are equal then we delete
+            if (realPassword.equals(insertedPassword) && realPassword.equals(retypePassword)) { // If the passwords are equal, and if both the inserted passwords are equal then we will delete the user's ML Models.
                 db.deleteUserData(username);
                 Toast.makeText(MyProfileActivity.this, "Your ML Models were deleted :(", Toast.LENGTH_LONG).show();
                 deleteMLModelsDialog.dismiss();
             }
             else {
-                Toast.makeText(MyProfileActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyProfileActivity.this, "Your password is incorrect or the 2 passwords you have inserted are not equal.", Toast.LENGTH_LONG).show();
                 clearAllFields(etDeleteMLModelsPassword);
             }
         });
         deleteMLModelsDialog.show();
     }
+
+//    private void createDeleteAccountDialog() {
+//
+//    }
 
 
     /**

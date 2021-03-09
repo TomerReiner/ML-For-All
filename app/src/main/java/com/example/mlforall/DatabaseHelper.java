@@ -387,15 +387,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * This function
-     * @param username The username of the user.
-     * @return All the Machine Learning Models of the user.
-     */
-    public ArrayList<MachineLearningModel> getMLModels(String username) {
-        return null; // TODO-complete
-    }
-
-    /**
      * This function gets all the user's machine learning models from his table.
      * @param username The username of the user.
      * @return {@link ArrayList} of {@link MachineLearningModel} with all of the users model.
