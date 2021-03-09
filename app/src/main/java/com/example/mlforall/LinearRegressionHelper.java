@@ -263,15 +263,4 @@ public class LinearRegressionHelper {
     public static boolean isDataTooLargeForGraph(double[] arr) {
         return arr[0] < -100 || arr[arr.length - 1] > 100;
     }
-
-    /**
-     * This function computes the difference between the min value and max value in <code>arr</code>.
-     * @param arr The array that we want to find the difference between its min value and its max value.
-     * The array is sorted from minimal value to maximal value.
-     * @return The difference between the min value and max value.
-     */
-    public static double differenceBetweenMinAndMaxValues(double[] arr) {
-        return arr[arr.length - 1] - arr[0];
-    }
-
 }

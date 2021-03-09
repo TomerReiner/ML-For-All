@@ -14,17 +14,10 @@ public class LinearEquation {
         return slope;
     }
 
-    public void setSlope(double slope) {
-        this.slope = slope;
-    }
-
     public double getIntercept() {
         return intercept;
     }
 
-    public void setIntercept(double intercept) {
-        this.intercept = intercept;
-    }
 
     public boolean equals(LinearEquation equation) {
         return this.slope == equation.getSlope() && this.intercept == equation.getIntercept();

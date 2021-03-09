@@ -14,19 +14,19 @@ import android.widget.Toast;
 public class DialogHelper {
 
     private final Context context;
-    private DatabaseHelper db;
+    private final DatabaseHelper db;
 
     /**
      * The Login Dialog.
      * @see R.layout#login_dialog
      */
-    private Dialog loginDialog;
+    private final Dialog loginDialog;
 
     /**
      * The Sign Up Dialog
      * @see R.layout#sign_up_dialog
      */
-    private Dialog signUpDialog;
+    private final Dialog signUpDialog;
 
 
     public DialogHelper(Context context, DatabaseHelper db, Dialog loginDialog, Dialog signUpDialog) {

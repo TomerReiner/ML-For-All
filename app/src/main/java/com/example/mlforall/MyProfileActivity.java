@@ -10,6 +10,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,7 +84,7 @@ public class MyProfileActivity extends AppCompatActivity {
         drawerToggle.setToolbarNavigationClickListener(v -> updateUsernameAndPasswordTextViews());
 
         // This listener is used to update tvUsername and tvPassword texts.
-        constraintLayout.setOnTouchListener((v, event) -> {
+        constraintLayout.setOnTouchListener((View v, MotionEvent event) -> {
             updateUsernameAndPasswordTextViews();
             return false;
         });

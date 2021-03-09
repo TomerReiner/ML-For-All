@@ -75,8 +75,6 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
     private HashMap<String, double[]> dataset; // This HashMap will contain the dataset.
     private boolean successfullyLoadedDataset = false;
 
-    private boolean shouldUserNormalizeData = false;
-
     /**
      * If the data is too large to display on the graph.
      * @see LinearRegressionHelper#isDataTooLargeForGraph(double[])
@@ -284,7 +282,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      * @param spinner The spinner that we want to set the items in it.
      */
     private void setSpinnerItems(Spinner spinner) {
-        String[] columns = (String[]) dataset.keySet().toArray(new String[0]);
+        String[] columns = dataset.keySet().toArray(new String[0]);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(CreateMachineLearningModelActivity.this, android.R.layout.simple_spinner_item, columns);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

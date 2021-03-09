@@ -139,14 +139,13 @@ public class FileHelper {
             return null;
 
         int data_size = data.size();
-        int column_size = data.get(0).size();
 
         for (int i = 0; i < data_size; i++) { // Loading the indexes of columns with non numeric values.
             int rows = data.get(i).size();
             boolean hasNonNumericValues = false;
             for (int j = 0; j < rows; j++) {
                 try {
-                    double itemInPosition = Double.parseDouble(data.get(i).get(j));
+                    Double.parseDouble(data.get(i).get(j));
                 }
                 catch (Exception e) {
                     hasNonNumericValues = true;

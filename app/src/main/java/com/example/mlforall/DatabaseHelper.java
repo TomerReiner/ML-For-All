@@ -182,12 +182,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, new String[]{username});
 
         if (cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                String currentPassword = cursor.getString(cursor.getColumnIndex(PASSWORD));
-                cursor.close();
-                db.close();
-                return currentPassword;
-            }
+            String currentPassword = cursor.getString(cursor.getColumnIndex(PASSWORD));
+            cursor.close();
+            db.close();
+            return currentPassword;
         }
         cursor.close();
         db.close();
