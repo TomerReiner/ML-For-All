@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CreateMachineLearningModelActivity extends AppCompatActivity {
-// TODO - abort process.
+
     public static final String TAG = "CreateMachineLearningModelActivity"; // The name of the activity.
 
     public static final String IS_DATA_TO_LARGE_TO_DISPLAY = "tooLargeToDisplay";
@@ -187,7 +187,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         loginDialog.dismiss();
         signUpDialog.dismiss();
     }
-// TODO-dialog for normalize data
+
     /**
      * This function initializes the variables.
      */
@@ -259,7 +259,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
 
                 if (dataset == null || dataset.size() == 0) { // If loading the dataset failed for any reason.
                     Toast.makeText(CreateMachineLearningModelActivity.this,
-                            "Please Make sure that all the values in the file are filled, there is the same amount of items in each column and that there are at least 10 rows in the dataset and 2 or more numeric columns.",
+                            "Please Make sure that all the values in the file are filled,\n there is the same amount of items in each column,\n and that there are at least 10 rows in the dataset and 2 or more numeric columns.",
                             Toast.LENGTH_LONG).show();
                     return false;
                 }
@@ -267,11 +267,11 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
                     return true;
             }
             else { // The user has not granted the application permission to read files.
-                Toast.makeText(CreateMachineLearningModelActivity.this, "Can't read file without permission.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateMachineLearningModelActivity.this, "Can't read file without permission.\nYou have to grant the app permission to read files in order to create Machine Learning Models.", Toast.LENGTH_SHORT).show();
                 return false;
             }
         } catch (IOException e) { // Error loading the file.
-            Toast.makeText(CreateMachineLearningModelActivity.this, "Error Loading the file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateMachineLearningModelActivity.this, "Error Loading the file.\n Please make sure that the file is in the SD CARD downloads folder,\n or in the internal storage downloads folder,\n or in the documents downloads folder.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return false;
         }
@@ -341,6 +341,12 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
 
         String xColumn = getSelectedColumn(spinnerChooseXData);
         String yColumn = getSelectedColumn(spinnerChooseYData);
+
+        if (xColumn.equals(yColumn)) { // If the columns are equal it means that the user wants to build a Machine Learning Model from a single value, which is useless.
+            Toast.makeText(CreateMachineLearningModelActivity.this, "Please choose different columns for X and Y.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         spinnerChooseXData.setClickable(false);
         spinnerChooseYData.setClickable(false);
         x = dataset.get(xColumn);

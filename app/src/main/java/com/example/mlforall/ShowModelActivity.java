@@ -76,7 +76,7 @@ public class ShowModelActivity extends AppCompatActivity {
         yTest = intent.getDoubleArrayExtra(LinearRegressionHelper.Y_TEST);
         slope = intent.getDoubleExtra("slope", 0);
         intercept = intent.getDoubleExtra("intercept", 0);
-        isDataTooLargeToDisplay = intent.getBooleanExtra(CreateMachineLearningModelActivity.IS_DATA_TO_LARGE_TO_DISPLAY, true);
+        isDataTooLargeToDisplay = intent.getBooleanExtra(CreateMachineLearningModelActivity.IS_DATA_TO_LARGE_TO_DISPLAY, false);
 
         plottingHelper = new PlottingHelper(xTrain, xTest, yTrain,yTest, slope, intercept, isDataTooLargeToDisplay);
 

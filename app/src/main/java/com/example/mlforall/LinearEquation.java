@@ -22,12 +22,4 @@ public class LinearEquation {
     public boolean equals(LinearEquation equation) {
         return this.slope == equation.getSlope() && this.intercept == equation.getIntercept();
     }
-
-    @SuppressWarnings("NullableProblems")
-    public String toString() {
-        return "LinearEquation{" +
-                "slope=" + slope +
-                ", intercept=" + intercept +
-                '}';
-    }
 }

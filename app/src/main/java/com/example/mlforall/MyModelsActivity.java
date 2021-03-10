@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -65,9 +66,8 @@ public class MyModelsActivity extends AppCompatActivity {
             startActivity(intentMoveToShowModelActivity);
         });
 
-        lvMyModels.setOnItemLongClickListener((parent, view, position, id) -> {
-
-            db.deleteModel(username, models.get(position)); // Deleting the model.
+        lvMyModels.setOnItemLongClickListener((AdapterView<?> parent, View view, int position, long id) -> {
+            db.deleteModel(username, position); // Deleting the model.
             loadModels(); // Reloading the models.
             return true;
         });

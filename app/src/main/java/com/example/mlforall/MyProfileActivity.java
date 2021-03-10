@@ -75,9 +75,7 @@ public class MyProfileActivity extends AppCompatActivity {
             createDeleteMLModelsDialog();
         });
 
-        btnDeleteAccount.setOnClickListener(v -> {
-            createDeleteAccountDialog();
-        });
+        btnDeleteAccount.setOnClickListener(v -> createDeleteAccountDialog());
 
         constraintLayout.setOnClickListener(v -> updateUsernameAndPasswordTextViews());
 

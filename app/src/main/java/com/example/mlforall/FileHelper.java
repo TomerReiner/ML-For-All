@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileHelper {
-// TODo-dialog to notify user that he need to load only full datasets.
+
     public static final int MIN_ROW_NUMBER_IN_DATASET = 10; // The min number of rows in the dataset.
     public static final int MIN_COLUMNS_NUMBER_IN_DATASET = 2; // The min number of columns in the dataset.
 
@@ -84,7 +84,7 @@ public class FileHelper {
 
             int valuesLength = values.length;
 
-            if (line == null || line.equals("")) // If loading the columns failed.
+            if (line.equals("")) // If loading the columns failed.
                 return null;
             else {
                 for (int i = 0; i < valuesLength; i++) { // Loading the dataset columns

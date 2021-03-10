@@ -27,8 +27,6 @@ public class MenuHelper {
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private ActionBar actionBar;
-    private Dialog loginDialog;
-    private Dialog signUpDialog;
     private DatabaseHelper db;
     private DialogHelper dialogHelper;
     private String username;
@@ -39,12 +37,11 @@ public class MenuHelper {
         this.navigationView = navigationView;
         this.drawerToggle = drawerToggle;
         this.actionBar = actionBar;
-        this.loginDialog = loginDialog;
-        this.signUpDialog = signUpDialog;
         this.db = db;
         this.username = username;
         this.dialogHelper = new DialogHelper(context, db, loginDialog, signUpDialog);
     }
+
 
     /**
      * This function sets the main menu for each activity.
