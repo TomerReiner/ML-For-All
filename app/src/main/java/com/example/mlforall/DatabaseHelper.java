@@ -22,8 +22,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String INTERCEPT = "intercept";
     public static final String SCORE = "score";
     public static final int VERSION = 1;
-    public static final int LOGGED_IN = 1;
-    public static final int LOGGED_OUT = 0;
+    public static final int LOGGED_IN = 1; // The user is logged in(true).
+    public static final int LOGGED_OUT = 0; // The user is not logged in(false).
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -173,23 +173,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * This function finds the password for a username.
      * @param username The username of the user that we want to find his password.
-     * @return The password of the user.
+     * @return The password of the user, empty string if there is no user logged in..
      */
     public String getPasswordForUsername(String username) {
+        if (username.equals("")) // If there is no username
+            return "";
+
         SQLiteDatabase db = this.getWritableDatabase();
         String query = String.format("SELECT %s FROM %s WHERE %s = ?;", PASSWORD, USERS_TABLE_NAME, USERNAME);
 
         Cursor cursor = db.rawQuery(query, new String[]{username});
-
-        if (cursor.getCount() > 0) {
-            String currentPassword = cursor.getString(cursor.getColumnIndex(PASSWORD));
-            cursor.close();
-            db.close();
-            return currentPassword;
-        }
+        cursor.moveToFirst();
+        String currentPassword = cursor.getString(cursor.getColumnIndex(PASSWORD));
         cursor.close();
         db.close();
-        return "";
+        return currentPassword;
     }
 
     /**
@@ -262,10 +260,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * This function deletes the user from {@link #USERS_TABLE_NAME}.
      * @param username The username of the user that we want to delete.
-     * @return <code>true</code> if the user was successfully deleted, <code>false</code> if not.
      * @see #onCreate(SQLiteDatabase)
      */
-    private boolean deleteUserFromUsers(String username) {
+    private void deleteUserFromUsers(String username) {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             db.delete(USERS_TABLE_NAME, USERNAME + " = ?", new String[]{username});
@@ -273,18 +270,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     /**
      * This function deletes the user's data table.
      * @param username The username of the user that we want to delete his data.
-     * @return <code>true</code> if the user's data was successfully deleted, <code>false</code> if not.
      * @see #addUser(User)
      */
-    public boolean deleteUserTable(String username) {
+    private void deleteUserTable(String username) {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             String query = String.format("DROP TABLE %s;", username);
@@ -293,40 +287,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     /**
      * This function deletes a user from the database.
      * @param username The username of the user that we want to delete.
-     * @return <code>true</code> if the user was successfully deleted form the database, <code>false</code> if not.
      * @see #deleteUser(String)
      * @see #deleteUserFromUsers(String)
      */
-    public boolean deleteUser(String username) {
-        return this.deleteUserFromUsers(username) && this.deleteUserTable(username);
+    public void deleteUser(String username) {
+        this.deleteUserFromUsers(username);
+        this.deleteUserTable(username);
     }
 
     /**
      * This function logs the user out.
      * @param username The name of the user that we want to log out.
-     * @return <code>true</code> if the user was successfully logged out, <code>false</code> if not.
      */
-    public boolean logOut(String username) {
+    public void logOut(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             ContentValues cv = new ContentValues();
             cv.put(CURRENTLY_LOGGED_IN, LOGGED_OUT);
-            db.update(USERS_TABLE_NAME, cv, USERNAME + " = ?", new String[]{username});
+            db.update(USERS_TABLE_NAME, cv, USERNAME + " = ?", new String[]{username}); // Logging out the user by setting currentlyLoggedIn to 0(false).
             db.close();
         }
         catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
     /**
      * This function returns the username that is currently logged in.
@@ -354,32 +343,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * This function deletes all the data from the user's data table(the table that has the user's username).
      * @param username The username of the user that we want to delete his data.
-     * @return <code>true</code> if the user's data table was successfully deleted, <code>false</code> if not.
      */
-    public boolean deleteUserData(String username) {
+    public void deleteUserData(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = String.format("DELETE FROM %s;", username);
-        try {
-            db.execSQL(query);
-            db.close();
-        }
-        catch (Exception e) {
-            return false;
-        }
-        return true;
+        db.execSQL(query);
+        db.close();
     }
 
     /**
      * This function adds a model to the user's data table.
      * @param username The username of the user that we want to add data for his table.
-     * @param equation The linear equation that was built for the data the user has loaded.
+     * @param model The machine learning model that we want to add ti the user's models table.
      */
-    public void addModel(String username, LinearEquation equation, double score) {
+    public void addModel(String username, MachineLearningModel model) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+        LinearEquation equation = model.getLinearEquation();
         cv.put(SLOPE, equation.getSlope());
         cv.put(INTERCEPT, equation.getIntercept());
-        cv.put(SCORE, score);
+        cv.put(SCORE, model.getScore());
         db.insert(username, null, cv);
         db.close();
     }
@@ -416,9 +399,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * This function deletes a model from the user's table.
      * @param username The username of the user.
      * @param model The model that the user wants to delete.
-     * @return <code>true</code> if the model was successfully deleted, <code>false</code> if not.
      */
-    public boolean deleteModel(String username, MachineLearningModel model) {
+    public void deleteModel(String username, MachineLearningModel model) {
         ArrayList<MachineLearningModel> models = this.getAllUsersModel(username);
         int modelsSize = models.size();
 
@@ -430,9 +412,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String whereClause = String.format("%s = ? AND %s = ? AND %s = ?", SLOPE, INTERCEPT, SCORE);
                 db.delete(username, whereClause, new String[]{"" + currentEquation.getSlope(), "" + currentEquation.getIntercept(), "" + model.getScore()});
                 db.close();
-                return true;
             }
         }
-        return false; // No model was found
     }
 }

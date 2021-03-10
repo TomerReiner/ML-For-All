@@ -36,6 +36,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private Dialog changeUsernameDialog;
     private Dialog changePasswordDialog;
     private Dialog deleteMLModelsDialog;
+    private Dialog deleteAccountDialog;
 
     private DatabaseHelper db;
     private MenuHelper menuHelper;
@@ -75,8 +76,7 @@ public class MyProfileActivity extends AppCompatActivity {
         });
 
         btnDeleteAccount.setOnClickListener(v -> {
-            username = db.getCurrentLoggedInUsername();
-            db.deleteUser(username);
+            createDeleteAccountDialog();
         });
 
         constraintLayout.setOnClickListener(v -> updateUsernameAndPasswordTextViews());
@@ -104,6 +104,7 @@ public class MyProfileActivity extends AppCompatActivity {
         signUpDialog.dismiss();
         changeUsernameDialog.dismiss();
         deleteMLModelsDialog.dismiss();
+        deleteAccountDialog.dismiss();
     }
 
     /**
@@ -122,6 +123,7 @@ public class MyProfileActivity extends AppCompatActivity {
         changeUsernameDialog = new Dialog(MyProfileActivity.this);
         changePasswordDialog = new Dialog(MyProfileActivity.this);
         deleteMLModelsDialog = new Dialog(MyProfileActivity.this);
+        deleteAccountDialog = new Dialog(MyProfileActivity.this);
         db = new DatabaseHelper(MyProfileActivity.this);
         username = db.getCurrentLoggedInUsername();
         menuHelper = new MenuHelper(MyProfileActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
@@ -141,8 +143,10 @@ public class MyProfileActivity extends AppCompatActivity {
      */
     private void createChangeUsernameDialog() {
         username = db.getCurrentLoggedInUsername();
-        if (username.equals("")) // If there is no username logged in we terminate the process.
+        if (username.equals("")) { // If there is no username logged in, we terminate the process.
+            Toast.makeText(MyProfileActivity.this, "You must be logged in to change your username.", Toast.LENGTH_LONG).show();
             return;
+        }
 
         changeUsernameDialog.setContentView(R.layout.change_username_dialog);
         changeUsernameDialog.setCancelable(true);
@@ -193,8 +197,10 @@ public class MyProfileActivity extends AppCompatActivity {
      */
     private void createChangePasswordDialog() {
         username = db.getCurrentLoggedInUsername();
-        if (username.equals("")) // If there is no username logged in we terminate the process.
+        if (username.equals("")) { // If there is no username logged in, we terminate the process.
+            Toast.makeText(MyProfileActivity.this, "You must be logged in to change your password.", Toast.LENGTH_LONG).show();
             return;
+        }
 
         changePasswordDialog.setContentView(R.layout.change_password_dialog);
         changePasswordDialog.setCancelable(true);
@@ -244,7 +250,12 @@ public class MyProfileActivity extends AppCompatActivity {
      */
     private void createDeleteMLModelsDialog() {
         username = db.getCurrentLoggedInUsername();
-        deleteMLModelsDialog.setContentView(R.layout.dialog_delete_ml_models);
+        if (username.equals("")) { // If there is no username logged in, we terminate the process.
+            Toast.makeText(MyProfileActivity.this, "You must be logged in to delete your ML Models.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        deleteMLModelsDialog.setContentView(R.layout.delete_ml_models_dialog);
         deleteMLModelsDialog.setCancelable(true);
         deleteMLModelsDialog.setTitle("Are you sure you want to delete all your ML Model?");
 
@@ -264,15 +275,54 @@ public class MyProfileActivity extends AppCompatActivity {
             }
             else {
                 Toast.makeText(MyProfileActivity.this, "Your password is incorrect or the 2 passwords you have inserted are not equal.", Toast.LENGTH_LONG).show();
-                clearAllFields(etDeleteMLModelsPassword);
+                clearAllFields(etDeleteMLModelsPassword, etDeleteMLModelsRetypePassword);
             }
         });
         deleteMLModelsDialog.show();
     }
 
-//    private void createDeleteAccountDialog() {
-//
-//    }
+    /**
+     * This function deletes the account of the currently logged in user.
+     * If the passwords that the user has inserted are equal and they are the real password,
+     * the account will be deleted.
+     * @see DatabaseHelper#deleteUser(String)
+     */
+    private void createDeleteAccountDialog() {
+        username = db.getCurrentLoggedInUsername();
+        if (username.equals("")) { // If there is no username logged in, we terminate the process.
+            Toast.makeText(MyProfileActivity.this, "You must be logged in to delete your account.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        deleteAccountDialog.setContentView(R.layout.delete_account_dialog);
+        deleteAccountDialog.setCancelable(true);
+        deleteAccountDialog.setTitle("Are you sure you want to delete your account?");
+
+        EditText etDeleteAccountPassword = deleteAccountDialog.findViewById(R.id.etDeleteAccountPassword);
+        EditText etDeleteAccountRetypePassword = deleteAccountDialog.findViewById(R.id.etDeleteAccountRetypePassword);
+        Button btnDeleteAccountConfirm = deleteAccountDialog.findViewById(R.id.btnDeleteAccountConfirm);
+
+
+        btnDeleteAccountConfirm.setOnClickListener(v -> {
+            String insertedPassword = etDeleteAccountPassword.getText().toString();
+            String retypePassword = etDeleteAccountRetypePassword.getText().toString();
+            String realPassword = db.getPasswordForUsername(username); // The real password of the user.
+
+            if (realPassword.equals(insertedPassword) && realPassword.equals(retypePassword)) { // If the passwords are equal, and if both the inserted passwords are equal then we will delete user's account.
+                db.deleteUser(username);
+                username = db.getCurrentLoggedInUsername();
+                updateUsernameAndPasswordTextViews();
+                Toast.makeText(MyProfileActivity.this, "Your account was deleted :(", Toast.LENGTH_LONG).show();
+                deleteAccountDialog.dismiss();
+            }
+            else {
+                Toast.makeText(MyProfileActivity.this, "Your password is incorrect or the 2 passwords you have inserted are not equal.", Toast.LENGTH_LONG).show();
+                clearAllFields(etDeleteAccountPassword, etDeleteAccountRetypePassword);
+            }
+        });
+
+        deleteAccountDialog.show();
+    }
 
 
     /**

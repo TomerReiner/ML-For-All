@@ -147,7 +147,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
             btnTestModel.setEnabled(false);
             btnShowModel.setVisibility(View.VISIBLE);
 
-            db.addModel(username, equation, score); // Adding the model to the database.
+            db.addModel(username, new MachineLearningModel(equation, score)); // Adding the model to the database.
         });
 
         btnShowModel.setOnClickListener(v -> {
