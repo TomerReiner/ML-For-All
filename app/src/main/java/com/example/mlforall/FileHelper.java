@@ -38,7 +38,7 @@ public class FileHelper {
         }
         return dataset;
     }
-//TODO-change class structure.
+
     /**
      * This function sets the new columns for the dataset. The function will remove from {@link #columns} all the values in the indexes that are in <code>indexesForNonNumericValueColumns</code>.
      * @param indexesForNonNumericValueColumns The indexes of the columns that have numeric values and will be dropped.

@@ -18,8 +18,8 @@ public class AboutActivity extends AppCompatActivity {
 
     public static final String TAG = "AboutActivity"; // The name of the activity.
 
-    private DrawerLayout drawerLayout; // The main layout in activity_main.xml.
-    private NavigationView navigationView; // The Navigation view in activity_main.xml.
+    private DrawerLayout drawerLayout; // The main layout in activity_about.xml.
+    private NavigationView navigationView; // The Navigation view in activity_about.xml.
     private ActionBarDrawerToggle drawerToggle;
     private ActionBar actionBar;
 

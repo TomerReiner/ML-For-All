@@ -36,7 +36,6 @@ package com.example.mlforall;
  * @author Tomer Reiner
  */
 public class LinearRegression {
-// TODO-change comments to {@link LinearEquation}
     private double[] x; // The x values for the LinearRegression.
     private double[] y; // The y values for the LinearRegression.
     private LinearEquation linearEquation;
@@ -57,7 +56,7 @@ public class LinearRegression {
      * This function fits the data to the model.
      */
     public void fit() {
-        // fitting the model(creating the linear equation y = mx + b).
+        // fitting the model(creating a linear equation of the form y = mx + b).
         this.linearEquation = LinearRegressionHelper.coefficients(this.x, this.y);
     }
 

@@ -24,8 +24,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public static final String TAG = "MyProfileActivity";
 
-    private DrawerLayout drawerLayout; // The main layout in activity_main.xml.
-    private NavigationView navigationView; // The Navigation view in activity_main.xml.
+    private DrawerLayout drawerLayout; // The main layout in activity_my_profile.xml.
+    private NavigationView navigationView; // The Navigation view in activity_my_profile.xml.
     private ActionBarDrawerToggle drawerToggle;
     private ActionBar actionBar;
 

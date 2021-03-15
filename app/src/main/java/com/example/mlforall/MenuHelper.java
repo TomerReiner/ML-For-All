@@ -197,17 +197,6 @@ public class MenuHelper {
                 context.startActivity(intentMoveToMyProfileActivity);
                 return true;
             }
-//                else if (item.getItemId() == R.id.itemLoginOrLogout) {
-//                    username = db.getCurrentLoggedInUsername();
-//                    if (username.equals("")) { // If there isn't a logged in user and the user pressed on itemLogInOrLogout then it means that the user wants to log out.
-//                        username = dialogHelper.buildLoginDialog();
-//                    }
-//                    else {
-//                        db.logOut(username);
-//                        Toast.makeText(context, "Logged Out", Toast.LENGTH_SHORT).show();
-//                        username = "";
-//                    }
-//                }
             else if (item.getItemId() == R.id.itemAbout) { // If the user wants to move to AboutActivity.
                 Intent intentMoveToAboutActivity = new Intent(context, AboutActivity.class);
                 context.startActivity(intentMoveToAboutActivity);

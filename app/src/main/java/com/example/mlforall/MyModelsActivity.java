@@ -23,8 +23,8 @@ public class MyModelsActivity extends AppCompatActivity {
 
     public static final String TAG = "MyModelsActivity";
 
-    private DrawerLayout drawerLayout; // The main layout in activity_main.xml.
-    private NavigationView navigationView; // The Navigation view in activity_main.xml.
+    private DrawerLayout drawerLayout; // The main layout in activity_my_models.xml.
+    private NavigationView navigationView; // The Navigation view in activity_my_models.xml.
     private ActionBarDrawerToggle drawerToggle;
     private ActionBar actionBar;
 

@@ -32,13 +32,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CreateMachineLearningModelActivity extends AppCompatActivity {
-
+//TODO - change nav view documentation
     public static final String TAG = "CreateMachineLearningModelActivity"; // The name of the activity.
 
     public static final String IS_DATA_TO_LARGE_TO_DISPLAY = "tooLargeToDisplay";
 
-    private DrawerLayout drawerLayout; // The main layout in activity_main.xml.
-    private NavigationView navigationView; // The Navigation view in activity_main.xml.
+    private DrawerLayout drawerLayout; // The main layout in activity_create_machine_learning_model.xml.
+    private NavigationView navigationView; // The Navigation view in activity_create_machine_learning_model.xml.
     private ActionBarDrawerToggle drawerToggle;
     private ActionBar actionBar;
 
