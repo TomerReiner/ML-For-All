@@ -17,9 +17,4 @@ public class LinearEquation {
     public double getIntercept() {
         return intercept;
     }
-
-
-    public boolean equals(LinearEquation equation) {
-        return this.slope == equation.getSlope() && this.intercept == equation.getIntercept();
-    }
 }

@@ -53,7 +53,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             boolean isUserAlreadyExists = this.userNameAlreadyExists(username);
             boolean isUsernameValid = this.isUsernameValid(username);
-            if (isUserAlreadyExists && !isUsernameValid)  // If the user already exists or not valid.
+            System.out.println(isUserAlreadyExists + " " + isUsernameValid);
+            if (isUserAlreadyExists || !isUsernameValid)  // If the user already exists or not valid.
                 return false;
 
             // If we are here then it means the is no user with that username.
@@ -121,7 +122,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
+        cursor.move(0);
+
+        if (cursor.getCount() == 1) { // If there is only one row in users table.
+            String currentUsername = cursor.getString(cursor.getColumnIndex(USERNAME));
+            if (username.equals(currentUsername)) { // If the username was found.
+                cursor.close();
+                db.close();
+                return true;
+            }
+        }
 
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {

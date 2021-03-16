@@ -86,6 +86,11 @@ public class MyProfileActivity extends AppCompatActivity {
             updateUsernameAndPasswordTextViews();
             return false;
         });
+
+        navigationView.setOnTouchListener((v, event) -> {
+            updateUsernameAndPasswordTextViews();
+            return false;
+        });
     }
 
     @Override
