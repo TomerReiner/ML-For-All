@@ -9,8 +9,8 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/constrainLayout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:fontFamily="@font/cutive"
             android:text="@string/username"
             android:textSize="30sp"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/cutive"
             android:text="Change Username"
             android:textAlignment="center"
             android:textAllCaps="false"
@@ -39,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/cutive"
             android:text="@string/password"
             android:textAllCaps="false"
             android:textSize="30sp"
@@ -51,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/cutive"
             android:text="Change Password"
             android:textAlignment="center"
             android:textAllCaps="false"
@@ -64,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
+            android:fontFamily="@font/cutive"
             android:text="Delete My ML Models"
             android:textAlignment="center"
             android:textAllCaps="false"
@@ -79,6 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/cutive"
             android:text="Delete My Account"
             android:textAlignment="center"
             android:textAllCaps="false"

@@ -17,6 +17,7 @@
             android:id="@+id/tvLoginWarning"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:fontFamily="@font/cutive"
             android:text="@string/login_warning"
             android:textSize="25sp"
             android:visibility="gone" />
@@ -25,6 +26,7 @@
             android:id="@+id/lvMyModels"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fontFamily="@font/cutive"
             android:visibility="gone" />
 
     </LinearLayout>

@@ -10,6 +10,7 @@
         android:id="@+id/tvGraphWarning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/cutive"
         android:text=""
         android:textColor="#FF0000"
         android:visibility="gone"
