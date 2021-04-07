@@ -24,10 +24,64 @@
     <string name="username">Username:</string>
     <string name="password">Password:</string>
     <string name="login">Login!</string>
+
     <string name="about">This is a Machine Learning application that enables you to build 2 simple machine learning models,
     one for classification and the other for regression. The application is open source and you can get it from this link:
-    <a href="https://github.com/TomerReiner/Machine-Learning-Project">here</a>
+<!--    <a href="https://github.com/TomerReiner/Machine-Learning-Project">here</a>-->
     </string>
+
     <string name="login_warning">You must be logged in to view your models.Please move to any other screen using the navigation menu, login to your account and come back to this screen.</string>
     <string name="reset">Reset</string>
+    <string name="tutorial">Tutorial:</string>
+
+    <string name="general_tutorial"><![CDATA[
+        This tutorial will guide you through the app and will show you how to use it.\n
+        First, your Android version must be lower than Android 11.\n
+        After that, you need to move the CSV files that you want to use to the Downloads Directory in the Documents Directory.\n
+        All right, we are ready to continue!]]>
+    </string>
+
+    <string name="navigation_instructions"><![CDATA[
+        When you open the app, the tutorial screen will show up.\n
+        On the top-left of the screen, there is a navigation menu.]]>
+    </string>
+
+    <string name="login_instructions">
+        To use the app, you must first create an account. To create an account, please press the icon on the menu that says: "Login/Logout".
+    </string>
+
+
+    <string name="logged_in_case_instructions">
+        If there is a connected account to the app right now, that user will log out automatically.
+        Then, a notification will notify you that the user logged out of the app. After that, press again on this icon.
+    </string>
+
+    <string name="already_has_account_instructions">
+         If you already have an account, log in to your account in this dialog.
+    </string>
+
+    <string name="open_sign_up_dialog_instructions">
+        If you do not have an account, click the button on the bottom of the dialog. A new dialog will open.
+    </string>
+
+    <string name="username_instructions"><![CDATA[
+        In this dialog, enter your username and password. A valid username can only include English letters, digits, and an underscore(_).\n
+        A Valid username can only include at least one letter and begin with a letter or an underscore.\n
+        A valid password can only include English letters, digits, and special characters.\n
+        After filling all the fields in the dialog, click the "Sign Up" button. If the sign-up process is successful, the dialog will close.\n
+        If the sign-up process fails, a notification will pop up.
+        If your username is invalid, change it to match the valid username pattern I mentioned.\n
+        If your username is taken by someone else, try another one.\n
+        After setting up the account, you are ready to use the app!]]>
+    </string>
+
+    <string name="menu_instructions"><![CDATA[
+        If you press on the first item of the menu (the one that says: "Go Home"), the app will redirect you to the tutorial.\n
+        If you press the second item on the menu(the one that says: "Create ML Model"), you will be redirected to the second screen of the app, the main screen. In that screen, you will load your files and create Machine Learning Models. We will discuss this screen later.\n
+        If you press the third item on the menu(the one that says: "My Models"), you will be redirected to a screen where you will see all your ML Models.\n
+        If you press the fourth item on the menu(the one that says: "My Profile"), a screen with your profile info will open. On this screen, you will be able to change your username, password, delete your data and even delete your account.\n
+        If you press the fifth item on the menu(the one that says: "Login/Logout"), the login dialog will open.\n
+        If you press the sixth item in the menu(the one that says: "About"), a screen with information about the app will open.]]>
+    </string>
+
 </resources>

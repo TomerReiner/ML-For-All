@@ -36,8 +36,8 @@ package com.example.mlforall;
  * @author Tomer Reiner
  */
 public class LinearRegression {
-    private double[] x; // The x values for the LinearRegression.
-    private double[] y; // The y values for the LinearRegression.
+    private final double[] x; // The x values for the LinearRegression.
+    private final double[] y; // The y values for the LinearRegression.
     private LinearEquation linearEquation;
 
     public LinearRegression(double[] x, double[] y) throws IllegalArgumentException {

@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class MyModelsListViewAdapter extends BaseAdapter {
 
-    private Context context;
-    private ArrayList<MachineLearningModel> models;
+    private final Context context;
+    private final ArrayList<MachineLearningModel> models;
 
     public MyModelsListViewAdapter(Context context, ArrayList<MachineLearningModel> models) {
         this.context = context;

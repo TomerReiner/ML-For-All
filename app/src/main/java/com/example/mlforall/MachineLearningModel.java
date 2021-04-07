@@ -2,8 +2,8 @@ package com.example.mlforall;
 
 public class MachineLearningModel {
 
-    private LinearEquation linearEquation;
-    private double score;
+    private final LinearEquation linearEquation;
+    private final double score;
 
     public MachineLearningModel(LinearEquation linearEquation, double score) {
         this.linearEquation = linearEquation;

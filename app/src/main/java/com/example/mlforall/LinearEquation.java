@@ -2,8 +2,8 @@ package com.example.mlforall;
 
 public class LinearEquation {
 
-    private double slope;
-    private double intercept;
+    private final double slope;
+    private final double intercept;
 
     public LinearEquation(double slope, double intercept) {
         this.slope = slope;

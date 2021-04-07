@@ -31,9 +31,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@SuppressWarnings("ALL")
 public class CreateMachineLearningModelActivity extends AppCompatActivity {
-//TODO - change nav view documentation
+
     public static final String TAG = "CreateMachineLearningModelActivity"; // The name of the activity.
+
+    public static final String CSV_EXTENSION = ".csv"; // Extension of CSV files.
 
     public static final String IS_DATA_TO_LARGE_TO_DISPLAY = "tooLargeToDisplay";
 
@@ -165,6 +168,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
             intentMoveToShowModelActivity.putExtra(IS_DATA_TO_LARGE_TO_DISPLAY, isDataTooLargeToDisplay);
             intentMoveToShowModelActivity.putExtra("slope", equation.getSlope());
             intentMoveToShowModelActivity.putExtra("intercept", equation.getIntercept());
+            intentMoveToShowModelActivity.putExtra("tag", TAG);
             startActivity(intentMoveToShowModelActivity);
         });
 
@@ -249,6 +253,9 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
      */
     private boolean loadDataset() {
         String fileName = etFileName.getText().toString();
+        if (!fileName.endsWith(CSV_EXTENSION)) // If the file name does not contain the extension.
+            fileName += CSV_EXTENSION;
+
         try {
             if (canReadExternalStorage()) {
                 File file = new File(Environment.getExternalStorageDirectory() + "/Download/", fileName); // Getting the file from the Downloads directory in the external storage.

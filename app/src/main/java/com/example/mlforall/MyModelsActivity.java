@@ -63,6 +63,7 @@ public class MyModelsActivity extends AppCompatActivity {
             Intent intentMoveToShowModelActivity = new Intent(MyModelsActivity.this, ShowModelActivity.class);
             intentMoveToShowModelActivity.putExtra("slope", currentLinearEquation.getSlope());
             intentMoveToShowModelActivity.putExtra("intercept", currentLinearEquation.getIntercept());
+            intentMoveToShowModelActivity.putExtra("tag", TAG);
             startActivity(intentMoveToShowModelActivity);
         });
 

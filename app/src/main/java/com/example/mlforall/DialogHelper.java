@@ -28,7 +28,6 @@ public class DialogHelper {
      */
     private final Dialog signUpDialog;
 
-
     public DialogHelper(Context context, DatabaseHelper db, Dialog loginDialog, Dialog signUpDialog) {
         this.context = context;
         this.db = db;
@@ -43,6 +42,7 @@ public class DialogHelper {
      */
     public String buildLoginDialog() {
         loginDialog.setContentView(R.layout.login_dialog);
+
         loginDialog.setCancelable(true);
 
         EditText etLoginUsername = loginDialog.findViewById(R.id.etLoginUsername);

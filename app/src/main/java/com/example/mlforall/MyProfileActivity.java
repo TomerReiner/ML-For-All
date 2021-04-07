@@ -84,6 +84,7 @@ public class MyProfileActivity extends AppCompatActivity {
         // This listener is used to update tvUsername and tvPassword texts.
         constraintLayout.setOnTouchListener((View v, MotionEvent event) -> {
             updateUsernameAndPasswordTextViews();
+
             return false;
         });
 

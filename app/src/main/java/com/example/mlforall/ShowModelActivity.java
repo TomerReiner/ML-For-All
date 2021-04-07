@@ -59,6 +59,8 @@ public class ShowModelActivity extends AppCompatActivity {
      */
     private boolean isDataTooLargeToDisplay;
 
+    private String tag; // The name of the activity from which the user came from.
+
     private PlottingHelper plottingHelper;
 
     @Override
@@ -77,21 +79,29 @@ public class ShowModelActivity extends AppCompatActivity {
         slope = intent.getDoubleExtra("slope", 0);
         intercept = intent.getDoubleExtra("intercept", 0);
         isDataTooLargeToDisplay = intent.getBooleanExtra(CreateMachineLearningModelActivity.IS_DATA_TO_LARGE_TO_DISPLAY, false);
+        tag = intent.getStringExtra("tag");
 
-        plottingHelper = new PlottingHelper(xTrain, xTest, yTrain,yTest, slope, intercept, isDataTooLargeToDisplay);
+        plottingHelper = new PlottingHelper(xTrain, xTest, yTrain, yTest, slope, intercept, isDataTooLargeToDisplay);
 
         graph.addSeries(plottingHelper.getLine());
 
-        if (isDataTooLargeToDisplay) {
-            tvGraphWarning.setVisibility(View.VISIBLE);
-            tvGraphWarning.setText(GRAPH_WARNING);
+        if (tag.equals(AboutActivity.TAG)) { // If the user found the hidden feature.
+            graph.addSeries(plottingHelper.plotSecretFeature());
+            graph.addSeries(plottingHelper.lineSecretFeature(-30));
+            graph.addSeries(plottingHelper.lineSecretFeature(30));
         }
+        else {
+            if (isDataTooLargeToDisplay) {
+                tvGraphWarning.setVisibility(View.VISIBLE);
+                tvGraphWarning.setText(GRAPH_WARNING);
+            }
 
-        if ((xTrain != null && xTest != null && yTrain != null && yTest != null) && !isDataTooLargeToDisplay) { // If the training and testing points are not null and if the data can be displayed we show the data.
-            graph.addSeries(plottingHelper.getTrainingPoints());
-            graph.addSeries(plottingHelper.getTestingPoints());
+            if ((xTrain != null && xTest != null && yTrain != null && yTest != null) && !isDataTooLargeToDisplay) { // If the training and testing points are not null and if the data can be displayed we show the data.
+                graph.addSeries(plottingHelper.getTrainingPoints());
+                graph.addSeries(plottingHelper.getTestingPoints());
+            }
+            graph.getLegendRenderer().setVisible(true);
+            graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         }
-        graph.getLegendRenderer().setVisible(true);
-        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
     }
 }

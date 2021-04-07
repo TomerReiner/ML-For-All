@@ -12,7 +12,7 @@ public class FileHelper {
 
     public static final String SEPARATOR = ",";
 
-    private BufferedReader reader;
+    private final BufferedReader reader;
     private ArrayList<String> columns = new ArrayList<>();
 
     public FileHelper(BufferedReader reader) {

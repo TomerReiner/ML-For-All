@@ -122,7 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
-        cursor.move(0);
+        cursor.moveToFirst();
 
         if (cursor.getCount() == 1) { // If there is only one row in users table.
             String currentUsername = cursor.getString(cursor.getColumnIndex(USERNAME));
@@ -131,6 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.close();
                 return true;
             }
+            return false;
         }
 
         if (cursor.getCount() > 0) {

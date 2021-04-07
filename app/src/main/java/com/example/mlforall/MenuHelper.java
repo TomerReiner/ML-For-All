@@ -22,13 +22,13 @@ import com.google.android.material.navigation.NavigationView;
  */
 public class MenuHelper {
 
-    private Context context;
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private ActionBarDrawerToggle drawerToggle;
-    private ActionBar actionBar;
-    private DatabaseHelper db;
-    private DialogHelper dialogHelper;
+    private final Context context;
+    private final DrawerLayout drawerLayout;
+    private final NavigationView navigationView;
+    private final ActionBarDrawerToggle drawerToggle;
+    private final ActionBar actionBar;
+    private final DatabaseHelper db;
+    private final DialogHelper dialogHelper;
     private String username;
 
     public MenuHelper(Context context, DrawerLayout drawerLayout, NavigationView navigationView, ActionBarDrawerToggle drawerToggle, ActionBar actionBar, Dialog loginDialog, Dialog signUpDialog, DatabaseHelper db, String username) {

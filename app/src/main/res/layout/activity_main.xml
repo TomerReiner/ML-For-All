@@ -7,45 +7,162 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvWelcomeGreet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="25dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/welcome_greet"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="40sp"/>
 
-                <TextView
-                    android:id="@+id/tvWelcomeGreet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:layout_weight="1"
-                    android:text="@string/welcome_greet"
-                    android:textAlignment="center"
-                    android:textAllCaps="false"
-                    android:textSize="40sp"/>
+            <TextView
+                android:id="@+id/tvTutorial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/tutorial"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="40sp"/>
 
-                <TextView
-                    android:id="@+id/tvTutorial"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:layout_weight="1"
-                    android:text="Tutorial"
-                    android:textAlignment="center"
-                    android:textAllCaps="false"
-                    android:textSize="40sp"/>
+            <TextView
+                android:id="@+id/tvGeneralInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/general_tutorial"
+                android:textSize="20sp" />
 
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvNavigationInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/navigation_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:contentDescription="Navigation Menu"
+                android:src="@drawable/navigation_view" />
+
+            <TextView
+                android:id="@+id/tvLoginInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/login_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/login"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:id="@+id/tvLogoutNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/logged_in_case_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgLoggedOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/logged_out"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:id="@+id/tvAlreadyLoggedInInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/already_has_account_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgLoginDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/login_dialog"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:id="@+id/openSignUpDialogInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/open_sign_up_dialog_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgSignUpInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/login_dialog_move_to_sign_up"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:id="@+id/tvUsernameInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/username_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgNavigationViewMenuInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:contentDescription="Navigation Menu"
+                android:src="@drawable/navigation_view" />
+
+            <TextView
+                android:id="@+id/tvMenuInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/menu_instructions"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nvMainActivity"

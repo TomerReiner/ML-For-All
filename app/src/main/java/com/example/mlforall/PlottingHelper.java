@@ -11,12 +11,12 @@ import com.jjoe64.graphview.series.PointsGraphSeries;
  */
 public class PlottingHelper {
 
-    private double[] xTrain;
-    private double[] xTest;
-    private double[] yTrain;
-    private double[] yTest;
-    private double slope;
-    private double intercept;
+    private final double[] xTrain;
+    private final double[] xTest;
+    private final double[] yTrain;
+    private final double[] yTest;
+    private final double slope;
+    private final double intercept;
     /**
      * If the data values are too large,
      * which means that one of the values in
@@ -25,7 +25,7 @@ public class PlottingHelper {
      * This is used to prevent {@link OutOfMemoryError},
      * which occurs when the data values are large and the graph can't display values in a large range.
      */
-    private boolean isDataTooLargeToDisplay;
+    private final boolean isDataTooLargeToDisplay;
 
 
     public PlottingHelper(double[] xTrain, double[] xTest, double[] yTrain, double[] yTest, double slope, double intercept, boolean isDataTooLargeToDisplay) {
@@ -137,6 +137,22 @@ public class PlottingHelper {
         }
         line.setTitle("Linear Equation");
         line.setColor(Color.GREEN);
+        return line;
+    }
+    
+    public LineGraphSeries<DataPoint> plotSecretFeature() {
+        LineGraphSeries<DataPoint> plot = new LineGraphSeries<>();
+        for (int i = -100; i <= 100; i++)
+            plot.appendData(new DataPoint(i, 0.0037 * i * i), true, 400);
+        return plot;
+    }
+
+    public LineGraphSeries<DataPoint> lineSecretFeature(double num) {
+        LineGraphSeries<DataPoint> line = new LineGraphSeries<>();
+        for (int i = 50; i <= 70; i++) {
+            line.appendData(new DataPoint(num, i), true, 51);
+            num += 0.01;
+        }
         return line;
     }
 }
