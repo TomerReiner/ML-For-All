@@ -56,6 +56,7 @@ public class DialogHelper {
             username[0] = etLoginUsername.getText().toString();
             String password = etLoginPassword.getText().toString();
             User user = new User(username[0], password);
+
             boolean successfullyLoggedInUser = db.login(user);
             if (successfullyLoggedInUser) { // If the user was successfully logged in.
                 loginDialog.dismiss();

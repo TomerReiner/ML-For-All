@@ -114,7 +114,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         initializeVariables(); // Initialize all the variables-DO NOT REMOVE!
         menuHelper.setMainMenu(TAG); // Initialize the main menu-DO NOT REMOVE!
 
-        requestReadExternalStoragePermission(); // Asking for permission to read files from the sd card.
+        requestReadExternalStoragePermission(); // Asking for permission to read files.
 
         btnLoadFile.setOnClickListener(v -> {
             username = db.getCurrentLoggedInUsername();
@@ -175,7 +175,6 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         btnReset.setOnClickListener(v -> {
             resetProcess(); // Terminating the Machine Learning Model building process.
         });
-
     }
 
     @Override
@@ -258,7 +257,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
 
         try {
             if (canReadExternalStorage()) {
-                File file = new File(Environment.getExternalStorageDirectory() + "/Download/", fileName); // Getting the file from the Downloads directory in the external storage.
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName); // Getting the file from the Downloads directory in the external storage.
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
                 FileHelper helper = new FileHelper(bufferedReader);
@@ -275,10 +274,11 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
             }
             else { // The user has not granted the application permission to read files.
                 Toast.makeText(CreateMachineLearningModelActivity.this, "Can't read file without permission.\nYou have to grant the app permission to read files in order to create Machine Learning Models.", Toast.LENGTH_SHORT).show();
+                requestReadExternalStoragePermission(); // Asking for permission to read files.
                 return false;
             }
         } catch (IOException e) { // Error loading the file.
-            Toast.makeText(CreateMachineLearningModelActivity.this, "Error Loading the file.\n Please make sure that the file is in the SD CARD downloads folder,\n or in the internal storage downloads folder,\n or in the documents downloads folder.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateMachineLearningModelActivity.this, "Error Loading the file.\n Please make sure that the file is in the downloads folder in the documents folder.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return false;
         }

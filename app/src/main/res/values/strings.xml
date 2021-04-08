@@ -30,14 +30,15 @@
 <!--    <a href="https://github.com/TomerReiner/Machine-Learning-Project">here</a>-->
     </string>
 
-    <string name="login_warning">You must be logged in to view your models.Please move to any other screen using the navigation menu, login to your account and come back to this screen.</string>
+    <string name="login_warning">You must be logged in to view your models.Please move to any other screen using the navigation menu,
+        login to your account and come back to this screen.</string>
     <string name="reset">Reset</string>
     <string name="tutorial">Tutorial:</string>
 
     <string name="general_tutorial"><![CDATA[
         This tutorial will guide you through the app and will show you how to use it.\n
         First, your Android version must be lower than Android 11.\n
-        After that, you need to move the CSV files that you want to use to the Downloads Directory in the Documents Directory.\n
+        After that, you need to move the CSV files you want to use into the Downloads Directory in the Documents Directory or the Downloads Directory.\n
         All right, we are ready to continue!]]>
     </string>
 
@@ -68,7 +69,7 @@
         In this dialog, enter your username and password. A valid username can only include English letters, digits, and an underscore(_).\n
         A Valid username can only include at least one letter and begin with a letter or an underscore.\n
         A valid password can only include English letters, digits, and special characters.\n
-        After filling all the fields in the dialog, click the "Sign Up" button. If the sign-up process is successful, the dialog will close.\n
+        After filling all the fields in the dialog, click the \"Sign Up\" button. If the sign-up process is successful, the dialog will close.\n
         If the sign-up process fails, a notification will pop up.
         If your username is invalid, change it to match the valid username pattern I mentioned.\n
         If your username is taken by someone else, try another one.\n
@@ -76,12 +77,48 @@
     </string>
 
     <string name="menu_instructions"><![CDATA[
-        If you press on the first item of the menu (the one that says: "Go Home"), the app will redirect you to the tutorial.\n
-        If you press the second item on the menu(the one that says: "Create ML Model"), you will be redirected to the second screen of the app, the main screen. In that screen, you will load your files and create Machine Learning Models. We will discuss this screen later.\n
-        If you press the third item on the menu(the one that says: "My Models"), you will be redirected to a screen where you will see all your ML Models.\n
-        If you press the fourth item on the menu(the one that says: "My Profile"), a screen with your profile info will open. On this screen, you will be able to change your username, password, delete your data and even delete your account.\n
-        If you press the fifth item on the menu(the one that says: "Login/Logout"), the login dialog will open.\n
-        If you press the sixth item in the menu(the one that says: "About"), a screen with information about the app will open.]]>
+        If you press on the first item of the menu (the one that says: \"Go Home\"), the app will redirect you to the tutorial.\n
+        If you press the second item on the menu(the one that says: \"Create ML Model\"), you will be redirected to the second screen of the app, the main screen. In that screen, you will load your files and create Machine Learning Models. We will discuss this screen later.\n
+        If you press the third item on the menu(the one that says: \"My Models\"), you will be redirected to a screen where you will see all your ML Models.\n
+        If you press the fourth item on the menu(the one that says: \"My Profile\"), a screen with your profile info will open. On this screen, you will be able to change your username, password, delete your data and even delete your account.\n
+        If you press the fifth item on the menu(the one that says: \"Login/Logout\"), the login dialog will open.\n
+        If you press the sixth item in the menu(the one that says: \"About\"), a screen with information about the app will open.]]>
+    </string>
+
+    <string name="important_note"><bold><big><![CDATA[
+        Note: You must log in to your account to use the app\'s features.]]></big></bold>
+    </string>
+
+    <string name="create_ml_model"><big><bold>Create ML Model</bold></big></string>
+
+    <string name="enter_file_name"><![CDATA[
+        Please enter the file\'s name with or without the file extension(.csv) and press \"Load File\".]]>
+    </string>
+
+    <string name="choose_columns_instructions"><![CDATA[
+        Then, choose your X column and Y column and hit \"Start!\".\n
+        When you hit start, the data would be shuffled and divided into training and testing data.\n
+        The model will be built on the training data and tested on the testing data.]]>
+    </string>
+
+    <string name="model_processing_instructions"><![CDATA[
+        After that, the slope and the intercept of the model will show. The application builds a simple 2D linear equation of this form:\n
+        y = m * x +b\n
+        or\n
+        y = slope * x + intercept\n
+        Then, hit \"Test My Model!\". The model\'s score on the testing data will appear.\n
+        After that, hit \"Show My Model!\". You will be redirected to a screen where your model will display on a graph.
+        If you have too large values(values greater than 100) or too small values(values smaller than -100) in your dataset,
+        the data points from the dataset won\'t appear on the graph. If there are more than 10 data points in your dataset,
+        only the first ten data points will appear on the graph.]]>
+    </string>
+
+    <string name="graph_instructions">
+        To leave the graph, click the return button on your phone.
+    </string>
+
+    <string name="reset_instructions"><![CDATA[
+        To reset the model building process, hit \"Reset\".]]>
     </string>
 
 </resources>

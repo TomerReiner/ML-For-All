@@ -81,8 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:src="@drawable/login"
-                android:contentDescription="TODO" />
+                android:contentDescription="TODO"
+                android:src="@drawable/login" />
 
             <TextView
                 android:id="@+id/tvLogoutNotification"
@@ -98,8 +98,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:src="@drawable/logged_out"
-                android:contentDescription="TODO" />
+                android:contentDescription="TODO"
+                android:src="@drawable/logged_out" />
 
             <TextView
                 android:id="@+id/tvAlreadyLoggedInInstructions"
@@ -115,8 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:src="@drawable/login_dialog"
-                android:contentDescription="TODO" />
+                android:contentDescription="TODO"
+                android:src="@drawable/login_dialog" />
 
             <TextView
                 android:id="@+id/openSignUpDialogInstructions"
@@ -132,8 +132,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:src="@drawable/login_dialog_move_to_sign_up"
-                android:contentDescription="TODO" />
+                android:contentDescription="TODO"
+                android:src="@drawable/login_dialog_move_to_sign_up" />
 
             <TextView
                 android:id="@+id/tvUsernameInstructions"
@@ -160,6 +160,102 @@
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/menu_instructions"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvImportantNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/important_note"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tvCreateMLModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/create_ml_model"
+                android:textSize="40sp"/>
+
+            <TextView
+                android:id="@+id/tvEnterFileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/enter_file_name"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgEnterFileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/enter_file_name" />
+
+            <TextView
+                android:id="@+id/tvChooseXYColumnsInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/choose_columns_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/start" />
+
+            <TextView
+                android:id="@+id/tvModelProcessingInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/model_processing_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgModelProcessing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/model_processing" />
+
+            <ImageView
+                android:id="@+id/imgGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/graph"/>
+
+            <TextView
+                android:id="@+id/tvLeaveGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/graph_instructions"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvResetProcess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reset_instructions"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgReset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/reset" />
 
         </LinearLayout>
     </ScrollView>
