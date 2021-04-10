@@ -48,6 +48,8 @@ public class MyProfileActivity extends AppCompatActivity {
     private Button btnDeleteMLModels;
     private Button btnDeleteAccount;
 
+    private TextView tvLoginNote;
+
     private String username = "";
 
     @Override
@@ -77,18 +79,22 @@ public class MyProfileActivity extends AppCompatActivity {
 
         btnDeleteAccount.setOnClickListener(v -> createDeleteAccountDialog());
 
+        // These listeners are used to update the text views' text on this activity.
         constraintLayout.setOnClickListener(v -> updateUsernameAndPasswordTextViews());
 
         drawerToggle.setToolbarNavigationClickListener(v -> updateUsernameAndPasswordTextViews());
 
-        // This listener is used to update tvUsername and tvPassword texts.
         constraintLayout.setOnTouchListener((View v, MotionEvent event) -> {
             updateUsernameAndPasswordTextViews();
-
             return false;
         });
 
         navigationView.setOnTouchListener((v, event) -> {
+            updateUsernameAndPasswordTextViews();
+            return false;
+        });
+
+        drawerLayout.setOnTouchListener((v, event) -> {
             updateUsernameAndPasswordTextViews();
             return false;
         });
@@ -138,6 +144,7 @@ public class MyProfileActivity extends AppCompatActivity {
         btnChangePassword = findViewById(R.id.btnChangePassword);
         btnDeleteMLModels = findViewById(R.id.btnDeleteMLModels);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
+        tvLoginNote = findViewById(R.id.tvLoginNote);
     }
 
     /**
@@ -353,13 +360,35 @@ public class MyProfileActivity extends AppCompatActivity {
         if (username.equals("")) { // If the username is empty, which means there is no user logged in.
             tvUsername.setText(R.string.username);
             tvPassword.setText(R.string.password);
+            tvLoginNote.setVisibility(View.VISIBLE);
         }
 
         else {
             tvUsername.setText(R.string.username);
             tvPassword.setText(R.string.password); // Resetting the fields.
             tvUsername.setText(tvUsername.getText().toString() + " " +  username);
-            tvPassword.setText(tvPassword.getText().toString() + " " + db.getPasswordForUsername(username)); // Updating the fields.
+            int passwordLength = db.getPasswordForUsername(username).length();
+            String passwordAsterisk = passwordFromAsterisks(passwordLength);
+            tvPassword.setText(tvPassword.getText().toString() + " " + passwordAsterisk); // Updating the fields.
+            tvLoginNote.setVisibility(View.GONE); // There is a user logged in so we don't need this note.
         }
+    }
+
+    /**
+     * This function "hides" the password using asterisks.
+     * <pre>
+     * {@code
+     * passwordFromAsterisks(8) -> "********"
+     * }
+     * </pre>
+     * @param passwordLength The length of the password.
+     * @return Password from asterisks.
+     */
+    private String passwordFromAsterisks(int passwordLength) {
+        StringBuilder passwordAsterisk = new StringBuilder();
+        for (int i = 0; i < passwordLength; i++) {
+            passwordAsterisk.append("*");
+        }
+        return passwordAsterisk.toString();
     }
 }

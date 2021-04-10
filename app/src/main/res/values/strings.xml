@@ -30,10 +30,16 @@
 <!--    <a href="https://github.com/TomerReiner/Machine-Learning-Project">here</a>-->
     </string>
 
-    <string name="login_warning">You must be logged in to view your models.Please move to any other screen using the navigation menu,
-        login to your account and come back to this screen.</string>
+    <string name="login_warning">You have to be logged in to view your models.
+        Please move to any other screen using the navigation menu,
+        log in to your account and come back to this screen.</string>
     <string name="reset">Reset</string>
     <string name="tutorial">Tutorial:</string>
+
+    <string name="login_note">Note: Please login to your account or create a new one to be able to use this screen.</string>
+
+
+<!--    Tutorial text section-->
 
     <string name="general_tutorial"><![CDATA[
         This tutorial will guide you through the app and will show you how to use it.\n
@@ -135,5 +141,15 @@
 
     <string name="delete_model">To delete a model, click for a second on the model.</string>
 
-    <string name="my_models_note"><big><bold>Note: On this screen, you cannot log in/out from your account.</bold></big></string>
+    <string name="my_models_note"><big><bold>Note: On this screen, you cannot log in/out from your account.
+        If you are not logged in to your account, this message will appear:</bold></big></string>
+
+    <string name="my_profile"><big><bold>My Profile:</bold></big></string>
+
+    <string name="my_profile_instructions">On this screen, you will be able to view your profile information,
+        change your username and password and even delete all your ML Models and even delete your account.
+        For security, you have to type your password every time you commit changes in your profile.
+        When you press one of the buttons on this screen, a dialog will open. Follow the dialog instructions.</string>
+
+    <string name="my_profile_note"><bold><big>Note: If you are not logged in to your account, this screen will appear:</big></bold></string>
 </resources>

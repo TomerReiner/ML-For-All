@@ -432,9 +432,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private int getIdAtIndex(String username, int position) {
         int idLocation;
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = String.format("SELECT * FROM %s;", username);
+        String query = String.format("SELECT %s FROM %s;", ID, username);
         Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
+        cursor.moveToPosition(0);
 
         if (position == 0) { // If the user wants to delete the first model.
             idLocation = cursor.getInt(cursor.getColumnIndex(ID));
@@ -446,6 +446,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.moveToNext(); // Moving to the next value until we reach the desired row.
         idLocation = cursor.getInt(cursor.getColumnIndex(ID));
         cursor.close();
+
         return idLocation;
     }
 
@@ -457,6 +458,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteModel(String username, int position) {
         SQLiteDatabase db = this.getWritableDatabase();
         int idPosition = this.getIdAtIndex(username, position);
+
         String whereClause = String.format("%s = ?", ID);
         db.delete(username, whereClause, new String[]{"" + idPosition});
         db.close();

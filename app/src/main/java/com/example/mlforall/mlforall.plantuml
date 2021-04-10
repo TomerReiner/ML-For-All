@@ -1,0 +1,401 @@
+@startuml
+
+title __MLFORALL's Class Diagram__\n
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.AboutActivity {
+        {static} + TAG : String
+        - actionBar : ActionBar
+        - btnHiddenFeature : Button
+        - count : int
+        - drawerLayout : DrawerLayout
+        - drawerToggle : ActionBarDrawerToggle
+        - loginDialog : EDialog
+        - navigationView : NavigationView
+        - signUpDialog : Dialog
+        - tvAbout : TextView
+        - username : String
+        + onOptionsItemSelected()
+        # onCreate()
+        # onPause()
+        - initializeVariables()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.CreateMachineLearningModelActivity {
+        {static} + CSV_EXTENSION : String
+        {static} + IS_DATA_TO_LARGE_TO_DISPLAY : String
+        {static} + REQUEST_STORAGE : int
+        {static} + TAG : String
+        - actionBar : ActionBar
+        - btnLoadFile : Button
+        - btnReset : Button
+        - btnShowModel : Button
+        - btnStart : Button
+        - btnTestModel : Button
+        - dataset : HashMap<String, double[]>
+        - drawerLayout : DrawerLayout
+        - drawerToggle : ActionBarDrawerToggle
+        - etFileName : EditText
+        - isDataTooLargeToDisplay : boolean
+        - loginDialog : Dialog
+        - navigationView : NavigationView
+        - signUpDialog : Dialog
+        - spinnerChooseXData : Spinner
+        - spinnerChooseYData : Spinner
+        - splitData : ArrayList<double[]>
+        - successfullyLoadedDataset : boolean
+        - tvChooseXYColumns : TextView
+        - tvIntercept : TextView
+        - tvScore : TextView
+        - tvSlope : TextView
+        - username : String
+        - x : double[]
+        - xTest : double[]
+        - xTrain : double[]
+        - y : double[]
+        - yTest : double[]
+        - yTrain : double[]
+        + onOptionsItemSelected()
+        # onCreate()
+        # onPause()
+        - buildMachineLearningModel()
+        - canReadExternalStorage()
+        - getSelectedColumn()
+        - initializeVariables()
+        - loadDataset()
+        - requestReadExternalStoragePermission()
+        - resetProcess()
+        - setSpinnerItems()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.DatabaseHelper {
+        {static} + CURRENTLY_LOGGED_IN : String
+        {static} + DATABASE_NAME : String
+        {static} + ID : String
+        {static} + INTERCEPT : String
+        {static} + LOGGED_IN : int
+        {static} + LOGGED_OUT : int
+        {static} + PASSWORD : String
+        {static} + SCORE : String
+        {static} + SLOPE : String
+        {static} + USERNAME : String
+        {static} + USERS_TABLE_NAME : String
+        {static} + VERSION : int
+        + DatabaseHelper()
+        + addModel()
+        + addUser()
+        + changePassword()
+        + changeUsername()
+        + deleteModel()
+        + deleteUser()
+        + deleteUserData()
+        + getAllUsersModel()
+        + getCurrentLoggedInUsername()
+        + getPasswordForUsername()
+        + logOut()
+        + login()
+        + onCreate()
+        + onUpgrade()
+        - deleteUserFromUsers()
+        - deleteUserTable()
+        - getIdAtIndex()
+        - isUsernameValid()
+        - renameTable()
+        - userNameAlreadyExists()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.DialogHelper {
+        - context : Context
+        - loginDialog : Dialog
+        - signUpDialog : Dialog
+        + DialogHelper()
+        + buildLoginDialog()
+        - createSignUpDialog()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.FileHelper {
+        {static} + MIN_COLUMNS_NUMBER_IN_DATASET : int
+        {static} + MIN_ROW_NUMBER_IN_DATASET : int
+        {static} + SEPARATOR : String
+        - columns : ArrayList<String>
+        - reader : BufferedReader
+        + FileHelper()
+        + getDataset()
+        - convertToDouble()
+        - dropNonNumericColumns()
+        - hasNullOrEmptyValues()
+        - loadDataset()
+        - loadPreprocessedData()
+        - setColumns()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.LinearEquation {
+        - intercept : double
+        - slope : double
+        + LinearEquation()
+        + getIntercept()
+        + getSlope()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.LinearRegression {
+        - x : double[]
+        - y : double[]
+        + LinearRegression()
+        + fit()
+        + getLinearEquation()
+        + predict()
+        + score()
+        - predict()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.LinearRegressionHelper {
+        {static} + TRAIN_SPLIT : double
+        {static} + X_TEST : String
+        {static} + X_TEST_INDEX : int
+        {static} + X_TRAIN : String
+        {static} + X_TRAIN_INDEX : int
+        {static} + Y_TEST : String
+        {static} + Y_TEST_INDEX : int
+        {static} + Y_TRAIN : String
+        {static} + Y_TRAIN_INDEX : int
+        {static} + coefficients()
+        {static} + isDataTooLargeForGraph()
+        {static} + mean()
+        {static} + splitData()
+        {static} - covariance()
+        {static} - getShuffledData()
+        {static} - randomTrainingIndexes()
+        {static} - sortData()
+        {static} - sum()
+        {static} - testingIndexes()
+        {static} - variance()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.MachineLearningModel {
+        - score : double
+        + MachineLearningModel()
+        + getLinearEquation()
+        + getScore()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.MainActivity {
+        {static} + TAG : String
+        - actionBar : ActionBar
+        - drawerLayout : DrawerLayout
+        - drawerToggle : ActionBarDrawerToggle
+        - loginDialog : Dialog
+        - navigationView : NavigationView
+        - signUpDialog : Dialog
+        - username : String
+        + onOptionsItemSelected()
+        # onCreate()
+        # onPause()
+        - initializeVariables()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.MenuHelper {
+        - actionBar : ActionBar
+        - context : Context
+        - drawerLayout : DrawerLayout
+        - drawerToggle : ActionBarDrawerToggle
+        - navigationView : NavigationView
+        - username : String
+        + MenuHelper()
+        + setMainMenu()
+        - setMainMenuForAboutActivity()
+        - setMainMenuForCreateMachineLearningModelActivity()
+        - setMainMenuForMainActivity()
+        - setMainMenuForMyModelsActivity()
+        - setMainMenuForMyProfileActivity()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.MyModelsActivity {
+        {static} + TAG : String
+        - actionBar : ActionBar
+        - drawerLayout : DrawerLayout
+        - drawerToggle : ActionBarDrawerToggle
+        - loginDialog : Dialog
+        - lvMyModels : ListView
+        - models : ArrayList<MachineLearningModel>
+        - navigationView : NavigationView
+        - signUpDialog : Dialog
+        - tvLoginWarning : TextView
+        - username : String
+        + onOptionsItemSelected()
+        # onCreate()
+        # onPause()
+        - initializeVariables()
+        - loadModels()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.MyModelsListViewAdapter {
+        - context : Context
+        - models : ArrayList<MachineLearningModel>
+        + MyModelsListViewAdapter()
+        + getCount()
+        + getItem()
+        + getItemId()
+        + getView()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.MyProfileActivity {
+        {static} + TAG : String
+        - actionBar : ActionBar
+        - btnChangePassword : Button
+        - btnChangeUsername : Button
+        - btnDeleteAccount : Button
+        - btnDeleteMLModels : Button
+        - changePasswordDialog : Dialog
+        - changeUsernameDialog : Dialog
+        - constraintLayout : ConstraintLayout
+        - deleteAccountDialog : Dialog
+        - deleteMLModelsDialog : Dialog
+        - drawerLayout : DrawerLayout
+        - drawerToggle : ActionBarDrawerToggle
+        - loginDialog : Dialog
+        - navigationView : NavigationView
+        - signUpDialog : Dialog
+        - tvPassword : TextView
+        - tvUsername : TextView
+        - username : String
+        + onOptionsItemSelected()
+        # onCreate()
+        # onPause()
+        - clearAllFields()
+        - createChangePasswordDialog()
+        - createChangeUsernameDialog()
+        - createDeleteAccountDialog()
+        - createDeleteMLModelsDialog()
+        - initializeVariables()
+        - updateUsernameAndPasswordTextViews()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.PlottingHelper {
+        - intercept : double
+        - isDataTooLargeToDisplay : boolean
+        - slope : double
+        - xTest : double[]
+        - xTrain : double[]
+        - yTest : double[]
+        - yTrain : double[]
+        + PlottingHelper()
+        + getLine()
+        + getTestingPoints()
+        + getTrainingPoints()
+        + lineSecretFeature()
+        + plotSecretFeature()
+        - plotLinearEquationWithTrainTestValues()
+        - plotLinearEquationWithoutTrainTestData()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.ShowModelActivity {
+        {static} + GRAPH_WARNING : String
+        - graph : GraphView
+        - intent : Intent
+        - intercept : double
+        - isDataTooLargeToDisplay : boolean
+        - slope : double
+        - tag : String
+        - tvGraphWarning : TextView
+        - xTest : double[]
+        - xTrain : double[]
+        - yTest : double[]
+        - yTrain : double[]
+        # onCreate()
+    }
+  }
+  
+
+  namespace com.example.mlforall {
+    class com.example.mlforall.User {
+        - password : String
+        - username : String
+        + User()
+        + getPassword()
+        + getUsername()
+    }
+  }
+  
+
+  com.example.mlforall.AboutActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.mlforall.AboutActivity o-- com.example.mlforall.DatabaseHelper : db
+  com.example.mlforall.AboutActivity o-- com.example.mlforall.MenuHelper : menuHelper
+  com.example.mlforall.CreateMachineLearningModelActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.mlforall.CreateMachineLearningModelActivity o-- com.example.mlforall.DatabaseHelper : db
+  com.example.mlforall.CreateMachineLearningModelActivity o-- com.example.mlforall.LinearEquation : equation
+  com.example.mlforall.CreateMachineLearningModelActivity o-- com.example.mlforall.MenuHelper : menuHelper
+  com.example.mlforall.CreateMachineLearningModelActivity o-- com.example.mlforall.LinearRegression : model
+  com.example.mlforall.DatabaseHelper -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.example.mlforall.DialogHelper o-- com.example.mlforall.DatabaseHelper : db
+  com.example.mlforall.LinearRegression o-- com.example.mlforall.LinearEquation : linearEquation
+  com.example.mlforall.MachineLearningModel o-- com.example.mlforall.LinearEquation : linearEquation
+  com.example.mlforall.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.mlforall.MainActivity o-- com.example.mlforall.DatabaseHelper : db
+  com.example.mlforall.MainActivity o-- com.example.mlforall.MenuHelper : menuHelper
+  com.example.mlforall.MenuHelper o-- com.example.mlforall.DatabaseHelper : db
+  com.example.mlforall.MenuHelper o-- com.example.mlforall.DialogHelper : dialogHelper
+  com.example.mlforall.MyModelsActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.mlforall.MyModelsActivity o-- com.example.mlforall.MyModelsListViewAdapter : adapter
+  com.example.mlforall.MyModelsActivity o-- com.example.mlforall.DatabaseHelper : db
+  com.example.mlforall.MyModelsActivity o-- com.example.mlforall.MenuHelper : menuHelper
+  com.example.mlforall.MyModelsListViewAdapter -up-|> android.widget.BaseAdapter
+  com.example.mlforall.MyProfileActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.mlforall.MyProfileActivity o-- com.example.mlforall.DatabaseHelper : db
+  com.example.mlforall.MyProfileActivity o-- com.example.mlforall.MenuHelper : menuHelper
+  com.example.mlforall.ShowModelActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.mlforall.ShowModelActivity o-- com.example.mlforall.PlottingHelper : plottingHelper
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

@@ -59,6 +59,7 @@ public class DialogHelper {
 
             boolean successfullyLoggedInUser = db.login(user);
             if (successfullyLoggedInUser) { // If the user was successfully logged in.
+                Toast.makeText(context, "Welcome back!", Toast.LENGTH_SHORT).show(); // Greeting the user for signing in.
                 loginDialog.dismiss();
             }
             else { // Login Failed.
@@ -67,7 +68,6 @@ public class DialogHelper {
                 etLoginPassword.setText(""); // Clearing the fields.
             }
         });
-
         btnMoveToSignUp.setOnClickListener(v -> {
             loginDialog.dismiss();
             username[0] = createSignUpDialog();
@@ -99,6 +99,7 @@ public class DialogHelper {
                 User user = new User(username[0], password);
                 boolean userSuccessfullySignedUp = db.addUser(user);
                 if (userSuccessfullySignedUp) { // If the user was successfully signed up.
+                    Toast.makeText(context, "Welcome To My App!", Toast.LENGTH_SHORT).show(); // Greeting the user for signing up.
                     signUpDialog.dismiss();
                     loginDialog.dismiss();
                 }

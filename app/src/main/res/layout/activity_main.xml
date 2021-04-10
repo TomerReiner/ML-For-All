@@ -319,6 +319,58 @@
                 android:text="@string/my_models_note"
                 android:textSize="20sp" />
 
+            <ImageView
+                android:id="@+id/imgMyModelsWarning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:padding="5dp"
+                android:src="@drawable/my_models_warning" />
+
+            <TextView
+                android:id="@+id/tvMyProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/my_profile"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/tvMyProfileInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/my_profile_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgMyProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:src="@drawable/my_profile" />
+
+            <TextView
+                android:id="@+id/tvMyProfileNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/my_profile_note"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgMyProfileNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:src="@drawable/my_profile_note"/>
+
+
         </LinearLayout>
     </ScrollView>
 
