@@ -2,8 +2,7 @@
     <string name="app_name">ML For All</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="shared_preferences">shared_preferences</string>
-    <string name="current_user_logged_in">current_user_logged_in</string>
+
     <string name="item_create_machine_learning_model">Create ML Model</string>
     <string name="item_login_logout">Login/Logout</string>
     <string name="item_my_models">My Models</string>
@@ -11,10 +10,8 @@
     <string name="item_about">About</string>
     <string name="welcome_greet">Welcome!</string>
     <string name="go_home">Go Home</string>
-    <string name="load_data">Load Data For the Machine Learning Model</string>
     <string name="load_file">Load File</string>
     <string name="choose_columns">Please Choose X Column and Y Column</string>
-    <string name="choose_ml_model">Please Choose Machine Learning Model</string>
     <string name="start">Start!</string>
     <string name="slope">Slope:</string>
     <string name="intercept">Intercept:</string>
@@ -130,9 +127,7 @@
 
     <string name="my_models"><bold><big>My Models</big></bold></string>
 
-
-
-    <string name="my_models_instructions">My Models:
+    <string name="my_models_instructions">
         On this screen, you will be able to see all your model. Every model consists of a slope, an intercept, and a score.
         </string>
 
@@ -152,4 +147,9 @@
         When you press one of the buttons on this screen, a dialog will open. Follow the dialog instructions.</string>
 
     <string name="my_profile_note"><bold><big>Note: If you are not logged in to your account, this screen will appear:</big></bold></string>
+    <string name="enter_the_name_of_the_csv_file">Enter The Name Of the CSV File</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_up_exclamation_mark">Sign Up!</string>
+    <string name="retype_password">Retype Password:</string>
+    <string name="don_t_have_an_account_sign_up_now">Don\'t have an account? Sign up now!</string>
 </resources>

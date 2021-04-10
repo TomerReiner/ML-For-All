@@ -4,6 +4,7 @@
         <ignore path="src/main/res/drawable/login.png" />
         <ignore path="src/main/res/drawable/login_dialog.png" />
         <ignore path="src/main/res/drawable/login_dialog_move_to_sign_up.png" />
+        <ignore path="src/main/res/drawable/my_models_graph.png" />
         <ignore path="src/main/res/drawable/navigation_view.png" />
         <ignore path="src/main/res/drawable/navigation_view.png" />
     </issue>

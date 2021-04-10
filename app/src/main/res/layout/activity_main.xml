@@ -199,7 +199,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:padding="5dp"
-                android:src="@drawable/enter_file_name" />
+                android:src="@drawable/enter_file_name"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/tvChooseXYColumnsInstructions"
@@ -215,7 +216,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/start" />
+                android:src="@drawable/start"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/tvModelProcessingInstructions"
@@ -232,7 +234,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:padding="5dp"
-                android:src="@drawable/model_processing" />
+                android:src="@drawable/model_processing"
+                android:contentDescription="TODO" />
 
             <ImageView
                 android:id="@+id/imgGraph"
@@ -240,7 +243,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:padding="5dp"
-                android:src="@drawable/graph"/>
+                android:src="@drawable/graph"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/tvLeaveGraph"
@@ -265,7 +269,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/reset" />
+                android:src="@drawable/reset"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/tvMyModels"
@@ -282,24 +287,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:padding="5dp"
-                android:src="@drawable/my_models_example" />
+                android:src="@drawable/my_models_example"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/tvMyModelsInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/my_models_instructions"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvMyModelsGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/load_model_on_graph" />
 
             <ImageView
                 android:id="@+id/imgMyModelsGraph"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:padding="5dp"
-                android:src="@drawable/my_models_graph" />
+                android:src="@drawable/my_models_graph"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/tvDeleteModel"
@@ -325,7 +341,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:padding="5dp"
-                android:src="@drawable/my_models_warning" />
+                android:src="@drawable/my_models_warning"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/tvMyProfile"
@@ -351,7 +368,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="5dp"
-                android:src="@drawable/my_profile" />
+                android:src="@drawable/my_profile"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/tvMyProfileNote"
@@ -368,7 +386,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="5dp"
-                android:src="@drawable/my_profile_note"/>
+                android:src="@drawable/my_profile_note"
+                android:contentDescription="TODO" />
 
 
         </LinearLayout>

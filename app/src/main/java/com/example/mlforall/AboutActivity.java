@@ -9,11 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,7 +29,7 @@ public class AboutActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private MenuHelper menuHelper;
 
-    private TextView tvAbout;
+//    private TextView tvAbout;
 
     private Button btnHiddenFeature;
 
@@ -91,7 +88,7 @@ public class AboutActivity extends AppCompatActivity {
         username = db.getCurrentLoggedInUsername();
         menuHelper = new MenuHelper(AboutActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
 
-        tvAbout = findViewById(R.id.tvAbout);
+//        tvAbout = findViewById(R.id.tvAbout);
 //        tvAbout.setMovementMethod(LinkMovementMethod.getInstance());
         btnHiddenFeature = findViewById(R.id.btnHiddenFeature);
     }
