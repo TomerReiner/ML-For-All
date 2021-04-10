@@ -22,10 +22,11 @@
 
         <Button
             android:id="@+id/btnHiddenFeature"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="81dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="176dp"
             android:visibility="visible"
+            android:background="#FFFFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.263"
