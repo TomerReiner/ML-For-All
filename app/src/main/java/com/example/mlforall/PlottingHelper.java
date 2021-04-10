@@ -139,7 +139,11 @@ public class PlottingHelper {
         line.setColor(Color.GREEN);
         return line;
     }
-    
+
+    /**
+     * This function creates the hidden feature.
+     * @return The hidden feature.
+     */
     public LineGraphSeries<DataPoint> plotSecretFeature() {
         LineGraphSeries<DataPoint> plot = new LineGraphSeries<>();
         for (int i = -100; i <= 100; i++)
@@ -147,11 +151,16 @@ public class PlottingHelper {
         return plot;
     }
 
-    public LineGraphSeries<DataPoint> lineSecretFeature(double num) {
+    /**
+     * This function creates the hidden feature.
+     * @param x The x value.
+     * @return The hidden feature.
+     */
+    public LineGraphSeries<DataPoint> lineSecretFeature(double x) {
         LineGraphSeries<DataPoint> line = new LineGraphSeries<>();
         for (int i = 50; i <= 70; i++) {
-            line.appendData(new DataPoint(num, i), true, 51);
-            num += 0.01;
+            line.appendData(new DataPoint(x, i), true, 51);
+            x += 0.01;
         }
         return line;
     }

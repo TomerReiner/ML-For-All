@@ -107,6 +107,7 @@
         or\n
         y = slope * x + intercept\n
         Then, hit \"Test My Model!\". The model\'s score on the testing data will appear.\n
+        If the model score is negative, then the model failed to fit the data.\n
         After that, hit \"Show My Model!\". You will be redirected to a screen where your model will display on a graph.
         If you have too large values(values greater than 100) or too small values(values smaller than -100) in your dataset,
         the data points from the dataset won\'t appear on the graph. If there are more than 10 data points in your dataset,
@@ -121,4 +122,18 @@
         To reset the model building process, hit \"Reset\".]]>
     </string>
 
+    <string name="my_models"><bold><big>My Models</big></bold></string>
+
+
+
+    <string name="my_models_instructions">My Models:
+        On this screen, you will be able to see all your model. Every model consists of a slope, an intercept, and a score.
+        </string>
+
+    <string name="load_model_on_graph">To view a model on a graph, click the desired model.
+        On the graph, you will see the linear equation of the model.</string>
+
+    <string name="delete_model">To delete a model, click for a second on the model.</string>
+
+    <string name="my_models_note"><big><bold>Note: On this screen, you cannot log in/out from your account.</bold></big></string>
 </resources>

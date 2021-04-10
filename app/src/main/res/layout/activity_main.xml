@@ -65,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:contentDescription="Navigation Menu"
+                android:padding="5dp"
                 android:src="@drawable/navigation_view" />
 
             <TextView
@@ -82,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:contentDescription="TODO"
+                android:padding="5dp"
                 android:src="@drawable/login" />
 
             <TextView
@@ -99,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:contentDescription="TODO"
+                android:padding="5dp"
                 android:src="@drawable/logged_out" />
 
             <TextView
@@ -116,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:contentDescription="TODO"
+                android:padding="5dp"
                 android:src="@drawable/login_dialog" />
 
             <TextView
@@ -133,6 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:contentDescription="TODO"
+                android:padding="5dp"
                 android:src="@drawable/login_dialog_move_to_sign_up" />
 
             <TextView
@@ -193,6 +198,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:padding="5dp"
                 android:src="@drawable/enter_file_name" />
 
             <TextView
@@ -208,6 +214,7 @@
                 android:id="@+id/imgStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:src="@drawable/start" />
 
             <TextView
@@ -224,6 +231,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
+                android:padding="5dp"
                 android:src="@drawable/model_processing" />
 
             <ImageView
@@ -231,6 +239,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:padding="5dp"
                 android:src="@drawable/graph"/>
 
             <TextView
@@ -246,16 +255,69 @@
                 android:id="@+id/tvResetProcess"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/reset_instructions"
                 android:layout_marginTop="25dp"
                 android:fontFamily="@font/happy_monkey"
+                android:text="@string/reset_instructions"
                 android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/imgReset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:src="@drawable/reset" />
+
+            <TextView
+                android:id="@+id/tvMyModels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/my_models"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/imgMyModelsExample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:padding="5dp"
+                android:src="@drawable/my_models_example" />
+
+            <TextView
+                android:id="@+id/tvMyModelsInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/my_models_instructions"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgMyModelsGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:padding="5dp"
+                android:src="@drawable/my_models_graph" />
+
+            <TextView
+                android:id="@+id/tvDeleteModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/delete_model"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvMyModelsNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/my_models_note"
+                android:textSize="20sp" />
 
         </LinearLayout>
     </ScrollView>
