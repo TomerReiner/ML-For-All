@@ -123,16 +123,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
 
-        if (cursor.getCount() == 1) { // If there is only one row in users table.
-            String currentUsername = cursor.getString(cursor.getColumnIndex(USERNAME));
-            if (username.equals(currentUsername)) { // If the username was found.
-                cursor.close();
-                db.close();
-                return true;
-            }
-            return false;
-        }
-
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 String currentUsername = cursor.getString(cursor.getColumnIndex(USERNAME));
