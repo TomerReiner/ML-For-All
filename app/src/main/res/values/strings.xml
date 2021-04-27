@@ -39,10 +39,10 @@
 <!--    Tutorial text section-->
 
     <string name="general_tutorial"><![CDATA[
-        This tutorial will guide you through the app and will show you how to use it.\n
-        First, your Android version must be lower than Android 11.\n
-        After that, you need to move the CSV files you want to use into the Downloads Directory in the Documents Directory or the Downloads Directory.\n
-        All right, we are ready to continue!]]>
+       This tutorial will guide you through the app and will show you how to use it.\n
+    First, your Android version must be lower than Android 11.\n
+    After that, you need to move the CSV files you want to use into the Downloads Directory in the Documents Directory or the Downloads Directory or the Downloads Directory in the SD Card.\n
+    All right, we are ready to continue!]]>
     </string>
 
     <string name="navigation_instructions"><![CDATA[
