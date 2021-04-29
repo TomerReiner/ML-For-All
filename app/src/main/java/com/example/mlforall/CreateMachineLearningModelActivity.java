@@ -247,7 +247,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
     }
 
     /**
-     * This function loads the dataset from the file that the user wanted.
+     * This function loads the dataset from the file that the user wanted to load.
      * @return <code>true</code> if the file was successfully loaded, <code>false</code> if not.
      */
     private boolean loadDataset() {
@@ -280,7 +280,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
             }
         } catch (IOException e) { // Error loading the file.
             Toast.makeText(CreateMachineLearningModelActivity.this, "Error Loading the file.\n" +
-                    "Please make sure that the file is in the Downloads folder in the Documents folder," +
+                    "Please make sure that the file is in the Downloads folder in the Documents folder, " +
                     "or in the Downloads folder or in the Downloads folder in the SD Card", Toast.LENGTH_LONG).show();
             e.printStackTrace();
             return false;

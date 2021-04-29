@@ -102,9 +102,12 @@ public class LinearRegressionHelper {
     }
 
     /**
-     * This function computes the slope and intercept for x and y. The slope is m and intercept is b in the equation: y = mx + b.
-     * <pre>Code Example:
+     * This function computes the slope and intercept for x and y. The slope is <code>m</code> and intercept is <code>b</code>
+     * The function will create this equation:
+     * <pre>
+     *     {@code y = m * x + b}
      * </pre>
+     * Code Example:
      * <pre>
      * {@code
      * double[] x = {1, 2, 3, 4, 5, 6, 7, 8};
@@ -199,13 +202,13 @@ public class LinearRegressionHelper {
 
     /**
      * This function splits the data to training and testing data.
-     * 80% of the data will go to train the model, and the other 20% of the data will go to testing the model.
+     * 80% of the data will go to train the model, and the other 20% of the data will go to test the model.
      * @param x The x data.
      * @param y The y data.
-     * @return {@link ArrayList} with size of 4, The first item will be training X data(xTrain),
-     * the second item will be testing X data(xTest),
-     * the third item will be training y data(yTrain),
-     * and the last item will be testing y data(yTest).
+     * @return {@link ArrayList} with size of 4, The first item will be the training X data(xTrain),
+     * the second item will be the testing X data(xTest),
+     * the third item will be the training y data(yTrain),
+     * and the last item will be the testing y data(yTest).
      */
     public static ArrayList<double[]> splitData(double[] x, double[] y) {
         ArrayList<Integer> trainingIndexes = randomTrainingIndexes(x.length);
@@ -234,7 +237,7 @@ public class LinearRegressionHelper {
     }
 
     /**
-     * This function sorts <code>x</code> from minimum value to maximum value and then change <y>so</y> so the y values for each x value will be saved.
+     * This function sorts <code>x</code> from minimum value to maximum value and then changes <code>y</code> so the y values for each x value will be saved.
      * @param x The x values.
      * @param y The y values.
      */
@@ -255,8 +258,8 @@ public class LinearRegressionHelper {
     }
 
     /**
-     * This function checks if the data is too large or too small to display on the graph.
-     * @param arr The array that we want to check if it is too large or too small to display on the graph.
+     * This function checks if the data in the array is too large or too small to be displayed on the graph.
+     * @param arr The array that we want to check if its values are too large or too small to display on the graph.
      * The array is sorted from minimal value to maximal value.
      * @return <code>true</code> if the values are too large or too small to display on the graph, <code>false</code> if not.
      */

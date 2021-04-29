@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * This class creates the adapter for the list view in {@link MyModelsActivity}
+ */
 public class MyModelsListViewAdapter extends BaseAdapter {
 
     private final Context context;

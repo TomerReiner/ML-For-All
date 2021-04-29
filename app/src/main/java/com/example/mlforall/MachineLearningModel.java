@@ -1,5 +1,8 @@
 package com.example.mlforall;
 
+/**
+ * This class represents a Machine Learning Models with a slope, an intercept and a score.
+ */
 public class MachineLearningModel {
 
     private final LinearEquation linearEquation;
