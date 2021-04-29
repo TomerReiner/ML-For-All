@@ -45,7 +45,7 @@
                 android:id="@+id/tvGeneralInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/general_tutorial"
                 android:textSize="20sp" />
@@ -54,7 +54,7 @@
                 android:id="@+id/tvNavigationInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/navigation_instructions"
                 android:textSize="20sp" />
@@ -63,7 +63,7 @@
                 android:id="@+id/imgNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:contentDescription="Navigation Menu"
                 android:padding="5dp"
                 android:src="@drawable/navigation_view" />
@@ -72,7 +72,7 @@
                 android:id="@+id/tvLoginInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/login_instructions"
                 android:textSize="20sp" />
@@ -81,7 +81,7 @@
                 android:id="@+id/imgLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:contentDescription="TODO"
                 android:padding="5dp"
                 android:src="@drawable/login" />
@@ -90,7 +90,7 @@
                 android:id="@+id/tvLogoutNotification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/logged_in_case_instructions"
                 android:textSize="20sp" />
@@ -99,7 +99,7 @@
                 android:id="@+id/imgLoggedOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:contentDescription="TODO"
                 android:padding="5dp"
                 android:src="@drawable/logged_out" />
@@ -108,7 +108,7 @@
                 android:id="@+id/tvAlreadyLoggedInInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/already_has_account_instructions"
                 android:textSize="20sp" />
@@ -117,7 +117,7 @@
                 android:id="@+id/imgLoginDialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:contentDescription="TODO"
                 android:padding="5dp"
                 android:src="@drawable/login_dialog" />
@@ -126,7 +126,7 @@
                 android:id="@+id/openSignUpDialogInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/open_sign_up_dialog_instructions"
                 android:textSize="20sp" />
@@ -135,7 +135,7 @@
                 android:id="@+id/imgSignUpInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:contentDescription="TODO"
                 android:padding="5dp"
                 android:src="@drawable/login_dialog_move_to_sign_up" />
@@ -144,7 +144,7 @@
                 android:id="@+id/tvUsernameInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/username_instructions"
                 android:textSize="20sp" />
@@ -153,7 +153,7 @@
                 android:id="@+id/imgNavigationViewMenuInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:contentDescription="Navigation Menu"
                 android:src="@drawable/navigation_view" />
 
@@ -161,7 +161,7 @@
                 android:id="@+id/tvMenuInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/menu_instructions"
                 android:textSize="20sp" />
@@ -170,7 +170,7 @@
                 android:id="@+id/tvImportantNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/important_note"
                 android:textSize="30sp" />
@@ -198,9 +198,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/enter_file_name"
-                android:contentDescription="TODO" />
+                android:src="@drawable/enter_file_name" />
 
             <TextView
                 android:id="@+id/tvChooseXYColumnsInstructions"
@@ -215,9 +215,9 @@
                 android:id="@+id/imgStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/start"
-                android:contentDescription="TODO" />
+                android:src="@drawable/start" />
 
             <TextView
                 android:id="@+id/tvModelProcessingInstructions"
@@ -232,19 +232,19 @@
                 android:id="@+id/imgModelProcessing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="25dp"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/model_processing"
-                android:contentDescription="TODO" />
+                android:src="@drawable/model_processing" />
 
             <ImageView
                 android:id="@+id/imgGraph"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/graph"
-                android:contentDescription="TODO" />
+                android:src="@drawable/graph" />
 
             <TextView
                 android:id="@+id/tvLeaveGraph"
@@ -268,15 +268,15 @@
                 android:id="@+id/imgReset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/reset"
-                android:contentDescription="TODO" />
+                android:src="@drawable/reset" />
 
             <TextView
                 android:id="@+id/tvMyModels"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 android:fontFamily="@font/happy_monkey"
                 android:text="@string/my_models"
                 android:textSize="40sp" />
@@ -286,9 +286,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/my_models_example"
-                android:contentDescription="TODO" />
+                android:src="@drawable/my_models_example" />
 
             <TextView
                 android:id="@+id/tvMyModelsInstructions"
@@ -304,18 +304,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp"
                 android:fontFamily="@font/happy_monkey"
-                android:text="@string/load_model_on_graph" />
+                android:text="@string/load_model_on_graph"
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/imgMyModelsGraph"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/my_models_graph"
-                android:contentDescription="TODO" />
+                android:src="@drawable/my_models_graph" />
 
             <TextView
                 android:id="@+id/tvDeleteModel"
@@ -340,9 +340,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/my_models_warning"
-                android:contentDescription="TODO" />
+                android:src="@drawable/my_models_warning" />
 
             <TextView
                 android:id="@+id/tvMyProfile"
@@ -367,9 +367,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/my_profile"
-                android:contentDescription="TODO" />
+                android:src="@drawable/my_profile" />
 
             <TextView
                 android:id="@+id/tvMyProfileNote"
@@ -385,11 +385,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:contentDescription="TODO"
                 android:padding="5dp"
-                android:src="@drawable/my_profile_note"
-                android:contentDescription="TODO" />
+                android:src="@drawable/my_profile_note" />
 
-
+            <TextView
+                android:id="@+id/tvEnjoyTheApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="50dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/enjoy_the_app"
+                android:textAlignment="center"
+                android:textSize="50sp"
+                android:textStyle="bold"/>
         </LinearLayout>
     </ScrollView>
 
