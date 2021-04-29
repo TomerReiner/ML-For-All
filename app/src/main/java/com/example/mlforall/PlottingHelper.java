@@ -158,7 +158,7 @@ public class PlottingHelper {
      */
     public LineGraphSeries<DataPoint> lineSecretFeature(double x) {
         LineGraphSeries<DataPoint> line = new LineGraphSeries<>();
-        for (int i = 50; i <= 70; i++) {
+        for (int i = 50; i <= 65; i++) {
             line.appendData(new DataPoint(x, i), true, 51);
             x += 0.01;
         }
