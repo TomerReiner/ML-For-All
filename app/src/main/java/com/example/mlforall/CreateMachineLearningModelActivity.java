@@ -273,12 +273,15 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
                     return true;
             }
             else { // The user has not granted the application permission to read files.
-                Toast.makeText(CreateMachineLearningModelActivity.this, "Can't read file without permission.\nYou have to grant the app permission to read files in order to create Machine Learning Models.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateMachineLearningModelActivity.this, "Can't read file without permission.\n" +
+                        "You have to grant the app permission to read files in order to create Machine Learning Models.", Toast.LENGTH_SHORT).show();
                 requestReadExternalStoragePermission(); // Asking for permission to read files.
                 return false;
             }
         } catch (IOException e) { // Error loading the file.
-            Toast.makeText(CreateMachineLearningModelActivity.this, "Error Loading the file.\n Please make sure that the file is in the downloads folder in the documents folder.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateMachineLearningModelActivity.this, "Error Loading the file.\n" +
+                    "Please make sure that the file is in the Downloads folder in the Documents folder," +
+                    "or in the Downloads folder or in the Downloads folder in the SD Card", Toast.LENGTH_LONG).show();
             e.printStackTrace();
             return false;
         }

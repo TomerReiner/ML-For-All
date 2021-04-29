@@ -27,7 +27,8 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignUp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSignUp"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etSignUpPassword"
@@ -40,7 +41,8 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSignUpUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpUsername"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etRetypePassword"
@@ -53,7 +55,8 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSignUpPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpPassword"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btnSignUp"

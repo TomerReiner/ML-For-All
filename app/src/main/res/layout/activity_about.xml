@@ -5,6 +5,7 @@
     android:id="@+id/dlAboutActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".AboutActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,11 +15,14 @@
         <TextView
             android:id="@+id/tvAbout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/happy_monkey"
             android:text="@string/about"
             android:textAllCaps="false"
-            android:textSize="20sp"/>
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnHiddenFeature"
@@ -26,10 +30,11 @@
             android:layout_height="80dp"
             android:layout_marginBottom="176dp"
             android:visibility="visible"
-            android:background="#FFFFFFFF"
+            android:background="@color/material_on_background_disabled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.263"
+            android:backgroundTint="#FFFFFF"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

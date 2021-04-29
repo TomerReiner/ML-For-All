@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvChangeUsernameDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/happy_monkey"
+        android:text="@string/change_your_username"
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/etChangeUsernameNewUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/happy_monkey"
-        android:hint="New Username:"
+        android:hint="@string/type_your_new_username"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etChangeUsernameRetypeUsername"
@@ -22,11 +31,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/happy_monkey"
-        android:hint="Retype Username:"
+        android:hint="@string/retype_your_new_username"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etChangeUsernameNewUsername" />
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etChangeUsernameVerifyPassword"
@@ -34,11 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/happy_monkey"
-        android:hint="Please Verify Your Password:"
+        android:hint="@string/type_your_password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etChangeUsernameRetypeUsername" />
+        android:importantForAutofill="no" />
 
 
     <Button
@@ -46,13 +51,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_shape"
         android:fontFamily="@font/happy_monkey"
-        android:text="Confirm"
+        android:text="@string/confirm"
         android:textAllCaps="false"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etChangeUsernameVerifyPassword" />
+        android:textSize="20sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

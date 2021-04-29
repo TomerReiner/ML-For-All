@@ -189,12 +189,13 @@ public class MyProfileActivity extends AppCompatActivity {
                 }
 
                 else { // Changing the username failed.
-                    Toast.makeText(MyProfileActivity.this, "Error encountered. Please make sure that all the fields are filled. If this doesn't work, try other username.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyProfileActivity.this, "Error encountered. Please make sure that all the fields are filled." +
+                            " If this doesn't work, try other username.", Toast.LENGTH_LONG).show();
                     clearAllFields(etChangeUsernameNewUsername, etChangeUsernameRetypeUsername, etChangeUsernameVerifyPassword);
                 }
             }
             else {
-                Toast.makeText(MyProfileActivity.this, "Please make sure that the usernames are equal, and the inserted password is your real password.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyProfileActivity.this, "Please make sure that the usernames are equal, and that the password is correct", Toast.LENGTH_LONG).show();
                 clearAllFields(etChangeUsernameNewUsername, etChangeUsernameRetypeUsername, etChangeUsernameVerifyPassword);
             }
         });
@@ -246,7 +247,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(MyProfileActivity.this, "Please make sure that new password fields are equal and that the old password is your password.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyProfileActivity.this, "Please make sure that new passwords' fields are equal and that the old password is correct.", Toast.LENGTH_LONG).show();
                 clearAllFields(etChangePasswordNewPassword,  etChangePasswordRetypePassword, etChangePasswordOldPassword);
             }
         });
@@ -268,7 +269,6 @@ public class MyProfileActivity extends AppCompatActivity {
 
         deleteMLModelsDialog.setContentView(R.layout.delete_ml_models_dialog);
         deleteMLModelsDialog.setCancelable(true);
-        deleteMLModelsDialog.setTitle("Are you sure you want to delete all your ML Model?");
 
         EditText etDeleteMLModelsPassword = deleteMLModelsDialog.findViewById(R.id.etDeleteMLModelsPassword);
         EditText etDeleteMLModelsRetypePassword = deleteMLModelsDialog.findViewById(R.id.etDeleteMLModelsRetypePassword);
@@ -285,7 +285,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 deleteMLModelsDialog.dismiss();
             }
             else {
-                Toast.makeText(MyProfileActivity.this, "Your password is incorrect or the 2 passwords you have inserted are not equal.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyProfileActivity.this, "Incorrect password.", Toast.LENGTH_LONG).show();
                 clearAllFields(etDeleteMLModelsPassword, etDeleteMLModelsRetypePassword);
             }
         });
@@ -307,12 +307,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
         deleteAccountDialog.setContentView(R.layout.delete_account_dialog);
         deleteAccountDialog.setCancelable(true);
-        deleteAccountDialog.setTitle("Are you sure you want to delete your account?");
 
         EditText etDeleteAccountPassword = deleteAccountDialog.findViewById(R.id.etDeleteAccountPassword);
         EditText etDeleteAccountRetypePassword = deleteAccountDialog.findViewById(R.id.etDeleteAccountRetypePassword);
         Button btnDeleteAccountConfirm = deleteAccountDialog.findViewById(R.id.btnDeleteAccountConfirm);
-
 
         btnDeleteAccountConfirm.setOnClickListener(v -> {
             String insertedPassword = etDeleteAccountPassword.getText().toString();
@@ -327,7 +325,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 deleteAccountDialog.dismiss();
             }
             else {
-                Toast.makeText(MyProfileActivity.this, "Your password is incorrect or the 2 passwords you have inserted are not equal.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyProfileActivity.this, "Incorrect password.", Toast.LENGTH_LONG).show();
                 clearAllFields(etDeleteAccountPassword, etDeleteAccountRetypePassword);
             }
         });

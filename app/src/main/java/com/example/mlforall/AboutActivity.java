@@ -9,8 +9,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,7 +31,7 @@ public class AboutActivity extends AppCompatActivity {
     private DatabaseHelper db;
     private MenuHelper menuHelper;
 
-//    private TextView tvAbout;
+    private TextView tvAbout;
 
     private Button btnHiddenFeature;
 
@@ -49,9 +51,11 @@ public class AboutActivity extends AppCompatActivity {
         initializeVariables(); // Initialize all the variables-DO NOT REMOVE!
         menuHelper.setMainMenu(TAG); // Initialize the main menu-DO NOT REMOVE!
 
+        count = 0;
+
         btnHiddenFeature.setOnClickListener(v -> {
             count++;
-            if (count == 5) { // If the user clicked the button 5 times, we open the hidden feature.
+            if (count == 2) { // If the user clicked the button 2 times, we open the hidden feature.
                 Intent intent = new Intent(AboutActivity.this, ShowModelActivity.class);
                 intent.putExtra("tag", TAG); // Transferring the name of the activity to ShowModelActivity to identify that the user came from this activity and open the hidden feature.
                 startActivity(intent);
@@ -71,6 +75,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onPause();
         loginDialog.dismiss();
         signUpDialog.dismiss();
+        count = 0;
     }
 
     /**
@@ -88,8 +93,8 @@ public class AboutActivity extends AppCompatActivity {
         username = db.getCurrentLoggedInUsername();
         menuHelper = new MenuHelper(AboutActivity.this, drawerLayout, navigationView, drawerToggle, actionBar, loginDialog, signUpDialog, db, username);
 
-//        tvAbout = findViewById(R.id.tvAbout);
-//        tvAbout.setMovementMethod(LinkMovementMethod.getInstance());
+        tvAbout = findViewById(R.id.tvAbout);
+        tvAbout.setMovementMethod(LinkMovementMethod.getInstance());
         btnHiddenFeature = findViewById(R.id.btnHiddenFeature);
     }
 }
