@@ -25,8 +25,8 @@
     <string name="about"><![CDATA[This is an application that enables you to build simple Machine Learning Models without the need of background knowledge in this subject.
     You can use the app very easily and build Machine Learning Models for free.\n
     Creator: Tomer Reiner\n
-    Version: 1.0.9\n
-    Release Date: 29.04.2021\n
+    Version: 1.1.0\n
+    Release Date: 30.04.2021\n
     Source Code Link:]]> <a href="https://github.com/TomerReiner/ML-For-All">ML For All</a>
     </string>
 
@@ -60,7 +60,6 @@
     <string name="change_password">Change Password</string>
     <string name="delete_my_ml_models">Delete My ML Models</string>
     <string name="delete_my_account">Delete My Account</string>
-    <string name="enjoy_the_app">Enjoy The App!</string>
 
 <!--    Tutorial section-->
 
@@ -96,7 +95,7 @@
 
     <string name="username_instructions"><![CDATA[
         In this dialog, enter your username and password. A valid username can only include English letters, digits, and an underscore(_).\n
-        A Valid username can only include at least one letter and begin with a letter or an underscore.\n
+        A Valid username has to include at least one letter and has to begin with a letter or an underscore.\n
         A valid password can only include English letters, digits, and special characters.\n
         After filling all the fields in the dialog, click the \"Sign Up!\" button. If the sign-up process is successful, the dialog will close.\n
         If the sign-up process fails, a notification will pop up.
@@ -116,13 +115,18 @@
     </string>
 
     <string name="important_note"><bold><big><![CDATA[
-        Note: You must log in to your account to use the app\'s features.]]></big></bold>
+        Note: You must login to your account to use the app\'s features.]]></big></bold>
     </string>
 
     <string name="create_ml_model"><big><bold>Create ML Models</bold></big></string>
 
     <string name="enter_file_name"><![CDATA[
-        Please enter the file\'s name with or without the file extension(.csv) and press \"Load File\".]]>
+        Please enter the file\'s name with or without the file extension(.csv) and press \"Load File\".\n
+        There has to be the same amount of items in each row in the file, and there has to be the same amount of rows in each column.
+        All the values in the file must be filled except for one case:
+        If there are empty values in the first row(except for the last value), which is the columns row,
+         the empty values will be labeled as their index in the row.]]>
+        <big><bold>Note: You have to grant the app permission to read files.</bold></big>
     </string>
 
     <string name="choose_columns_instructions"><![CDATA[
@@ -133,14 +137,14 @@
 
     <string name="model_processing_instructions"><![CDATA[
         After that, the slope and the intercept of the model will show. The app builds a simple 2D linear equation of this form:\n
-        y = m * x +b\n
+        y = m * x + b\n
         or\n
         y = slope * x + intercept\n
         Then, hit \"Test My Model!\". The model\'s score on the testing data will appear.\n
         If the model\'s score is negative, then the model failed to fit the data.\n
-        After that, hit \"Show My Model!\". You will be redirected to a screen where your model will display on a graph.
+        After that, hit \"Show My Model!\". You will be redirected to a screen where your model will be displayed on a graph.
         If you have too large values(values greater than 100) or too small values(values smaller than -100) in your dataset,
-        the data points from the dataset won\'t appear on the graph. If there are more than 10 data points in your dataset,
+        the data points from the dataset won\'t appear on the graph. If there are more than 10 data points in the training data and more than 10 data points in the testing data,
         only the first ten data points of the training data and the first ten data points of the testing data will appear on the graph.]]>
     </string>
 
@@ -163,7 +167,7 @@
 
     <string name="delete_model">To delete a model, click for a second on the model.</string>
 
-    <string name="my_models_note"><big><bold>Note: On this screen, you cannot log in/out from your account.
+    <string name="my_models_note"><big><bold>Note: On this screen, you cannot login/logout from your account.
         If you are not logged in to your account, this message will appear:</bold></big></string>
 
     <string name="my_profile"><big><bold>My Profile:</bold></big></string>
@@ -171,5 +175,9 @@
     <string name="my_profile_instructions"><![CDATA[On this screen, you will be able to view your profile\'s information,
         change your username and password, delete all of your ML Models and even delete your account.
         For security, you have to type your password every time you commit changes in your profile.
-        When you press one of the buttons on this screen, a dialog will open. Follow the dialog instructions.]]></string>
+        When you press one of the buttons on this screen, a dialog will open. You have to follow the dialog instructions to complete the desired action.]]></string>
+
+    <string name="secret_feature_clue">There is a secret feature on one of the app\'s screens. Try to find it!</string>
+
+    <string name="enjoy_the_app">Enjoy The App!</string>
 </resources>

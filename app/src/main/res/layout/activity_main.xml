@@ -390,6 +390,16 @@
                 android:src="@drawable/my_profile_note" />
 
             <TextView
+                android:id="@+id/tvSecretFeatureClue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/happy_monkey"
+                android:text="@string/secret_feature_clue"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
+
+            <TextView
                 android:id="@+id/tvEnjoyTheApp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

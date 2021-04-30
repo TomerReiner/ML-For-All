@@ -155,7 +155,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private void createChangeUsernameDialog() {
         username = db.getCurrentLoggedInUsername();
         if (username.equals("")) { // If there is no username logged in, we terminate the process.
-            Toast.makeText(MyProfileActivity.this, "You must be logged in to change your username.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MyProfileActivity.this, "You have to be logged in to change your username.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -182,7 +182,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 boolean successfullyChangesUsername = db.changeUsername(username, newUsername);
 
                 if (successfullyChangesUsername) { // If the username was successfully changed.
-                    Toast.makeText(MyProfileActivity.this, "Username was successfully changes!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyProfileActivity.this, "Username was successfully changed!", Toast.LENGTH_LONG).show();
                     username = newUsername; // Updating the username.
                     changeUsernameDialog.dismiss();
                     updateUsernameAndPasswordTextViews();
@@ -195,7 +195,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(MyProfileActivity.this, "Please make sure that the usernames are equal, and that the password is correct", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyProfileActivity.this, "Please make sure that the usernames are equal, the password is correct and that all the fields are filled.", Toast.LENGTH_LONG).show();
                 clearAllFields(etChangeUsernameNewUsername, etChangeUsernameRetypeUsername, etChangeUsernameVerifyPassword);
             }
         });
@@ -210,7 +210,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private void createChangePasswordDialog() {
         username = db.getCurrentLoggedInUsername();
         if (username.equals("")) { // If there is no username logged in, we terminate the process.
-            Toast.makeText(MyProfileActivity.this, "You must be logged in to change your password.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MyProfileActivity.this, "You have to be logged in to change your password.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -247,7 +247,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(MyProfileActivity.this, "Please make sure that new passwords' fields are equal and that the old password is correct.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyProfileActivity.this, "Please make sure that new passwords fields are equal, the old password is correct, and that all the fields are filled.", Toast.LENGTH_LONG).show();
                 clearAllFields(etChangePasswordNewPassword,  etChangePasswordRetypePassword, etChangePasswordOldPassword);
             }
         });
@@ -263,7 +263,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private void createDeleteMLModelsDialog() {
         username = db.getCurrentLoggedInUsername();
         if (username.equals("")) { // If there is no username logged in, we terminate the process.
-            Toast.makeText(MyProfileActivity.this, "You must be logged in to delete your ML Models.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MyProfileActivity.this, "You have to be logged in to delete your ML Models.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -301,7 +301,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private void createDeleteAccountDialog() {
         username = db.getCurrentLoggedInUsername();
         if (username.equals("")) { // If there is no username logged in, we terminate the process.
-            Toast.makeText(MyProfileActivity.this, "You must be logged in to delete your account.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MyProfileActivity.this, "You have to be logged in to delete your account.", Toast.LENGTH_LONG).show();
             return;
         }
 

@@ -119,7 +119,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         btnLoadFile.setOnClickListener(v -> {
             username = db.getCurrentLoggedInUsername();
             if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
-                Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateMachineLearningModelActivity.this, "You have to be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -140,7 +140,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         btnTestModel.setOnClickListener(v -> {
             username = db.getCurrentLoggedInUsername();
             if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
-                Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to view model's score.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateMachineLearningModelActivity.this, "You have to be logged in to view your model's score.", Toast.LENGTH_SHORT).show();
                 return;
             }
             tvScore.setVisibility(View.VISIBLE); // Setting the next views to be visible.
@@ -156,7 +156,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
         btnShowModel.setOnClickListener(v -> {
             username = db.getCurrentLoggedInUsername();
             if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
-                Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to view your model's graph.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateMachineLearningModelActivity.this, "You have to be logged in to view your model's graph.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -345,7 +345,7 @@ public class CreateMachineLearningModelActivity extends AppCompatActivity {
     private void buildMachineLearningModel() {
         username = db.getCurrentLoggedInUsername();
         if (username.equals("")) { // If the user is not logged in then we notify him and terminate the model building process.
-            Toast.makeText(CreateMachineLearningModelActivity.this, "You must be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateMachineLearningModelActivity.this, "You have to be logged in to build machine learning models.", Toast.LENGTH_SHORT).show();
             return;
         }
 

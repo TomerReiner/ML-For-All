@@ -27,7 +27,6 @@ public class PlottingHelper {
      */
     private final boolean isDataTooLargeToDisplay;
 
-
     public PlottingHelper(double[] xTrain, double[] xTest, double[] yTrain, double[] yTest, double slope, double intercept, boolean isDataTooLargeToDisplay) {
         this.xTrain = xTrain;
         this.xTest = xTest;
@@ -39,8 +38,8 @@ public class PlottingHelper {
     }
 
     /**
-     * This function create the linear line so the user will be able to view the model that was built for the data.
-     * If {@link #isDataTooLargeToDisplay} == true, a line will be shown from x=0 to x=100.
+     * This function creates the linear equation so that the user will be able to view the model that was built for the data.
+     * If <code>{@link #isDataTooLargeToDisplay} == true</code>, a line will be shown from x=0 to x=100.
      * @return The line.
      */
     public LineGraphSeries<DataPoint> getLine() {
@@ -74,7 +73,7 @@ public class PlottingHelper {
     /**
      * This function creates the testing points.
      * If <code>xTest.length > 10</code> then only the 10 first points in the dataset will be shown.
-     * This is used to prevent too many points on the graph.
+     * This is used to prevent the appearance of too many points on the graph.
      * @return The testing points.
      */
     public PointsGraphSeries<DataPoint> getTestingPoints() {
@@ -96,7 +95,7 @@ public class PlottingHelper {
     }
 
     /**
-     * This function plot line graph if {@link #xTrain}, {@link #xTest}, {@link #yTrain} and {@link #yTest} are not null.
+     * This function plots the linear equation if {@link #xTrain}, {@link #xTest}, {@link #yTrain} and {@link #yTest} are not null.
      * @return The line.
      */
     private LineGraphSeries<DataPoint> plotLinearEquationWithTrainTestValues() {
@@ -126,7 +125,7 @@ public class PlottingHelper {
     }
 
     /**
-     * This function plots the data if {@link #xTrain}, {@link #xTest}, {@link #yTrain} and {@link #yTest} are null.
+     * This function plots the linear equation if {@link #xTrain}, {@link #xTest}, {@link #yTrain} and {@link #yTest} are null.
      * @return The line.
      */
     private LineGraphSeries<DataPoint> plotLinearEquationWithoutTrainTestData() {

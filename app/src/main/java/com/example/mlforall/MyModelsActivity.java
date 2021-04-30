@@ -113,7 +113,7 @@ public class MyModelsActivity extends AppCompatActivity {
         if (username.equals(""))
             return;
 
-        models = db.getAllUsersModel(username);
+        models = db.getAllUserModel(username);
         adapter = new MyModelsListViewAdapter(MyModelsActivity.this, models);
         lvMyModels.setAdapter(adapter);
     }

@@ -41,8 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * This function add a user to the database and create machine learning models table for him.
-     *
+     * This function add a user to the database and creates machine learning models table for him.
      * @param user The user that we want to add to the database.
      * @return <code>true</code> if the user was successfully inserted, <code>false</code>.
      */
@@ -76,8 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * This function logs the user in.
-     *
+     * This function logs the user in to the app.
      * @param user The user that we want to login.
      * @return <code>true</code> if the user was successfully logged in, <code>false</code> if not.
      */
@@ -112,9 +110,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * This function checks if a username already exists in {@link #USERNAME} columns.
-     *
-     * @param username The username that we want to check if he exists in the database.
+     * This function checks if a username already exists in {@link #USERNAME} columns in the {@link #USERS_TABLE_NAME} table.
+     * @param username The username that we want to check if it exists in the database.
      * @return <code>true</code> if the username already exists, <code>false</code> if not.
      */
     private boolean userNameAlreadyExists(String username) {
@@ -146,7 +143,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * isUsernameValid("Tomer123") -> true
      * }
      * </pre>
-     *
      * @param username The username that we want to check if its valid.
      * @return <code>true</code> if the username is valid, <code>false</code> if not.
      */
@@ -176,7 +172,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function finds the password for a username.
-     *
      * @param username The username of the user that we want to find his password.
      * @return The password of the user, empty string if there is no user logged in..
      */
@@ -197,7 +192,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function renames a table's name.
-     *
      * @param oldTableName The old table name.
      * @param newTableName The new table name.
      * @see #changeUsername(String, String)
@@ -211,7 +205,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function changes the username of the user.
-     *
      * @param oldUsername The old username of the user.
      * @param newUsername The new username of the user.
      * @return <code>true</code> if the username was successfully changes, <code>false</code> if not.
@@ -240,7 +233,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function changes the password of the user.
-     *
      * @param username    The username of the user that we want to change his password.
      * @param newPassword The new password of the user.
      * @return <code>true</code> if the password was successfully changed, <code>false</code> if not.
@@ -265,7 +257,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function deletes the user from {@link #USERS_TABLE_NAME}.
-     *
      * @param username The username of the user that we want to delete.
      * @see #onCreate(SQLiteDatabase)
      */
@@ -281,7 +272,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function deletes the user's data table.
-     *
      * @param username The username of the user that we want to delete his data.
      * @see #addUser(User)
      */
@@ -298,7 +288,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function deletes a user from the database.
-     *
      * @param username The username of the user that we want to delete.
      * @see #deleteUser(String)
      * @see #deleteUserFromUsers(String)
@@ -309,8 +298,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * This function logs the user out.
-     *
+     * This function logs the user out from the app.
      * @param username The name of the user that we want to log out.
      */
     public void logOut(String username) {
@@ -327,7 +315,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function returns the username that is currently logged in.
-     *
      * @return the username of the user that is currently logged in, <code>""</code> if there is no user logged in.
      */
     public String getCurrentLoggedInUsername() {
@@ -351,7 +338,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function deletes all the data from the user's data table(the table that has the user's username).
-     *
      * @param username The username of the user that we want to delete his data.
      */
     public void deleteUserData(String username) {
@@ -363,9 +349,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function adds a model to the user's data table.
-     *
      * @param username The username of the user that we want to add data for his table.
-     * @param model    The machine learning model that we want to add ti the user's models table.
+     * @param model    The machine learning model that we want to add to the user's models table.
      */
     public void addModel(String username, MachineLearningModel model) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -380,11 +365,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This function gets all the user's machine learning models from his table.
-     *
      * @param username The username of the user.
      * @return {@link ArrayList} of {@link MachineLearningModel} with all of the users model.
      */
-    public ArrayList<MachineLearningModel> getAllUsersModel(String username) {
+    public ArrayList<MachineLearningModel> getAllUserModel(String username) {
         ArrayList<MachineLearningModel> models = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -414,7 +398,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * This will create a situation where the next model's id that will be inserted to the database will be 6,
      * because the previous id values was 5.
      * We will have to iterate through the user's table items until we reach the row at <code>position</code>,
-     * and then delete the model with that id.
+     * and then delete the model with the id in <code>position</code>.
      * @param username The username of the user.
      * @param position The index of the model that we want to delete.
      * @return The id column value in the row with <code>position</code> index.
@@ -444,6 +428,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * This function deletes a model from the user's table.
      * @param username The username of the user.
      * @param position The index of the model that we want to delete.
+     * @see  #getIdAtIndex(String, int)
      */
     public void deleteModel(String username, int position) {
         SQLiteDatabase db = this.getWritableDatabase();

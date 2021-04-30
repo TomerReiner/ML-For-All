@@ -5,7 +5,6 @@
     android:id="@+id/dlAboutActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     tools:context=".AboutActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,16 +25,17 @@
 
         <Button
             android:id="@+id/btnHiddenFeature"
-            android:layout_width="81dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="176dp"
-            android:visibility="visible"
             android:background="@color/material_on_background_disabled"
+            android:backgroundTint="#FFFFFF"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.263"
-            android:backgroundTint="#FFFFFF"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAbout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
