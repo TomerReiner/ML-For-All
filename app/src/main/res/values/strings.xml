@@ -25,7 +25,7 @@
     <string name="about"><![CDATA[This is an application that enables you to build simple Machine Learning Models without the need of background knowledge in this subject.
     You can use the app very easily and build Machine Learning Models for free.\n
     Creator: Tomer Reiner\n
-    Version: 1.1.2\n
+    Version: 1.1.3\n
     Release Date: 30.04.2021\n
     Source Code Link:]]> <a href="https://github.com/TomerReiner/ML-For-All">ML For All</a>
     </string>
@@ -118,7 +118,7 @@
         Note: You must login to your account to use the app\'s features.]]></big></bold>
     </string>
 
-    <string name="create_ml_model"><big><bold>Create ML Models</bold></big></string>
+    <string name="create_ml_model"><big><bold>Create ML(Machine Learning) Models</bold></big></string>
 
     <string name="enter_file_name"><![CDATA[
         Please enter the file\'s name with or without the file extension(.csv) and press \"Load File\".\n
