@@ -1,7 +1,7 @@
 package com.example.mlforall;
 
 /**
- * This class represents a User with a username and a passowrd.
+ * This class represents a User with a username and a password.
  */
 public class User {
 
