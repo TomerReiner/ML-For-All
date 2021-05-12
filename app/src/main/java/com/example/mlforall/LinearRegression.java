@@ -40,12 +40,9 @@ public class LinearRegression {
     private final double[] y; // The y values for the LinearRegression.
     private LinearEquation linearEquation;
 
-    public LinearRegression(double[] x, double[] y) throws IllegalArgumentException {
+    public LinearRegression(double[] x, double[] y) {
         this.x = x;
         this.y = y;
-
-        if (this.x.length != this.y.length) // If the lengths of the arrays are not equal.
-            throw new IllegalArgumentException(String.format("The length of the arrays don't match: %d, %d", this.x.length, this.y.length));
     }
 
     public LinearEquation getLinearEquation() {
